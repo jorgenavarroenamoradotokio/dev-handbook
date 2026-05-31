@@ -2,7 +2,7 @@
 
 > Referencia técnica personal de ingeniería de software. Guías de producción sobre lenguajes, frameworks, bases de datos, infraestructura y certificaciones — con arquitectura interna, ejemplos reales y antipatrones.
 
-[![Guías completadas](https://img.shields.io/badge/Guías_completadas-0-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
+[![Guías completadas](https://img.shields.io/badge/Guías_completadas-1-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
 [![Categorías](https://img.shields.io/badge/Categorías-9-blue?style=flat-square)](#️-índice-de-guías)
 [![Última actualización](https://img.shields.io/badge/Última_actualización-2026--05-blue?style=flat-square)](./docs/CHANGELOG.md)
 [![Licencia](https://img.shields.io/badge/Licencia-Privado-red?style=flat-square)](#-licencia)
@@ -26,11 +26,11 @@ Cada guía sigue una [plantilla estándar](./docs/templates/template-guide.md) q
 
 ## 🗺️ Índice de Guías
 
-### 🛠️ Tooling (`/tooling`)
+### 🛠️ version (`/version-control`)
 
 | Tecnología | Guía | Nivel | Estado | Última actualización |
 |:-----------|:-----|:-----:|:------:|:--------------------:|
-| — | Próximamente | — | 🔜 | — |
+| **Git & Version Control** | [Guía Definitiva](./version-control/git.md) | Completo | ✅ | 2026-05 |
 
 ### 💻 Languages (`/languages`)
 
@@ -152,6 +152,7 @@ dev-handbook/
 │   └── servers/                   # Nginx, Caddy, HAProxy, Traefik
 │
 ├── 📁 version-control/
+│   └── git.md
 │
 ├── 📁 certifications/
 │
@@ -209,8 +210,8 @@ git branch -d docs/guide-<tecnologia>
 
 | Métrica | Valor |
 |:--------|:-----:|
-| Total de guías | 0 |
-| Guías completadas ✅ | 0 |
+| Total de guías | 1 |
+| Guías completadas ✅ | 1 |
 | Guías en progreso 🟡 | 0 |
 | Categorías activas | 0 |
 | Tecnologías planificadas | 35+ |

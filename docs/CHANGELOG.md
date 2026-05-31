@@ -24,6 +24,21 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
 
 ---
 
+[0.1.0] — 2026-05
+Added
+
+version-control/git.md — Guía definitiva de Git y Version Control
+
+Git internals: modelo de objetos (blob, tree, commit, tag), DAG
+Configuración profesional de ~/.gitconfig con SSH signing
+Comandos avanzados: bisect, worktrees, reflog, add -p
+Workflows comparados: Trunk-Based Development vs Gitflow vs GitHub Flow
+Conventional Commits + automatización de CHANGELOG con git-cliff
+Git hooks con pre-commit: detección de secrets, validación de commits
+Branch protection rules y CODEOWNERS para GitHub
+8 antipatrones documentados con causa → consecuencia → fix
+
+
 ### Added
 - Estructura inicial del repositorio
   - `README.md` con índice de guías y estado del repositorio
