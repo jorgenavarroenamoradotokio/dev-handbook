@@ -69,21 +69,6 @@ git branch -d docs/guide-<tecnologia>
 
 ---
 
-## Estándares de calidad de una guía
-
-Una guía **no se considera completa** hasta cubrir todas estas secciones:
-
-- [ ] **Metadata**: versión actual, tipo, casos de uso y casos a evitar
-- [ ] **Arquitectura interna**: cómo funciona bajo el capó (diagrama Mermaid obligatorio)
-- [ ] **Instalación**: comandos exactos, incluyendo opción Docker para desarrollo local
-- [ ] **Configuración de producción**: fichero de configuración comentado línea por línea
-- [ ] **Ejemplos reales**: código del mundo real, no `hello world`
-- [ ] **Buenas prácticas**: seguridad, rendimiento, observabilidad
-- [ ] **Antipatrones**: tabla con problema → consecuencia → solución
-- [ ] **Recursos**: documentación oficial, libros, herramientas
-
----
-
 ## Convenciones de escritura
 
 ### Commits
