@@ -4,8 +4,6 @@
 
 ---
 
-# Módulo 02: Instalación, Estructura de Directorios y Arranque
-
 - [Módulo 02: Instalación, Estructura de Directorios y Arranque](#módulo-02-instalación-estructura-de-directorios-y-arranque)
   - [2.1 Requisitos Previos: JDK Compatible por Versión](#21-requisitos-previos-jdk-compatible-por-versión)
     - [¿Qué es el JDK y por qué importa?](#qué-es-el-jdk-y-por-qué-importa)
@@ -46,6 +44,8 @@
   - [Puntos Clave](#puntos-clave)
 
 ---
+
+# Módulo 02: Instalación, Estructura de Directorios y Arranque
 
 ## 2.1 Requisitos Previos: JDK Compatible por Versión
 

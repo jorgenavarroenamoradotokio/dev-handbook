@@ -4,12 +4,7 @@
 
 ---
 
-# Módulo 01: Arquitectura Interna y Componentes de Apache Tomcat
-
-## Índice
-
 - [Módulo 01: Arquitectura Interna y Componentes de Apache Tomcat](#módulo-01-arquitectura-interna-y-componentes-de-apache-tomcat)
-  - [Índice](#índice)
   - [1.1 ¿Qué es Tomcat y para qué sirve?](#11-qué-es-tomcat-y-para-qué-sirve)
     - [La analogía del restaurante](#la-analogía-del-restaurante)
     - [¿Qué es un "contenedor de Servlets"?](#qué-es-un-contenedor-de-servlets)
@@ -54,6 +49,8 @@
   - [Puntos Clave](#puntos-clave)
 
 ---
+
+# Módulo 01: Arquitectura Interna y Componentes de Apache Tomcat
 
 ## 1.1 ¿Qué es Tomcat y para qué sirve?
 

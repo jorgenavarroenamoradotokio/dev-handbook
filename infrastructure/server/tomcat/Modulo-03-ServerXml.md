@@ -4,8 +4,6 @@
 
 ---
 
-# Módulo 03: Configuración de server.xml en Profundidad
-
 - [Módulo 03: Configuración de server.xml en Profundidad](#módulo-03-configuración-de-serverxml-en-profundidad)
   - [3.1 Visión General del Archivo server.xml](#31-visión-general-del-archivo-serverxml)
     - [¿Qué es server.xml y por qué es tan importante?](#qué-es-serverxml-y-por-qué-es-tan-importante)
@@ -46,6 +44,8 @@
   - [Puntos Clave](#puntos-clave)
 
 ---
+
+# Módulo 03: Configuración de server.xml en Profundidad
 
 ## 3.1 Visión General del Archivo server.xml
 
