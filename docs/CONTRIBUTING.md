@@ -20,11 +20,33 @@ Este documento define las convenciones para mantener el repositorio consistente 
 | Docker y contenedores | `infrastructure/containers/` |
 | CI/CD (GitHub Actions, GitLab CI, ArgoCD) | `infrastructure/ci-cd/` |
 | Servidores y proxies (Nginx, Caddy, HAProxy) | `infrastructure/servers/` |
-| Control de versiones, Git workflows | `tooling/` |
+| Servidores de aplicaciones (Tomcat, JBoss, Jetty) | `infrastructure/server/<nombre>/` |
+| Sistemas operativos (Linux, administración) | `infrastructure/os/<os>/` |
+| Control de versiones, Git workflows | `version-control/` |
 | Shell, CLI tools (bash, zsh, awk, jq) | `tooling/shell/` |
 | Certificaciones (AWS, CKA, Terraform) | `certifications/` |
 
 Si una tecnología no encaja claramente, abre un issue o crea la carpeta con un `README.md` que explique el criterio.
+
+---
+
+## Guías modulares vs. guías únicas
+
+Algunas tecnologías con mucho contenido se dividen en **módulos numerados** dentro de su carpeta:
+
+```
+infrastructure/server/tomcat/
+├── Modulo-01-Arquitectura.md
+├── Modulo-02-Instalacion.md
+└── ...
+
+infrastructure/os/linux/
+├── Modulo-01-Fundamentos-Arquitectura.md
+├── Modulo-02-CLI-Procesamiento-Texto.md
+└── ...
+```
+
+**Criterio:** usar módulos cuando la guía supera ~500 líneas o cubre dominios claramente separables (instalación, seguridad, rendimiento, etc.). En ese caso, crear una carpeta con el nombre de la tecnología y numerar los ficheros con prefijo `Modulo-NN-`.
 
 ---
 
@@ -39,10 +61,13 @@ git switch -c docs/guide-<tecnologia>
 # Ejemplos:
 # docs/guide-postgresql
 # docs/guide-nginx
-# docs/guide-aws-saa
+# docs/guide-linux
+# docs/guide-tomcat
 
 # 3. Copiar la plantilla estándar
 cp docs/templates/template-guide.md <categoria>/<tecnologia>.md
+# Para guías modulares:
+# cp docs/templates/template-guide.md infrastructure/server/tomcat/Modulo-01-Arquitectura.md
 
 # 4. Desarrollar la guía (ver estándares de calidad abajo)
 
@@ -59,6 +84,7 @@ git commit -m "docs(<categoria>): add <tecnologia> guide"
 # Ejemplos:
 # docs(data): add postgresql guide
 # docs(infrastructure): add nginx guide
+# docs(infrastructure): add linux os guide
 
 # 8. Merge a main
 git switch main
@@ -84,8 +110,9 @@ docs(<scope>): <descripción en imperativo>
 
 ### Nombres de archivo
 
-- Siempre en **kebab-case**: `docker-compose.md`, `react-native.md`
-- Sin espacios, sin mayúsculas, sin caracteres especiales
+- Siempre en **kebab-case** para guías únicas: `docker-compose.md`, `react-native.md`
+- Para guías modulares: prefijo `Modulo-NN-` en **PascalKebab**: `Modulo-01-Arquitectura.md`
+- Sin espacios, sin caracteres especiales
 
 ### Diagramas
 

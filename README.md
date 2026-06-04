@@ -2,9 +2,9 @@
 
 > Referencia técnica personal de ingeniería de software. Guías de producción sobre lenguajes, frameworks, bases de datos, infraestructura y certificaciones — con arquitectura interna, ejemplos reales y antipatrones.
 
-[![Guías completadas](https://img.shields.io/badge/Guías_completadas-1-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
+[![Guías completadas](https://img.shields.io/badge/Guías_completadas-03-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
 [![Categorías](https://img.shields.io/badge/Categorías-9-blue?style=flat-square)](#️-índice-de-guías)
-[![Última actualización](https://img.shields.io/badge/Última_actualización-2026--05-blue?style=flat-square)](./docs/CHANGELOG.md)
+[![Última actualización](https://img.shields.io/badge/Última_actualización-2026--06-blue?style=flat-square)](./docs/CHANGELOG.md)
 [![Licencia](https://img.shields.io/badge/Licencia-Privado-red?style=flat-square)](#-licencia)
 
 ---
@@ -26,23 +26,48 @@ Cada guía sigue una [plantilla estándar](./docs/templates/template-guide.md) q
 
 ## 🗺️ Índice de Guías
 
-### 🛠️ version (`/version-control`)
+### 🛠️ Version Control (`/version-control`)
 
-| Tecnología | Guía | Nivel | Estado | Última actualización |
-|:-----------|:-----|:-----:|:------:|:--------------------:|
-| **Git & Version Control** | [Guía Definitiva](./version-control/git.md) | Completo | ✅ | 2026-05 |
+| Tecnología | Guía | Estado | Última actualización |
+|:-----------|:-----|:------:|:--------------------:|
+| **Git & Version Control** | [Guía Definitiva](./version-control/git.md) | ✅ | 2026-05 |
+
+### 🖥️ Infrastructure — OS (`/infrastructure/os/linux`)
+
+Administración de sistemas Linux a nivel de producción: fundamentos, CLI, almacenamiento y automatización.
+
+| Módulo | Guía | Estado | Última actualización |
+|:-------|:-----|:------:|:--------------------:|
+| 01 | [Fundamentos y Arquitectura](./infrastructure/os/linux/Modulo-01-Fundamentos-Arqui...) | ✅ | 2026-06 |
+| 02 | [CLI y Procesamiento de Texto](./infrastructure/os/linux/Modulo-02-CLI-Procesamiento-T...) | ✅ | 2026-06 |
+| 03 | [Administración del Sistema](./infrastructure/os/linux/Modulo-03-Administracion-Siste...) | ✅ | 2026-06 |
+| 04 | [Almacenamiento y Red](./infrastructure/os/linux/Modulo-04-Almacenamiento-Re...) | ✅ | 2026-06 |
+| 05 | [Automatización y Operaciones](./infrastructure/os/linux/Modulo-05-Automatizacion-Ope...) | ✅ | 2026-06 |
+
+### 🐱 Infrastructure — Servers (`/infrastructure/server/tomcat`)
+
+Apache Tomcat: instalación, configuración, seguridad, rendimiento y operaciones en producción.
+
+| Módulo | Guía | Estado | Última actualización |
+|:-------|:-----|:------:|:--------------------:|
+| 01 | [Arquitectura](./infrastructure/server/tomcat/Modulo-01-Arquitectura.md) | ✅ | 2026-06 |
+| 02 | [Instalación](./infrastructure/server/tomcat/Modulo-02-Instalacion.md) | ✅ | 2026-06 |
+| 03 | [Server XML](./infrastructure/server/tomcat/Modulo-03-ServerXml.md) | ✅ | 2026-06 |
+| 04 | [Conectores](./infrastructure/server/tomcat/Modulo-04-Conectores.md) | ✅ | 2026-06 |
+| 05 | [Web](./infrastructure/server/tomcat/Modulo-05-Web.md) | ✅ | 2026-06 |
+| 06 | [Seguridad](./infrastructure/server/tomcat/Modulo-06-Seguridad.md) | ✅ | 2026-06 |
+| 07 | [Pool](./infrastructure/server/tomcat/Modulo-07-Pool.md) | ✅ | 2026-06 |
+| 08 | [Sesiones y Clustering](./infrastructure/server/tomcat/Modulo-08-Sesiones-Clustering.md) | ✅ | 2026-06 |
+| 09 | [Rendimiento y Monitorización](./infrastructure/server/tomcat/Modulo-09-Rendimiento-Monitorizaci...) | ✅ | 2026-06 |
+| 10 | [Migraciones](./infrastructure/server/tomcat/Modulo-10-Migraciones.md) | ✅ | 2026-06 |
 
 ### 💻 Languages (`/languages`)
-
-Cubre Backend y Frontend. Profundidad técnica: runtime, gestión de memoria, concurrencia, patrones.
 
 | Tecnología | Subcategoría | Guía | Estado | Última actualización |
 |:-----------|:-------------|:-----|:------:|:--------------------:|
 | — | Próximamente | — | 🔜 | — |
 
 ### 🧱 Platforms (`/platforms`)
-
-Frameworks web, móvil y microservicios.
 
 #### Web Backend
 
@@ -70,12 +95,9 @@ Frameworks web, móvil y microservicios.
 
 ### 🧪 Testing (`/testing`)
 
-Unit, Integration, E2E, Contract Testing y QA Automation.
-
 | Herramienta / Tipo | Subcategoría | Guía | Estado | Última actualización |
 |:-------------------|:-------------|:-----|:------:|:--------------------:|
 | — | Próximamente | — | 🔜 | — |
-
 
 ### 🐳 Infrastructure — Containers (`/infrastructure/containers`)
 
@@ -83,27 +105,17 @@ Unit, Integration, E2E, Contract Testing y QA Automation.
 |:-----------|:-----|:------:|:--------------------:|
 | — | Próximamente | — | 🔜 | — |
 
-
 ### 🗄️ Data — Databases (`/data/databases`)
 
 | Tecnología | Tipo | Guía | Estado | Última actualización |
 |:-----------|:-----|:-----|:------:|:--------------------:|
 | — | Próximamente | — | 🔜 | — |
 
-
-### 🖥️ Infrastructure — Servers (`/infrastructure/servers`)
-
-| Tecnología | Tipo | Guía | Estado | Última actualización |
-|:-----------|:-----|:-----|:------:|:--------------------:|
-| — | Próximamente | — | 🔜 | — |
-
-
 ### 🎓 Certifications (`/certifications`)
 
 | Certificación | Proveedor | Guía | Estado | Última actualización |
 |:-------------|:----------|:-----|:------:|:--------------------:|
 | — | Próximamente | — | 🔜 | — |
-
 
 ---
 
@@ -115,28 +127,28 @@ dev-handbook/
 ├── 📄 README.md
 │
 ├── 📁 docs/
-│   ├── CONTRIBUTING.md            # Convenciones y proceso para añadir guías
-│   ├── CHANGELOG.md               # Historial de guías y cambios
+│   ├── CONTRIBUTING.md
+│   ├── CHANGELOG.md
 │   └── templates/
-│       └── template-guide.md      # Plantilla base para nuevas guías
+│       └── template-guide.md
 │
 ├── 📁 languages/
-│   ├── backend/                   # Go, python, java, rust, kotlin
-│   └── frontend/                  # typescript
+│   ├── backend/
+│   └── frontend/
 │
 ├── 📁 platforms/
 │   ├── web/
-│   │   ├── backend/               # FastAPI, Gin, Spring Boot, Express
-│   │   └── frontend/              # Next.js, Remix, SvelteKit
-│   ├── mobile/                    # React Native, Flutter
-│   └── microservices/             # gRPC, Temporal, Dapr
+│   │   ├── backend/
+│   │   └── frontend/
+│   ├── mobile/
+│   └── microservices/
 │
 ├── 📁 data/
 │   └── databases/
-│       ├── relational/            # PostgreSQL, MySQL
-│       ├── nosql/                 # MongoDB, DynamoDB
-│       ├── cache/                 # Redis, Memcached
-│       └── vector/                # pgvector
+│       ├── relational/
+│       ├── nosql/
+│       ├── cache/
+│       └── vector/
 │
 ├── 📁 testing/
 │   ├── unit/
@@ -146,17 +158,21 @@ dev-handbook/
 │   └── performance/
 │
 ├── 📁 infrastructure/
-│   ├── containers/                # Docker, Compose, Kubernetes intro
-│   ├── ci-cd/                     # GitHub Actions, GitLab CI
+│   ├── os/
+│   │   └── linux/                 # Módulos 01–05 (completos)
+│   ├── server/
+│   │   └── tomcat/                # Módulos 01–10 (completos)
+│   ├── containers/
+│   ├── ci-cd/
 │   ├── build-tools/
-│   └── servers/                   # Nginx, Caddy, HAProxy, Traefik
+│   └── servers/
 │
 ├── 📁 version-control/
 │   └── git.md
 │
 ├── 📁 certifications/
 │
-└── 📁 assets/                     # Diagramas, imágenes
+└── 📁 assets/
 ```
 
 ---
@@ -210,10 +226,10 @@ git branch -d docs/guide-<tecnologia>
 
 | Métrica | Valor |
 |:--------|:-----:|
-| Total de guías | 1 |
-| Guías completadas ✅ | 1 |
-| Guías en progreso 🟡 | 0 |
-| Categorías activas | 0 |
+| Total de guías | 16 |
+| Guías completadas ✅ | 11 |
+| Guías en progreso 🟡 | 5 |
+| Categorías activas | 3 |
 | Tecnologías planificadas | 35+ |
 
 > El contador se actualiza manualmente con cada guía añadida. Ver historial completo en [CHANGELOG.md](./docs/CHANGELOG.md).
