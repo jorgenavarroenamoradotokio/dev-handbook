@@ -5,71 +5,71 @@
 ---
 
 - [1. Modelos de Despliegue en la Nube](#1-modelos-de-despliegue-en-la-nube)
-    - [Tipos de Modelos de Despliegue](#tipos-de-modelos-de-despliegue)
+  - [Tipos de Modelos de Despliegue](#tipos-de-modelos-de-despliegue)
     - [Consideraciones de Seguridad por Arquitectura](#consideraciones-de-seguridad-por-arquitectura)
     - [Nube Híbrida — Desafíos de Seguridad Específicos](#nube-híbrida--desafíos-de-seguridad-específicos)
-  - [2. Modelo de Servicios en la Nube (XaaS)](#2-modelo-de-servicios-en-la-nube-xaas)
+  - [Modelo de Servicios en la Nube (XaaS)](#modelo-de-servicios-en-la-nube-xaas)
     - [Los tres modelos principales](#los-tres-modelos-principales)
     - [Proveedores de Terceros](#proveedores-de-terceros)
-  - [3. Matriz de Responsabilidades (Shared Responsibility Model)](#3-matriz-de-responsabilidades-shared-responsibility-model)
+  - [Matriz de Responsabilidades (Shared Responsibility Model)](#matriz-de-responsabilidades-shared-responsibility-model)
     - [Matriz de Responsabilidades por Modelo de Servicio](#matriz-de-responsabilidades-por-modelo-de-servicio)
     - [Responsabilidades del CSP](#responsabilidades-del-csp)
     - [Responsabilidades del Cliente](#responsabilidades-del-cliente)
-  - [4. Computación Centralizada y Descentralizada](#4-computación-centralizada-y-descentralizada)
+  - [Computación Centralizada y Descentralizada](#computación-centralizada-y-descentralizada)
     - [Arquitectura Centralizada](#arquitectura-centralizada)
     - [Arquitectura Descentralizada](#arquitectura-descentralizada)
     - [Ejemplos de Arquitectura Descentralizada](#ejemplos-de-arquitectura-descentralizada)
-  - [5. Conceptos de Arquitectura Resiliente](#5-conceptos-de-arquitectura-resiliente)
+  - [Conceptos de Arquitectura Resiliente](#conceptos-de-arquitectura-resiliente)
     - [Alta Disponibilidad (HA — High Availability)](#alta-disponibilidad-ha--high-availability)
     - [Replicación de Datos](#replicación-de-datos)
     - [Niveles de Replicación (Zonas de Disponibilidad)](#niveles-de-replicación-zonas-de-disponibilidad)
-  - [6. Virtualización de Aplicaciones y Contenedores](#6-virtualización-de-aplicaciones-y-contenedores)
+  - [Virtualización de Aplicaciones y Contenedores](#virtualización-de-aplicaciones-y-contenedores)
     - [Virtualización de Aplicaciones](#virtualización-de-aplicaciones)
     - [Contenedorización](#contenedorización)
     - [Hipervisores](#hipervisores)
     - [VM vs. Contenedores](#vm-vs-contenedores)
-  - [7. Arquitectura en la Nube](#7-arquitectura-en-la-nube)
+  - [Arquitectura en la Nube](#arquitectura-en-la-nube)
     - [Computación Sin Servidor (Serverless)](#computación-sin-servidor-serverless)
     - [Microservicios](#microservicios)
     - [Cambios Transformacionales (Servicios Nativos de Nube)](#cambios-transformacionales-servicios-nativos-de-nube)
-  - [8. Tecnologías de Automatización en la Nube](#8-tecnologías-de-automatización-en-la-nube)
+  - [Tecnologías de Automatización en la Nube](#tecnologías-de-automatización-en-la-nube)
     - [Infraestructura como Código (IaC — Infrastructure as Code)](#infraestructura-como-código-iac--infrastructure-as-code)
     - [Tecnologías de Capacidad de Respuesta](#tecnologías-de-capacidad-de-respuesta)
-  - [9. Redes Definidas por Software (SDN — Software-Defined Networking)](#9-redes-definidas-por-software-sdn--software-defined-networking)
+  - [Redes Definidas por Software (SDN — Software-Defined Networking)](#redes-definidas-por-software-sdn--software-defined-networking)
     - [Los Tres Planos de Red](#los-tres-planos-de-red)
     - [Arquitectura SDN](#arquitectura-sdn)
     - [NFV (Network Functions Virtualization / Virtualización de Funciones de Red)](#nfv-network-functions-virtualization--virtualización-de-funciones-de-red)
-  - [10. Características de la Arquitectura en la Nube](#10-características-de-la-arquitectura-en-la-nube)
+  - [Características de la Arquitectura en la Nube](#características-de-la-arquitectura-en-la-nube)
     - [Características Clave](#características-clave)
     - [SLA e ISA](#sla-e-isa)
-  - [11. Aspectos de Seguridad en la Nube a Considerar](#11-aspectos-de-seguridad-en-la-nube-a-considerar)
+  - [Aspectos de Seguridad en la Nube a Considerar](#aspectos-de-seguridad-en-la-nube-a-considerar)
     - [Protección de Datos](#protección-de-datos)
     - [Gestión de Parches](#gestión-de-parches)
     - [SD-WAN (Software-Defined WAN / Red de Área Amplia Definida por Software)](#sd-wan-software-defined-wan--red-de-área-amplia-definida-por-software)
     - [SASE (Secure Access Service Edge / Perímetro de Servicio de Acceso Seguro)](#sase-secure-access-service-edge--perímetro-de-servicio-de-acceso-seguro)
-- [2 Sistemas Integrados y Arquitectura de Confianza Cero](#2-sistemas-integrados-y-arquitectura-de-confianza-cero)
-  - [1. Sistemas Integrados (Embedded Systems)](#1-sistemas-integrados-embedded-systems)
+- [2. Sistemas Integrados y Arquitectura de Confianza Cero](#2-sistemas-integrados-y-arquitectura-de-confianza-cero)
+  - [Sistemas Integrados (Embedded Systems)](#sistemas-integrados-embedded-systems)
     - [Aplicaciones de Sistemas Integrados](#aplicaciones-de-sistemas-integrados)
     - [RTOS (Real-Time Operating System / Sistema Operativo en Tiempo Real)](#rtos-real-time-operating-system--sistema-operativo-en-tiempo-real)
     - [Riesgos Asociados a los RTOS](#riesgos-asociados-a-los-rtos)
-  - [2. Sistemas de Control Industrial (ICS — Industrial Control Systems)](#2-sistemas-de-control-industrial-ics--industrial-control-systems)
+  - [Sistemas de Control Industrial (ICS — Industrial Control Systems)](#sistemas-de-control-industrial-ics--industrial-control-systems)
     - [Componentes de un ICS](#componentes-de-un-ics)
     - [SCADA (Supervisory Control and Data Acquisition / Control de Supervisión y Adquisición de Datos)](#scada-supervisory-control-and-data-acquisition--control-de-supervisión-y-adquisición-de-datos)
     - [Sectores de Aplicación ICS/SCADA](#sectores-de-aplicación-icsscada)
     - [Seguridad en ICS/SCADA](#seguridad-en-icsscada)
-  - [3. Internet de las Cosas (IoT — Internet of Things)](#3-internet-de-las-cosas-iot--internet-of-things)
+  - [Internet de las Cosas (IoT — Internet of Things)](#internet-de-las-cosas-iot--internet-of-things)
     - [Componentes del Ecosistema IoT](#componentes-del-ecosistema-iot)
     - [Ejemplos de IoT por Sector](#ejemplos-de-iot-por-sector)
     - [Factores que Impulsan la Adopción de IoT](#factores-que-impulsan-la-adopción-de-iot)
     - [Riesgos de Seguridad de IoT](#riesgos-de-seguridad-de-iot)
     - [Casos Históricos de Ataques IoT](#casos-históricos-de-ataques-iot)
     - [Guías de Mejores Prácticas para IoT](#guías-de-mejores-prácticas-para-iot)
-  - [4. Desperimetrización y Confianza Cero](#4-desperimetrización-y-confianza-cero)
+  - [Desperimetrización y Confianza Cero](#desperimetrización-y-confianza-cero)
     - [El Problema del Perímetro Tradicional](#el-problema-del-perímetro-tradicional)
     - [Desperimetrización](#desperimetrización)
     - [Tendencias que Impulsan la Desperimetrización](#tendencias-que-impulsan-la-desperimetrización)
     - [Confianza Cero (Zero Trust Architecture — ZTA)](#confianza-cero-zero-trust-architecture--zta)
-  - [5. Conceptos de Seguridad de Confianza Cero](#5-conceptos-de-seguridad-de-confianza-cero)
+  - [Conceptos de Seguridad de Confianza Cero](#conceptos-de-seguridad-de-confianza-cero)
     - [Conceptos Fundamentales de Zero Trust](#conceptos-fundamentales-de-zero-trust)
     - [Los Planos de Control y Datos en Zero Trust](#los-planos-de-control-y-datos-en-zero-trust)
       - [Plano de Control](#plano-de-control)
@@ -78,7 +78,7 @@
     - [Zona de Confianza Implícita](#zona-de-confianza-implícita)
     - [Ventajas de la Separación del Plano de Control y Datos](#ventajas-de-la-separación-del-plano-de-control-y-datos)
     - [Ejemplos de Implementaciones de Zero Trust](#ejemplos-de-implementaciones-de-zero-trust)
-- [3. Glosario de Acrónimos](#3-glosario-de-acrónimos)
+- [3. Glosario](#3-glosario)
 
 ---
 
@@ -86,7 +86,7 @@
 
 > **Analogía:** Piensa en los modelos de despliegue como tipos de vivienda: la nube pública es un piso compartido (barato, con vecinos); la privada, una casa propia (cara, total control); la híbrida, tener casa y reservar hotel cuando hay muchas visitas.
 
-### Tipos de Modelos de Despliegue
+## Tipos de Modelos de Despliegue
 
 | Modelo | Descripción | Seguridad | Costo |
 |--------|-------------|-----------|-------|
@@ -117,7 +117,7 @@
 > **👉 Enfoque de Examen SY0-701:**
 > CompTIA pregunta frecuentemente sobre qué modelo usar en escenarios específicos. **Distractor común:** confundir "privado alojado" con "privado puro" — el alojado sigue siendo de terceros. Recuerda: multinube = varios CSP; híbrida = nube pública + privada. La triada CIA puede aparecer: en nube **pública**, los riesgos de **confidencialidad** son mayores. Vigila preguntas sobre SLA e ISA como mecanismos de gobierno en la nube.
 
-## 2. Modelo de Servicios en la Nube (XaaS)
+## Modelo de Servicios en la Nube (XaaS)
 
 > **Analogía:** Los modelos de servicio son como cocinar: IaaS es comprar los ingredientes y el fogón (tú cocinas todo); PaaS es una cocina equipada donde tú solo haces la receta; SaaS es pedir el plato listo al restaurante.
 
@@ -143,7 +143,7 @@
 > **👉 Enfoque de Examen SY0-701:**
 > Memoriza la tabla de responsabilidades: en **SaaS**, el CSP gestiona el SO y la red; en **IaaS**, la responsabilidad de red es **compartida**. FaaS = serverless. CompTIA puede preguntarte qué modelo usar si la empresa quiere "solo ejecutar su código sin gestionar servidores" → **FaaS/Serverless**. Los SLA son contractuales, no técnicos — no los confundas con controles de seguridad.
 
-## 3. Matriz de Responsabilidades (Shared Responsibility Model)
+## Matriz de Responsabilidades (Shared Responsibility Model)
 
 > **Analogía:** Como en un edificio de apartamentos: el propietario del edificio (CSP) mantiene la estructura, fontanería y seguridad del portal; el inquilino (cliente) cierra su puerta con llave y protege sus objetos dentro del piso.
 
@@ -185,7 +185,7 @@
 > **👉 Enfoque de Examen SY0-701:**
 > Esta es una de las áreas más preguntadas del dominio de arquitectura. CompTIA presentará escenarios donde debes identificar quién es responsable de qué. **Distractor frecuente:** asumir que el CSP es responsable de todo en SaaS — el cliente **siempre** es responsable de la clasificación de datos y la gestión de identidades de sus usuarios. Memoriza que la seguridad física **siempre** es del CSP (excepto on-premises).
 
-## 4. Computación Centralizada y Descentralizada
+## Computación Centralizada y Descentralizada
 
 ### Arquitectura Centralizada
 
@@ -214,7 +214,7 @@
 > **👉 Enfoque de Examen SY0-701:**
 > Tor puede aparecer en preguntas sobre privacidad y anonimato — no confundir con una herramienta de seguridad corporativa. Blockchain puede aparecer asociado a integridad de datos (no repudio). CDN → disponibilidad. Vigila el **tradeoff**: centralizado = más control, descentralizado = más resiliencia.
 
-## 5. Conceptos de Arquitectura Resiliente
+## Conceptos de Arquitectura Resiliente
 
 ### Alta Disponibilidad (HA — High Availability)
 
@@ -251,7 +251,7 @@ Los CSP dividen el mundo en **regiones** independientes, que a su vez se dividen
 > **👉 Enfoque de Examen SY0-701:**
 > Las preguntas sobre resiliencia suelen pedir qué nivel de replicación aplicar ante un escenario de desastre regional → **GRS**. Hot vs. Cold Storage aparece frecuentemente en preguntas de costo vs. velocidad de recuperación. Recuerda: HA ≠ DR (Disaster Recovery) — HA es disponibilidad continua, DR es recuperación ante catástrofe.
 
-## 6. Virtualización de Aplicaciones y Contenedores
+## Virtualización de Aplicaciones y Contenedores
 
 ### Virtualización de Aplicaciones
 
@@ -291,7 +291,7 @@ Los CSP dividen el mundo en **regiones** independientes, que a su vez se dividen
 > **👉 Enfoque de Examen SY0-701:**
 > La diferencia Tipo 1 vs. Tipo 2 es pregunta frecuente. **Bare-metal = Tipo 1 = producción empresarial**. Contenedores vs. VM: CompTIA preguntará qué usar cuando se prioriza velocidad de despliegue y portabilidad → contenedores. Mayor aislamiento de seguridad → VM. Recuerda: Docker = motor de contenedores, no hipervisor.
 
-## 7. Arquitectura en la Nube
+## Arquitectura en la Nube
 
 ### Computación Sin Servidor (Serverless)
 
@@ -345,7 +345,7 @@ Los CSP dividen el mundo en **regiones** independientes, que a su vez se dividen
 > **👉 Enfoque de Examen SY0-701:**
 > Serverless/FaaS: el cliente NO gestiona el SO ni los parches. Microservicios: el riesgo es en la **integración**, no en los componentes individuales. Preguntas de escenario: "Una empresa quiere escalar automáticamente según demanda sin administrar servidores" → FaaS/Serverless. "Una empresa quiere dividir su aplicación monolítica en componentes independientes" → Microservicios.
 
-## 8. Tecnologías de Automatización en la Nube
+## Tecnologías de Automatización en la Nube
 
 ### Infraestructura como Código (IaC — Infrastructure as Code)
 
@@ -382,7 +382,7 @@ Los CSP dividen el mundo en **regiones** independientes, que a su vez se dividen
 > **👉 Enfoque de Examen SY0-701:**
 > IaC = automatización + consistencia + reducción de errores manuales. HCL es el formato de Terraform (HashiCorp). Balanceo de carga → disponibilidad; Edge Computing → latencia; Auto-Scaling → elasticidad. Pregunta tipo: "¿Qué tecnología permitiría a una empresa ajustar automáticamente sus recursos de cómputo durante picos de demanda?" → Auto-Scaling. No confundas balanceador de carga con firewall.
 
-## 9. Redes Definidas por Software (SDN — Software-Defined Networking)
+## Redes Definidas por Software (SDN — Software-Defined Networking)
 
 > **Analogía:** SDN es como separar el piloto automático del avión del propio avión. El plano de control (piloto automático) toma decisiones de vuelo, el plano de datos (motores y alerones) ejecuta esas decisiones, y el plano de gestión (torre de control) monitorea todo.
 
@@ -424,7 +424,7 @@ La IaC se ve facilitada por dispositivos de red físicos y virtuales que se pued
 > **👉 Enfoque de Examen SY0-701:**
 > Memoriza los tres planos y sus funciones. SDN separa el **control** de los **datos** — esto es fundamental. **Distractor:** confundir SDN con NFV; SDN = políticas de red vía software; NFV = virtualización de las propias funciones de red. API Northbound = hacia las apps; API Southbound = hacia los dispositivos. Pregunta típica: "¿Qué tecnología permite a un administrador configurar políticas de red mediante una API centralizada?" → SDN.
 
-## 10. Características de la Arquitectura en la Nube
+## Características de la Arquitectura en la Nube
 
 ### Características Clave
 
@@ -456,7 +456,7 @@ La IaC se ve facilitada por dispositivos de red físicos y virtuales que se pued
 > **👉 Enfoque de Examen SY0-701:**
 > **CapEx vs. OpEx** es pregunta habitual — nube = OpEx. Scale-Up vs. Scale-Out: Up = más potencia al mismo servidor; Out = más servidores. **PUE** puede aparecer en preguntas sobre eficiencia de datacenter. ISA vs. SLA: ISA = seguridad; SLA = niveles de servicio. Memoriza que GDPR, HIPAA y PCI DSS son los estándares de cumplimiento normativo que suelen mencionarse en el ISA.
 
-## 11. Aspectos de Seguridad en la Nube a Considerar
+## Aspectos de Seguridad en la Nube a Considerar
 
 ### Protección de Datos
 
@@ -498,9 +498,9 @@ La IaC se ve facilitada por dispositivos de red físicos y virtuales que se pued
 > **👉 Enfoque de Examen SY0-701:**
 > SASE = SD-WAN + seguridad en la nube + Zero Trust. Es una arquitectura moderna importante para el examen. **Distractor:** confundir SASE con SD-WAN — SD-WAN es solo la parte de red; SASE agrega la capa de seguridad integral. Parches en la nube: el cliente puede perder control sobre el calendario → riesgo regulatorio. Preguntas de escenario: "Empresa con empleados remotos en múltiples países necesita acceso seguro centralizado" → SASE.
 
-# 2 Sistemas Integrados y Arquitectura de Confianza Cero
+# 2. Sistemas Integrados y Arquitectura de Confianza Cero
 
-## 1. Sistemas Integrados (Embedded Systems)
+## Sistemas Integrados (Embedded Systems)
 
 > **Analogía:** Un sistema integrado es como el cerebro especializado de un electrodoméstico — no hace de todo, pero hace su tarea específica de manera perfecta, constante y en tiempo real.
 
@@ -538,7 +538,7 @@ Los sistemas integrados se usan en aplicaciones especializadas donde se requiere
 > **👉 Enfoque de Examen SY0-701:**
 > RTOS: la característica clave es "tiempo real" — no confundir con SO convencional. El riesgo en RTOS es que un compromiso puede tener consecuencias físicas (no solo de datos). Recuerda VxWorks = defensa/aeroespacial; FreeRTOS = open source / IoT.
 
-## 2. Sistemas de Control Industrial (ICS — Industrial Control Systems)
+## Sistemas de Control Industrial (ICS — Industrial Control Systems)
 
 > **Analogía:** Un ICS es el sistema nervioso de una fábrica o planta — los PLC son los nervios periféricos que controlan músculos (actuadores), los sensores son los receptores sensoriales, la HMI es el cerebro consciente que muestra el estado y permite el control, y el servidor SCADA es la conciencia global que supervisa todo.
 
@@ -597,7 +597,7 @@ Los sistemas integrados se usan en aplicaciones especializadas donde se requiere
 > **👉 Enfoque de Examen SY0-701:**
 > **Triada AIC vs. CIA** es crítica: en ICS/SCADA, la disponibilidad viene PRIMERO. Stuxnet es el ejemplo clásico de ataque ICS. Memoriza: PLC → controla actuadores; HMI → interfaz humana; SCADA → supervisión multi-sitio; DCS → un solo sitio. NIST SP 800-82 = referencia para seguridad ICS. OT (Operational Technology) es el término genérico para la tecnología de control industrial, distinto de IT (Information Technology).
 
-## 3. Internet de las Cosas (IoT — Internet of Things)
+## Internet de las Cosas (IoT — Internet of Things)
 
 > **Analogía:** IoT es como convertir todos los objetos de tu mundo físico en "informantes" que reportan su estado constantemente a una central de datos en la nube — desde el termostato hasta el motor de una turbina.
 
@@ -657,7 +657,7 @@ Los sistemas integrados se usan en aplicaciones especializadas donde se requiere
 > **👉 Enfoque de Examen SY0-701:**
 > Botnet Mirai es el ejemplo de ataque IoT más citado en exámenes. Los riesgos de IoT se centran en: recursos limitados, falta de estandarización y contraseñas predeterminadas sin cambiar. Recuerda: IoT agrega una superficie de ataque masiva. Pregunta tipo: "¿Cuál es el mayor riesgo de seguridad al implementar dispositivos IoT en una red corporativa?" → dispositivos con firmware sin actualizar y contraseñas predeterminadas.
 
-## 4. Desperimetrización y Confianza Cero
+## Desperimetrización y Confianza Cero
 
 ### El Problema del Perímetro Tradicional
 
@@ -723,7 +723,7 @@ El perímetro tradicional se ha disuelto porque:
 > **👉 Enfoque de Examen SY0-701:**
 > Zero Trust es uno de los temas más importantes del examen SY0-701. Memoriza la frase "nunca confiar, siempre verificar". **Distractor común:** pensar que Zero Trust elimina la autenticación una vez que el usuario está "dentro" — en ZTA, la verificación es **continua**. BYOD y trabajo remoto son los drivers típicos que llevan a implementar ZTA. NIST SP 800-207 es la referencia normativa de Zero Trust.
 
-## 5. Conceptos de Seguridad de Confianza Cero
+## Conceptos de Seguridad de Confianza Cero
 
 ### Conceptos Fundamentales de Zero Trust
 
@@ -810,7 +810,7 @@ El perímetro tradicional se ha disuelto porque:
 >
 > **Distractores frecuentes:** confundir el Motor de Políticas con el Administrador de Políticas; pensar que una vez autenticado el acceso es permanente (en ZTA NO lo es). Pregunta tipo: "¿Qué componente de ZTA es responsable de emitir tokens de acceso?" → **Administrador de Políticas**. "¿Qué componente toma la decisión dinámica de autorización?" → **Motor de Políticas**.
 
-# 3. Glosario de Acrónimos
+# 3. Glosario
 
 | Acrónimo | Significado en inglés | Significado en español |
 |---------|----------------------|----------------------|

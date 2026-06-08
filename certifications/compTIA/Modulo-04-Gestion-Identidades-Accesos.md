@@ -11,7 +11,7 @@
   - [Conceptos sobre Contraseñas](#conceptos-sobre-contraseñas)
     - [Componentes de una política de contraseñas sólida](#componentes-de-una-política-de-contraseñas-sólida)
     - [Distinción clave: Antigüedad vs. Caducidad](#distinción-clave-antigüedad-vs-caducidad)
-    - [🔔 Nota NIST (National Institute of Standards and Technology)](#-nota-nist-national-institute-of-standards-and-technology)
+    - [Nota NIST (National Institute of Standards and Technology)](#nota-nist-national-institute-of-standards-and-technology)
   - [Administradores de Contraseñas](#administradores-de-contraseñas)
     - [Flujo de funcionamiento de un administrador de contraseñas](#flujo-de-funcionamiento-de-un-administrador-de-contraseñas)
     - [Riesgos principales de los administradores de contraseñas](#riesgos-principales-de-los-administradores-de-contraseñas)
@@ -172,7 +172,7 @@ Los factores son las **categorías** de credenciales que puede presentar un usua
 | **Antigüedad (Age)** | El usuario **aún puede iniciar sesión** pero debe elegir una nueva contraseña de inmediato |
 | **Caducidad (Expiry)** | El usuario **ya NO puede iniciar sesión**; la cuenta queda efectivamente desactivada |
  
-### 🔔 Nota NIST (National Institute of Standards and Technology)
+### Nota NIST (National Institute of Standards and Technology)
  
 Las recomendaciones más recientes del **NIST** han **descartado** algunos elementos "tradicionales":
 - ❌ Complejidad obligatoria (reglas rígidas de caracteres)
@@ -253,7 +253,7 @@ FRR alta → Inconveniente para usuarios legítimos
 FAR alta → Brecha de seguridad (más crítica)
 CER baja → Tecnología más eficiente y confiable
 ```
- 
+
 ### Tipos de biometría
  
 | Tipo | Método | Notas |
@@ -782,6 +782,7 @@ PASO 7: El servidor responde a las solicitudes de acceso según su ACL
  
 - El **KDC es un único punto de falla (Single Point of Failure)**.
 - **Solución:** Se implementan KDCs de respaldo (ej. múltiples controladores de dominio AD, cada uno ejecutando KDC).
+  
 > **👉 Enfoque de Examen SY0-701:**
 > "¿Cómo previene Kerberos los ataques de repetición?" → Verifica que el ticket no se haya usado antes + comprueba el sello de tiempo. "¿Qué es la autenticación mutua en Kerberos?" → El servidor también se autentica ante el cliente enviando la marca de tiempo cifrada. El SID del usuario y sus grupos viajan en el **ticket de servicio**.
 
@@ -913,7 +914,7 @@ PASO 7: El servidor responde a las solicitudes de acceso según su ACL
  
 6. El servidor de recursos acepta la solicitud si el token es válido
 ```
- 
+
 ### JWT — JSON Web Token
  
 - **Formato de datos que usa OAuth** para los datos de reclamos.

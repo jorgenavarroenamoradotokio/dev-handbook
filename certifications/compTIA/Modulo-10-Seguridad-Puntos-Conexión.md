@@ -4,10 +4,9 @@
 
 ---
 
-- [1 Seguridad de Puntos de Conexión](#1-seguridad-de-puntos-de-conexión)
-    - [Por tipo de dispositivo:](#por-tipo-de-dispositivo)
-    - [Objetivos de aprendizaje del Tema 10:](#objetivos-de-aprendizaje-del-tema-10)
-- [1 Implementación de Seguridad en los Puntos de Conexión](#1-implementación-de-seguridad-en-los-puntos-de-conexión)
+- [1. Seguridad de Puntos de Conexión](#1-seguridad-de-puntos-de-conexión)
+  - [Por tipo de dispositivo](#por-tipo-de-dispositivo)
+- [2. Implementación de Seguridad en los Puntos de Conexión](#2-implementación-de-seguridad-en-los-puntos-de-conexión)
   - [Endurecimiento de los Puntos de Conexión (Endpoints)](#endurecimiento-de-los-puntos-de-conexión-endpoints)
     - [Seguridad del Sistema Operativo](#seguridad-del-sistema-operativo)
     - [Estaciones de Trabajo](#estaciones-de-trabajo)
@@ -42,7 +41,7 @@
   - [Endurecimiento de Dispositivos Especializados](#endurecimiento-de-dispositivos-especializados)
     - [Endurecimiento ICS/SCADA](#endurecimiento-icsscada)
     - [Endurecimiento Integrado y RTOS](#endurecimiento-integrado-y-rtos)
-- [2 Endurecimiento de Dispositivos Móviles](#2-endurecimiento-de-dispositivos-móviles)
+- [3. Endurecimiento de Dispositivos Móviles](#3-endurecimiento-de-dispositivos-móviles)
   - [Técnicas de Endurecimiento para Dispositivos Móviles](#técnicas-de-endurecimiento-para-dispositivos-móviles)
     - [Modelos de Implementación](#modelos-de-implementación)
     - [Administración de Dispositivos Móviles (MDM)](#administración-de-dispositivos-móviles-mdm)
@@ -61,13 +60,13 @@
     - [Problemas de Seguridad de Bluetooth](#problemas-de-seguridad-de-bluetooth)
     - [Ataques Bluetooth Específicos](#ataques-bluetooth-específicos)
     - [Características de Seguridad de Bluetooth](#características-de-seguridad-de-bluetooth)
-- [3 CONCEPTOS CLAVE](#3-conceptos-clave)
-- [4 TABLA DE ATAQUES BLUETOOTH](#4-tabla-de-ataques-bluetooth)
-- [5 COMANDOS Y PROTOCOLOS CLAVE](#5-comandos-y-protocolos-clave)
+- [4. CONCEPTOS CLAVE](#4-conceptos-clave)
+- [5. TABLA DE ATAQUES BLUETOOTH](#5-tabla-de-ataques-bluetooth)
+- [6. COMANDOS Y PROTOCOLOS CLAVE](#6-comandos-y-protocolos-clave)
 
 ---
 
-# 1 Seguridad de Puntos de Conexión
+# 1. Seguridad de Puntos de Conexión
 
 La **seguridad de puntos de conexión** (endpoint security) tiene como objetivo proteger **todos los dispositivos finales** conectados a una red:
 
@@ -77,7 +76,7 @@ La **seguridad de puntos de conexión** (endpoint security) tiene como objetivo 
 
 > **Analogía:** Imagina que tu red es una ciudad amurallada. Los puntos de conexión (endpoints) son todas las puertas de entrada: ordenadores, móviles, tabletas, dispositivos IoT. Si una puerta tiene la cerradura rota, toda la ciudad está en peligro.
 
-### Por tipo de dispositivo:
+## Por tipo de dispositivo
 
 | Tipo de dispositivo | Enfoque principal de endurecimiento |
 |---|---|
@@ -85,16 +84,8 @@ La **seguridad de puntos de conexión** (endpoint security) tiene como objetivo 
 | Dispositivos móviles | Cifrado, bloqueo de pantalla, MDM, deshabilitar Bluetooth/NFC innecesarios |
 | Sistemas integrados / IoT | Firmware seguro, arranque seguro, comunicaciones cifradas, soluciones ligeras |
 
-### Objetivos de aprendizaje del Tema 10:
-- Explorar la importancia del endurecimiento de los puntos de conexión
-- Comprender las técnicas de endurecimiento
-- Explorar los desafíos únicos del endurecimiento de dispositivos integrados
-- Obtener información sobre el endurecimiento de dispositivos móviles
-- Explicar la importancia de la gestión de dispositivos móviles
 
-> **👉 Enfoque de Examen SY0-701:** CompTIA distingue claramente entre endpoints tradicionales, dispositivos móviles y sistemas especializados (ICS/SCADA/IoT). Una pregunta clásica dice: "¿Qué control se aplica a un endpoint comprometido por ingeniería social?" → La respuesta NO es solo instalar antivirus; es **educación + revisión de privilegios**. Recuerda siempre el orden: identificar el vector → aplicar el control adecuado.
-
-# 1 Implementación de Seguridad en los Puntos de Conexión
+# 2. Implementación de Seguridad en los Puntos de Conexión
 
 El **endurecimiento de dispositivos** (hardening) describe la práctica de **modificar configuraciones** para proteger los sistemas reduciendo vulnerabilidades atribuidas a configuraciones predeterminadas.
 
@@ -750,7 +741,7 @@ Los sistemas integrados simples y los RTOS:
 
 > **👉 Enfoque de Examen SY0-701:** Los dispositivos ICS/SCADA son tema favorito del examen. Puntos clave: (1) Las pasarelas unidireccionales (diodos de datos) son el control ÚNICO específico de ICS/SCADA. (2) RTOS/sistemas integrados → seguridad por diseño, no añadida. (3) Un ataque exitoso a SCADA puede tener consecuencias físicas (vidas humanas). Distractor: confundir RTOS con IoT → son diferentes aunque comparten desafíos.
 
-# 2 Endurecimiento de Dispositivos Móviles
+# 3. Endurecimiento de Dispositivos Móviles
 
 El **endurecimiento de dispositivos móviles** abarca prácticas esenciales:
 - Actualizaciones periódicas
@@ -1048,7 +1039,7 @@ Un sensor **GPS** triangula la posición del dispositivo mediante señales de sa
 
 > **👉 Enfoque de Examen SY0-701:** Los tres ataques Bluetooth más importantes para el examen son: Bluejacking (mensajes no solicitados), Bluesnarfing (robo de datos) y BlueBorne (sin intervención del usuario, sin descubrimiento). Distractor clásico: confundir Bluejacking (spam/mensajes) con Bluesnarfing (robo). BlueBorne es el más peligroso porque no requiere emparejamiento ni descubrimiento. BLE ≠ Bluetooth estándar: BLE usa direcciones aleatorias rotativas para privacidad. BSC aparece en Bluetooth 4.0+.
 
-# 3 CONCEPTOS CLAVE
+# 4. CONCEPTOS CLAVE
 
 | Concepto | Sigla | Significado completo | Función principal |
 |---|---|---|---|
@@ -1091,7 +1082,7 @@ Un sensor **GPS** triangula la posición del dispositivo mediante señales de sa
 | Wi-Fi Protected Setup | **WPS** | Wi-Fi Protected Setup | Protocolo de configuración Wi-Fi (con vulnerabilidades) |
 | Mandatory Access Control | **MAC** | Mandatory Access Control | Control de acceso obligatorio (usado por SELinux) |
 
-# 4 TABLA DE ATAQUES BLUETOOTH
+# 5. TABLA DE ATAQUES BLUETOOTH
 
 | Ataque | Vector | ¿Requiere emparejamiento? | ¿Requiere interacción del usuario? | Impacto |
 |---|---|---|---|---|
@@ -1099,7 +1090,7 @@ Un sensor **GPS** triangula la posición del dispositivo mediante señales de sa
 | **Bluesnarfing** | Bluetooth | No (exploit) | No | Robo de información del dispositivo |
 | **BlueBorne** | Bluetooth | No | No | Compromiso completo del sistema sin importar configuración |
 
-# 5 COMANDOS Y PROTOCOLOS CLAVE
+# 6. COMANDOS Y PROTOCOLOS CLAVE
 
 | Comando/Protocolo/Puerto | Plataforma | Descripción |
 |---|---|---|
