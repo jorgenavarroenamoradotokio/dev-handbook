@@ -4,34 +4,34 @@
 
 ---
 
-- [10. Almacenamiento y Sistemas de Archivos](#10-almacenamiento-y-sistemas-de-archivos)
-  - [10.1 Identificar dispositivos](#101-identificar-dispositivos)
-  - [10.2 Particionado de discos](#102-particionado-de-discos)
+- [1. Almacenamiento y Sistemas de Archivos](#1-almacenamiento-y-sistemas-de-archivos)
+  - [Identificar dispositivos](#identificar-dispositivos)
+  - [Particionado de discos](#particionado-de-discos)
     - [fdisk — Para discos MBR (y GPT básico)](#fdisk--para-discos-mbr-y-gpt-básico)
     - [gdisk — Para discos GPT](#gdisk--para-discos-gpt)
     - [parted — Herramienta flexible (MBR y GPT)](#parted--herramienta-flexible-mbr-y-gpt)
-  - [10.3 Crear sistemas de archivos (mkfs)](#103-crear-sistemas-de-archivos-mkfs)
-  - [10.4 Montar y desmontar dispositivos](#104-montar-y-desmontar-dispositivos)
+  - [Crear sistemas de archivos (mkfs)](#crear-sistemas-de-archivos-mkfs)
+  - [Montar y desmontar dispositivos](#montar-y-desmontar-dispositivos)
     - [Dispositivos extraíbles y Automontaje](#dispositivos-extraíbles-y-automontaje)
-  - [10.5 Montaje permanente con /etc/fstab](#105-montaje-permanente-con-etcfstab)
-  - [10.6 LVM — Logical Volume Manager](#106-lvm--logical-volume-manager)
+  - [Montaje permanente con /etc/fstab](#montaje-permanente-con-etcfstab)
+  - [LVM — Logical Volume Manager](#lvm--logical-volume-manager)
     - [¿Por qué usar LVM?](#por-qué-usar-lvm)
-- [11. Redes y Seguridad](#11-redes-y-seguridad)
-  - [11.1 Configuración y diagnóstico de red](#111-configuración-y-diagnóstico-de-red)
-  - [11.2 SSH seguro](#112-ssh-seguro)
+- [2. Redes y Seguridad](#2-redes-y-seguridad)
+  - [Configuración y diagnóstico de red](#configuración-y-diagnóstico-de-red)
+  - [SSH seguro](#ssh-seguro)
     - [Generar y gestionar claves SSH](#generar-y-gestionar-claves-ssh)
     - [Asegurar el servidor SSH (/etc/ssh/sshd\_config)](#asegurar-el-servidor-ssh-etcsshsshd_config)
     - [SSH Config del cliente (~/.ssh/config)](#ssh-config-del-cliente-sshconfig)
-  - [11.3 Gestión de Firewall](#113-gestión-de-firewall)
+  - [Gestión de Firewall](#gestión-de-firewall)
     - [UFW (Uncomplicated Firewall) — Debian/Ubuntu](#ufw-uncomplicated-firewall--debianubuntu)
     - [firewalld — RHEL/Rocky/Fedora](#firewalld--rhelrockyfedora)
     - [Cheat Sheet — Red y Seguridad](#cheat-sheet--red-y-seguridad)
-- [12. Automatización con Bash Scripting](#12-automatización-con-bash-scripting)
-  - [12.1 Estructura de un script](#121-estructura-de-un-script)
-  - [12.2 Variables y parámetros](#122-variables-y-parámetros)
-  - [12.3 Condicionales y bucles](#123-condicionales-y-bucles)
-  - [12.4 Funciones y buenas prácticas](#124-funciones-y-buenas-prácticas)
-  - [12.5 Cron y Anacron](#125-cron-y-anacron)
+- [3. Automatización con Bash Scripting](#3-automatización-con-bash-scripting)
+  - [Estructura de un script](#estructura-de-un-script)
+  - [Variables y parámetros](#variables-y-parámetros)
+  - [Condicionales y bucles](#condicionales-y-bucles)
+  - [Funciones y buenas prácticas](#funciones-y-buenas-prácticas)
+  - [Cron y Anacron](#cron-y-anacron)
     - [cron — El planificador de tareas](#cron--el-planificador-de-tareas)
     - [Sintaxis del crontab](#sintaxis-del-crontab)
     - [Ejemplos de crontab](#ejemplos-de-crontab)
@@ -40,9 +40,9 @@
 
 ---
 
-# 10. Almacenamiento y Sistemas de Archivos
+# 1. Almacenamiento y Sistemas de Archivos
 
-## 10.1 Identificar dispositivos
+## Identificar dispositivos
 
 En Linux, los dispositivos no aparecen como letras de unidad (E:, F:), sino que deben "montarse" en un directorio del árbol de archivos.
 
@@ -60,9 +60,7 @@ ls -l /dev/disk/by-label/       # Ver etiquetas de particiones
 # Virtual (VM): /dev/vda, /dev/vdb...
 ```
 
----
-
-## 10.2 Particionado de discos
+## Particionado de discos
 
 - **MBR:** Esquema antiguo. Máximo 4 particiones primarias, discos hasta 2TB.
 - **GPT:** Estándar moderno. Hasta 128 particiones, discos >2TB, requerido por UEFI.
@@ -101,9 +99,7 @@ sudo parted /dev/sdb print                          # Ver tabla de particiones
 sudo parted /dev/sda resizepart 1 100%             # Redimensionar partición (útil en VMs)
 ```
 
----
-
-## 10.3 Crear sistemas de archivos (mkfs)
+## Crear sistemas de archivos (mkfs)
 
 Tras particionar, hay que formatear con un sistema de archivos.
 
@@ -127,9 +123,7 @@ sudo fsck /dev/sdb1
 sudo e2fsck -f /dev/sdb1                            # Verificación forzada para ext4
 ```
 
----
-
-## 10.4 Montar y desmontar dispositivos
+## Montar y desmontar dispositivos
 
 Para acceder a los archivos de un dispositivo, hay que **montarlo** en un punto de montaje (una carpeta vacía).
 
@@ -162,9 +156,8 @@ En entornos de escritorio (GNOME, KDE), los dispositivos se montan automáticame
 - **`/etc/fstab`:** Particiones que se montan automáticamente al arrancar el sistema.
 - **`mount -a`:** Monta todos los dispositivos configurados en fstab que no estén montados.
 
----
 
-## 10.5 Montaje permanente con /etc/fstab
+## Montaje permanente con /etc/fstab
 
 `/etc/fstab` (File System Table) define qué sistemas de archivos se montan automáticamente al arrancar.
 
@@ -222,9 +215,7 @@ sudo mount -a                       # 7. Probar sin reiniciar
 df -h /datos                        # 8. Verificar que se montó correctamente
 ```
 
----
-
-## 10.6 LVM — Logical Volume Manager
+## LVM — Logical Volume Manager
 
 ### ¿Por qué usar LVM?
 
@@ -283,11 +274,9 @@ sudo umount /mnt/snap
 sudo lvremove /dev/datos_vg/web_snap                      # Eliminar snapshot
 ```
 
----
+# 2. Redes y Seguridad
 
-# 11. Redes y Seguridad
-
-## 11.1 Configuración y diagnóstico de red
+## Configuración y diagnóstico de red
 
 ```bash
 # ip addr — Ver y gestionar IPs (sucesor de ifconfig)
@@ -350,9 +339,7 @@ tail -50 /var/log/nginx/error.log  # 5. ¿Hay errores en los logs?
 curl -I http://localhost        # 6. ¿Conectividad local?
 ```
 
----
-
-## 11.2 SSH seguro
+## SSH seguro
 
 ### Generar y gestionar claves SSH
 
@@ -423,9 +410,7 @@ rsync -avz src/ usuario@servidor:/dst/          # Solo transfiere cambios (efici
 rsync -avz --delete /local/ usuario@srv:/backup/ # Sincronización con borrado
 ```
 
----
-
-## 11.3 Gestión de Firewall
+## Gestión de Firewall
 
 ### UFW (Uncomplicated Firewall) — Debian/Ubuntu
 
@@ -493,11 +478,9 @@ sudo firewall-cmd --permanent --remove-service=telnet
 | `sudo ufw status numbered` | Ver reglas con números |
 | `rsync -avz src/ user@host:/dst/` | Sincronización eficiente |
 
----
+# 3. Automatización con Bash Scripting
 
-# 12. Automatización con Bash Scripting
-
-## 12.1 Estructura de un script
+## Estructura de un script
 
 ```bash
 #!/usr/bin/env bash
@@ -554,9 +537,7 @@ chmod +x mi_script.sh       # Hacer ejecutable
 bash mi_script.sh           # Ejecutar explícitamente con bash
 ```
 
----
-
-## 12.2 Variables y parámetros
+## Variables y parámetros
 
 ```bash
 #!/usr/bin/env bash
@@ -610,9 +591,7 @@ for fruta in "${FRUTAS[@]}"; do
 done
 ```
 
----
-
-## 12.3 Condicionales y bucles
+## Condicionales y bucles
 
 ```bash
 #!/usr/bin/env bash
@@ -741,9 +720,7 @@ find "$DESTINO" -name "home_backup_*.tar.gz" -mtime +"$DIAS_RETENER" -delete
 log "INFO: Proceso completado."
 ```
 
----
-
-## 12.4 Funciones y buenas prácticas
+## Funciones y buenas prácticas
 
 ```bash
 #!/usr/bin/env bash
@@ -789,9 +766,7 @@ validar_numero() {
 readonly BINARIO="/usr/bin/python3"   # No depender del PATH del sistema
 ```
 
----
-
-## 12.5 Cron y Anacron
+## Cron y Anacron
 
 ### cron — El planificador de tareas
 
@@ -892,5 +867,3 @@ cat /etc/anacrontab
 | Cron cada hora | `0 * * * * comando` |
 | Cron todos los días a las 2 AM | `0 2 * * * comando` |
 | Cron al inicio del sistema | `@reboot comando` |
-
----

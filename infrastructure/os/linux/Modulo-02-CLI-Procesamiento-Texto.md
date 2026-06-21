@@ -4,53 +4,53 @@
 
 ---
 
-- [4. Redirecciones y Pipelines](#4-redirecciones-y-pipelines)
-  - [4.1 Los tres flujos estándar](#41-los-tres-flujos-estándar)
-  - [4.2 Operadores de redirección](#42-operadores-de-redirección)
-  - [4.3 El Pipe y combinaciones avanzadas](#43-el-pipe-y-combinaciones-avanzadas)
+- [1. Redirecciones y Pipelines](#1-redirecciones-y-pipelines)
+  - [Los tres flujos estándar](#los-tres-flujos-estándar)
+  - [Operadores de redirección](#operadores-de-redirección)
+  - [El Pipe y combinaciones avanzadas](#el-pipe-y-combinaciones-avanzadas)
     - [Cheat Sheet — Redirecciones](#cheat-sheet--redirecciones)
-- [5. Procesamiento de Texto Avanzado](#5-procesamiento-de-texto-avanzado)
-  - [5.1 grep — Búsqueda de patrones](#51-grep--búsqueda-de-patrones)
-  - [5.2 sed — Editor de flujo](#52-sed--editor-de-flujo)
-  - [5.3 awk — Procesador estructurado](#53-awk--procesador-estructurado)
-  - [5.4 cut, sort, uniq, tr](#54-cut-sort-uniq-tr)
+- [2. Procesamiento de Texto Avanzado](#2-procesamiento-de-texto-avanzado)
+  - [grep — Búsqueda de patrones](#grep--búsqueda-de-patrones)
+  - [sed — Editor de flujo](#sed--editor-de-flujo)
+  - [awk — Procesador estructurado](#awk--procesador-estructurado)
+  - [cut, sort, uniq, tr](#cut-sort-uniq-tr)
     - [Pipelines de poder — Casos reales](#pipelines-de-poder--casos-reales)
-  - [5.5 Expresiones Regulares](#55-expresiones-regulares)
+  - [Expresiones Regulares](#expresiones-regulares)
     - [Metacaracteres Fundamentales](#metacaracteres-fundamentales)
     - [Corchetes y Rangos](#corchetes-y-rangos)
     - [Cuantificadores](#cuantificadores)
     - [BRE vs ERE](#bre-vs-ere)
     - [Clases de Caracteres POSIX](#clases-de-caracteres-posix)
     - [Ejemplos prácticos con regex](#ejemplos-prácticos-con-regex)
-- [6. Permisos de Usuario](#6-permisos-de-usuario)
-  - [6.1 Archivos críticos del sistema](#61-archivos-críticos-del-sistema)
+- [3. Permisos de Usuario](#3-permisos-de-usuario)
+  - [Archivos críticos del sistema](#archivos-críticos-del-sistema)
     - [Anatomía de /etc/passwd](#anatomía-de-etcpasswd)
-  - [6.2 El Sistema de Permisos (rwx)](#62-el-sistema-de-permisos-rwx)
+  - [El Sistema de Permisos (rwx)](#el-sistema-de-permisos-rwx)
     - [Representación y Notación](#representación-y-notación)
-  - [6.3 Notación octal y simbólica](#63-notación-octal-y-simbólica)
+  - [Notación octal y simbólica](#notación-octal-y-simbólica)
     - [Conversión a Notación Octal (Numérica)](#conversión-a-notación-octal-numérica)
     - [Cambiar Propietario y Grupo](#cambiar-propietario-y-grupo)
-  - [6.4 Máscaras de permisos (umask)](#64-máscaras-de-permisos-umask)
-  - [6.5 Permisos Especiales: SUID, SGID y Sticky Bit](#65-permisos-especiales-suid-sgid-y-sticky-bit)
+  - [Máscaras de permisos (umask)](#máscaras-de-permisos-umask)
+  - [Permisos Especiales: SUID, SGID y Sticky Bit](#permisos-especiales-suid-sgid-y-sticky-bit)
     - [SUID (Set User ID) — Bit 4000](#suid-set-user-id--bit-4000)
     - [SGID (Set Group ID) — Bit 2000](#sgid-set-group-id--bit-2000)
     - [Sticky Bit — Bit 1000](#sticky-bit--bit-1000)
     - [Tabla resumen de bits especiales](#tabla-resumen-de-bits-especiales)
-  - [6.6 Listas de Control de Acceso (ACLs)](#66-listas-de-control-de-acceso-acls)
-  - [6.7 Gestión de Usuarios y Grupos](#67-gestión-de-usuarios-y-grupos)
-  - [6.8 El Usuario Root](#68-el-usuario-root)
-  - [6.9 Elevación de Privilegios: sudo y su](#69-elevación-de-privilegios-sudo-y-su)
+  - [Listas de Control de Acceso (ACLs)](#listas-de-control-de-acceso-acls)
+  - [Gestión de Usuarios y Grupos](#gestión-de-usuarios-y-grupos)
+  - [El Usuario Root](#el-usuario-root)
+  - [Elevación de Privilegios: sudo y su](#elevación-de-privilegios-sudo-y-su)
     - [sudo — La forma correcta y auditable](#sudo--la-forma-correcta-y-auditable)
     - [su — Cambiar de usuario](#su--cambiar-de-usuario)
     - [sudo vs su](#sudo-vs-su)
-  - [6.10 Gestión de Sesiones](#610-gestión-de-sesiones)
-    - [Cheat Sheet — Permisos y Usuarios](#cheat-sheet--permisos-y-usuarios)
+  - [Gestión de Sesiones](#gestión-de-sesiones)
+- [4. Comandos Permisos y Usuarios](#4-comandos-permisos-y-usuarios)
 
 ---
 
-# 4. Redirecciones y Pipelines
+# 1. Redirecciones y Pipelines
 
-## 4.1 Los tres flujos estándar
+## Los tres flujos estándar
 
 En Linux, cada proceso tiene tres flujos de datos conectados por defecto:
 
@@ -60,9 +60,7 @@ stdout (1) → Salida estándar   → Por defecto: terminal
 stderr (2) → Salida de errores → Por defecto: terminal
 ```
 
----
-
-## 4.2 Operadores de redirección
+## Operadores de redirección
 
 ```bash
 # STDOUT — Redirigir la salida
@@ -94,9 +92,7 @@ apt upgrade 2>&1 | tee /tmp/upgrade.log
 tail -f /var/log/nginx/access.log | tee -a registros_hoy.log
 ```
 
----
-
-## 4.3 El Pipe y combinaciones avanzadas
+## El Pipe y combinaciones avanzadas
 
 El pipe `|` conecta el stdout de un comando con el stdin del siguiente. Es la herramienta más poderosa de la CLI Unix.
 
@@ -135,11 +131,9 @@ grep "Failed password" /var/log/auth.log \
 | `tee` | Copia stdout a archivo Y lo muestra en pantalla |
 | `> /dev/null` | Descarta la salida |
 
----
+# 2. Procesamiento de Texto Avanzado
 
-# 5. Procesamiento de Texto Avanzado
-
-## 5.1 grep — Búsqueda de patrones
+## grep — Búsqueda de patrones
 
 `grep` (Global Regular Expression Print) busca líneas que coincidan con un patrón.
 
@@ -164,9 +158,7 @@ grep -E "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}" access.log  # Encontrar
 grep -oE "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+" access.log   # Extraer solo la IP (-o)
 ```
 
----
-
-## 5.2 sed — Editor de flujo
+## sed — Editor de flujo
 
 `sed` procesa texto línea por línea aplicando transformaciones. El rey de las sustituciones en batch.
 
@@ -196,9 +188,7 @@ echo "2026-01-15" | sed -E 's/([0-9]{4})-([0-9]{2})-([0-9]{2})/\3\/\2\/\1/'
 # Salida: 15/01/2026
 ```
 
----
-
-## 5.3 awk — Procesador estructurado
+## awk — Procesador estructurado
 
 `awk` es prácticamente un lenguaje de programación. Diseñado para trabajar con texto en columnas.
 
@@ -232,9 +222,7 @@ awk -F: '{sum += $3} END {print "Suma de UIDs:", sum}' /etc/passwd
 awk '{print $1}' /var/log/nginx/access.log | sort | uniq -c | sort -rn | head -10
 ```
 
----
-
-## 5.4 cut, sort, uniq, tr
+## cut, sort, uniq, tr
 
 ```bash
 # cut — Extraer columnas
@@ -288,9 +276,7 @@ du -sh /var/log/* 2>/dev/null | sort -rh | head -10
 cat documento.txt | tr ' ' '\n' | tr -d '[:punct:]' | sort | uniq -c | sort -rn | head -20
 ```
 
----
-
-## 5.5 Expresiones Regulares
+## Expresiones Regulares
 
 Una expresión regular (regex) es un patrón para describir conjuntos de texto. Usadas por `grep`, `sed`, `awk` y muchos otros.
 
@@ -367,13 +353,11 @@ grep -oE "https?://[^ ]+" access.log                       # Extraer URLs
 grep -E "[0-9]{4}-[0-9]{2}-[0-9]{2}" log.txt              # Buscar fechas YYYY-MM-DD
 ```
 
----
-
-# 6. Permisos de Usuario
+# 3. Permisos de Usuario
 
 Linux es un sistema multiusuario. El modelo de permisos es la primera línea de defensa de seguridad.
 
-## 6.1 Archivos críticos del sistema
+## Archivos críticos del sistema
 
 El sistema gestiona la identidad mediante tres archivos de texto en `/etc/`:
 
@@ -405,9 +389,7 @@ getent group sudo                            # Ver miembros de un grupo
 id usuario                                   # UID, GID y grupos del usuario
 ```
 
----
-
-## 6.2 El Sistema de Permisos (rwx)
+## El Sistema de Permisos (rwx)
 
 Cada archivo/directorio tiene tres permisos básicos que se aplican a tres categorías:
 
@@ -438,9 +420,7 @@ ls -l archivo   # ver permisos detallados
 stat archivo    # información completa incluyendo octal (Access: 0644/...)
 ```
 
----
-
-## 6.3 Notación octal y simbólica
+## Notación octal y simbólica
 
 ### Conversión a Notación Octal (Numérica)
 
@@ -491,9 +471,7 @@ sudo chmod -R 755 /var/www/miapp/
 sudo chmod 640 /var/www/miapp/.env      # El .env solo lo lee el servidor
 ```
 
----
-
-## 6.4 Máscaras de permisos (umask)
+## Máscaras de permisos (umask)
 
 Define los permisos por defecto de archivos y directorios nuevos. Es una máscara que se **resta** de los permisos máximos.
 
@@ -511,9 +489,7 @@ umask 027               # Más restrictivo: archivos 640, directorios 750
 echo "umask 027" >> ~/.bashrc
 ```
 
----
-
-## 6.5 Permisos Especiales: SUID, SGID y Sticky Bit
+## Permisos Especiales: SUID, SGID y Sticky Bit
 
 ### SUID (Set User ID) — Bit 4000
 
@@ -579,9 +555,7 @@ sudo chmod 1777 /uploads    # Todos pueden subir, nadie puede borrar archivos aj
 | SGID | 2000 | Ejecuta como grupo | Archivos heredan el grupo | `s` en `x` del grupo |
 | Sticky | 1000 | (obsoleto) | Solo el dueño puede borrar | `t` en `x` de otros |
 
----
-
-## 6.6 Listas de Control de Acceso (ACLs)
+## Listas de Control de Acceso (ACLs)
 
 El sistema rwx solo permite definir permisos para un usuario y un grupo. Las ACLs permiten permisos granulares para usuarios adicionales sin cambiar el grupo.
 
@@ -618,9 +592,7 @@ setfacl -b archivo.txt                      # Eliminar TODAS las ACLs
 > sudo setfacl -d -m g:marketing:r-x /var/reports/  # Los nuevos archivos también
 > ```
 
----
-
-## 6.7 Gestión de Usuarios y Grupos
+## Gestión de Usuarios y Grupos
 
 ```bash
 # Crear usuarios
@@ -681,9 +653,7 @@ id ana
 groups ana
 ```
 
----
-
-## 6.8 El Usuario Root
+## El Usuario Root
 
 El usuario root (UID 0) es la cuenta con **privilegios ilimitados** en el sistema.
 
@@ -691,9 +661,7 @@ El usuario root (UID 0) es la cuenta con **privilegios ilimitados** en el sistem
 - **Riesgo:** Un error como root (`rm -rf /`) puede destruir el sistema operativo instantáneamente.
 - **Uso moderno:** En Ubuntu, la cuenta root está "bloqueada" (sin contraseña) para obligar al uso de `sudo`. En RHEL/Rocky, root tiene contraseña pero se recomienda igualmente usar `sudo`.
 
----
-
-## 6.9 Elevación de Privilegios: sudo y su
+## Elevación de Privilegios: sudo y su
 
 ### sudo — La forma correcta y auditable
 
@@ -731,9 +699,7 @@ su - root
 | Auditoría | Difícil de rastrear quién hizo qué | Los comandos se registran en `/var/log/auth.log` |
 | Control | Acceso total o nada | Permite restringir comandos específicos en sudoers |
 
----
-
-## 6.10 Gestión de Sesiones
+## Gestión de Sesiones
 
 Para verificar quién eres y gestionar la sesión:
 
@@ -748,7 +714,7 @@ lastfail        # Intentos de login fallidos
 exit            # Cierra la sesión del usuario actual y vuelve al anterior
 ```
 
-### Cheat Sheet — Permisos y Usuarios
+# 4. Comandos Permisos y Usuarios
 
 | Comando | Función |
 |---|---|
@@ -765,5 +731,3 @@ exit            # Cierra la sesión del usuario actual y vuelve al anterior
 | `chage -M 90 usuario` | Contraseña expira en 90 días |
 | `sudo visudo` | Editar configuración sudo de forma segura |
 | `sudo -l` | Ver qué puede hacer el usuario con sudo |
-
----

@@ -4,44 +4,44 @@
 
 ---
 
-- [7. Procesos y Recursos del Sistema](#7-procesos-y-recursos-del-sistema)
-  - [7.1 ¿Qué es un proceso?](#71-qué-es-un-proceso)
-  - [7.2 Monitoreo en tiempo real](#72-monitoreo-en-tiempo-real)
+- [1. Procesos y Recursos del Sistema](#1-procesos-y-recursos-del-sistema)
+  - [¿Qué es un proceso?](#qué-es-un-proceso)
+  - [Monitoreo en tiempo real](#monitoreo-en-tiempo-real)
     - [top — El monitor clásico](#top--el-monitor-clásico)
     - [htop — La evolución de top](#htop--la-evolución-de-top)
     - [ps — Snapshot de procesos](#ps--snapshot-de-procesos)
     - [lsof — Archivos abiertos](#lsof--archivos-abiertos)
     - [Comandos de diagnóstico adicionales](#comandos-de-diagnóstico-adicionales)
-  - [7.3 Señales de Procesos](#73-señales-de-procesos)
-  - [7.4 Background, Foreground y Multiplexores](#74-background-foreground-y-multiplexores)
+  - [Señales de Procesos](#señales-de-procesos)
+  - [Background, Foreground y Multiplexores](#background-foreground-y-multiplexores)
     - [Jobs — Gestión de tareas](#jobs--gestión-de-tareas)
     - [tmux — El multiplexor moderno (recomendado)](#tmux--el-multiplexor-moderno-recomendado)
     - [screen — Multiplexor clásico](#screen--multiplexor-clásico)
-  - [7.5 Prioridades: nice y renice](#75-prioridades-nice-y-renice)
+  - [Prioridades: nice y renice](#prioridades-nice-y-renice)
     - [Cheat Sheet — Procesos](#cheat-sheet--procesos)
-- [8. Gestión de Paquetes y Librerías](#8-gestión-de-paquetes-y-librerías)
-  - [8.1 Conceptos y formatos](#81-conceptos-y-formatos)
-  - [8.2 APT (Debian/Ubuntu)](#82-apt-debianubuntu)
-  - [8.3 DNF/YUM (RHEL/Rocky/Fedora)](#83-dnfyum-rhelrockyfedora)
-  - [8.4 Pacman (Arch Linux)](#84-pacman-arch-linux)
-  - [8.5 Instalación manual de paquetes](#85-instalación-manual-de-paquetes)
+- [2. Gestión de Paquetes y Librerías](#2-gestión-de-paquetes-y-librerías)
+  - [Conceptos y formatos](#conceptos-y-formatos)
+  - [APT (Debian/Ubuntu)](#apt-debianubuntu)
+  - [DNF/YUM (RHEL/Rocky/Fedora)](#dnfyum-rhelrockyfedora)
+  - [Pacman (Arch Linux)](#pacman-arch-linux)
+  - [Instalación manual de paquetes](#instalación-manual-de-paquetes)
     - [Instalación de paquetes .deb](#instalación-de-paquetes-deb)
     - [Instalación desde código fuente](#instalación-desde-código-fuente)
-  - [8.6 Paquetes Universales](#86-paquetes-universales)
-  - [8.7 Repositorios externos y GPG](#87-repositorios-externos-y-gpg)
+  - [Paquetes Universales](#paquetes-universales)
+  - [Repositorios externos y GPG](#repositorios-externos-y-gpg)
     - [Agregar Repositorios PPA](#agregar-repositorios-ppa)
     - [Gestión de Claves GPG](#gestión-de-claves-gpg)
-- [9. Archivado y Compresión de Ficheros](#9-archivado-y-compresión-de-ficheros)
-  - [9.1 Compresión básica: gzip, bzip2, xz](#91-compresión-básica-gzip-bzip2-xz)
-  - [9.2 tar — El archivador estándar](#92-tar--el-archivador-estándar)
-  - [9.3 zip / unzip](#93-zip--unzip)
-  - [9.4 Técnicas avanzadas de archivado](#94-técnicas-avanzadas-de-archivado)
+- [3. Archivado y Compresión de Ficheros](#3-archivado-y-compresión-de-ficheros)
+  - [Compresión básica: gzip, bzip2, xz](#compresión-básica-gzip-bzip2-xz)
+  - [tar — El archivador estándar](#tar--el-archivador-estándar)
+  - [zip / unzip](#zip--unzip)
+  - [Técnicas avanzadas de archivado](#técnicas-avanzadas-de-archivado)
 
 ---
 
-# 7. Procesos y Recursos del Sistema
+# 1. Procesos y Recursos del Sistema
 
-## 7.1 ¿Qué es un proceso?
+## ¿Qué es un proceso?
 
 Un proceso es un programa en ejecución. Cada proceso tiene un **PID** (Process ID) único, un estado, un propietario y consume recursos. Los procesos se organizan en jerarquía padre-hijo (el padre de casi todos es systemd, PID 1).
 
@@ -55,9 +55,7 @@ Un proceso es un programa en ejecución. Cada proceso tiene un **PID** (Process 
 | Stopped | `T` | Pausado (Ctrl+Z o SIGSTOP) |
 | Zombie | `Z` | Terminó pero su padre no recogió el resultado |
 
----
-
-## 7.2 Monitoreo en tiempo real
+## Monitoreo en tiempo real
 
 ### top — El monitor clásico
 
@@ -143,9 +141,7 @@ uptime                      # Uptime y carga del sistema
 dmesg | tail -20            # Mensajes del kernel (hardware, drivers)
 ```
 
----
-
-## 7.3 Señales de Procesos
+## Señales de Procesos
 
 Las señales son interrupciones software enviadas a procesos. Un proceso puede capturar/ignorar casi todas, excepto SIGKILL y SIGSTOP.
 
@@ -192,9 +188,7 @@ kill -9 $(pgrep proceso_bloqueado)
 ps aux | grep proceso_bloqueado
 ```
 
----
-
-## 7.4 Background, Foreground y Multiplexores
+## Background, Foreground y Multiplexores
 
 ### Jobs — Gestión de tareas
 
@@ -260,9 +254,7 @@ screen -r nombre_sesion     # Reanudar sesión
 > tmux attach -t migracion_db
 > ```
 
----
-
-## 7.5 Prioridades: nice y renice
+## Prioridades: nice y renice
 
 El valor `nice` va de **-20** (máxima prioridad) a **+19** (mínima prioridad). Por defecto: 0. Solo root puede establecer valores negativos.
 
@@ -305,9 +297,8 @@ top                                     # Columna NI
 | `nice -n 19 cmd` | Lanzar con mínima prioridad |
 | `renice +10 -p PID` | Bajar prioridad de proceso existente |
 
----
 
-# 8. Gestión de Paquetes y Librerías
+# 2. Gestión de Paquetes y Librerías
 
 La gestión de paquetes es el corazón de la administración de software en Linux. Un paquete es un contenedor que incluye:
 
@@ -316,7 +307,7 @@ La gestión de paquetes es el corazón de la administración de software en Linu
 - **Dependencias:** Lista de otros paquetes necesarios.
 - **Scripts:** Instrucciones para configurar el software automáticamente tras la instalación.
 
-## 8.1 Conceptos y formatos
+## Conceptos y formatos
 
 | Familia | Formato | Gestor (CLI) | Distribuciones Populares |
 |---|---|---|---|
@@ -326,9 +317,7 @@ La gestión de paquetes es el corazón de la administración de software en Linu
 | SUSE | `.rpm` | `zypper` | openSUSE |
 | Universal | — | `snap`, `flatpak` | Todas las distribuciones |
 
----
-
-## 8.2 APT (Debian/Ubuntu)
+## APT (Debian/Ubuntu)
 
 ```bash
 # Sincronización y actualización
@@ -358,9 +347,7 @@ dpkg -L paquete                         # Ver qué archivos instaló un paquete
 dpkg -S /usr/bin/vim                    # ¿A qué paquete pertenece este archivo?
 ```
 
----
-
-## 8.3 DNF/YUM (RHEL/Rocky/Fedora)
+## DNF/YUM (RHEL/Rocky/Fedora)
 
 ```bash
 sudo dnf update                         # Actualizar todo el sistema
@@ -381,9 +368,7 @@ ls /etc/yum.repos.d/                    # Archivos de repositorios
 sudo dnf config-manager --add-repo URL
 ```
 
----
-
-## 8.4 Pacman (Arch Linux)
+## Pacman (Arch Linux)
 
 ```bash
 sudo pacman -Syu                        # Actualizar sistema completo
@@ -396,9 +381,7 @@ pacman -Qi paquete                      # Información del paquete
 pacman -Ql paquete                      # Archivos de un paquete
 ```
 
----
-
-## 8.5 Instalación manual de paquetes
+## Instalación manual de paquetes
 
 ### Instalación de paquetes .deb
 
@@ -421,9 +404,7 @@ sudo make install                       # 4. Instalar (mueve a carpetas del sist
 
 > ⚠️ No gestiona dependencias automáticamente y no queda registrado en el gestor de paquetes. Prefer usar paquetes del repositorio siempre que sea posible.
 
----
-
-## 8.6 Paquetes Universales
+## Paquetes Universales
 
 Para evitar problemas de dependencias entre distribuciones:
 
@@ -447,9 +428,7 @@ Para evitar problemas de dependencias entre distribuciones:
   ./aplicacion.AppImage
   ```
 
----
-
-## 8.7 Repositorios externos y GPG
+## Repositorios externos y GPG
 
 ### Agregar Repositorios PPA
 
@@ -479,15 +458,13 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
 
 > Al añadir repositorios modernos, siempre importar la clave pública del autor mediante `gpg --import` o añadiéndola a `/usr/share/keyrings/`
 
----
-
-# 9. Archivado y Compresión de Ficheros
+# 3. Archivado y Compresión de Ficheros
 
 En Linux, **archivar** y **comprimir** son conceptos distintos:
 - **Archivar:** Agrupar varios archivos en uno solo (`tar`)
 - **Comprimir:** Reducir el peso usando algoritmos matemáticos (`gzip`, `bzip2`, `xz`)
 
-## 9.1 Compresión básica: gzip, bzip2, xz
+## Compresión básica: gzip, bzip2, xz
 
 | Herramienta | Extensión | Velocidad | Ratio de compresión | Uso recomendado |
 |---|---|---|---|---|
@@ -513,9 +490,7 @@ unxz archivo.txt.xz                 # Descomprimir
 xzcat archivo.txt.xz                # Ver sin descomprimir
 ```
 
----
-
-## 9.2 tar — El archivador estándar
+## tar — El archivador estándar
 
 `tar` (Tape Archiver) no comprime por sí solo; empaqueta múltiples archivos en uno. Lo más común es combinar tar con compresión.
 
@@ -548,9 +523,7 @@ tar -tvf backup.tar.gz
 tar -tvf backup.tar.gz > /dev/null && echo "OK" || echo "CORRUPTO"
 ```
 
----
-
-## 9.3 zip / unzip
+## zip / unzip
 
 `zip` es muy popular para compatibilidad con Windows, ya que archiva y comprime en un solo paso.
 
@@ -564,9 +537,7 @@ unzip -l archivo.zip                   # Ver contenido sin extraer
 unzip -t backup.zip                    # Test de integridad
 ```
 
----
-
-## 9.4 Técnicas avanzadas de archivado
+## Técnicas avanzadas de archivado
 
 ```bash
 # Excluir ficheros al comprimir
@@ -598,5 +569,3 @@ gpg -d backup.tar.gz.gpg | tar -xzvf -
 > - Siempre verificar integridad y permisos antes de transferir backups.
 > - Comprimir a través de SSH permite backups remotos sin ocupar espacio local.
 > - Usar exclusiones para no incluir carpetas temporales o irrelevantes como `node_modules`.
-
----

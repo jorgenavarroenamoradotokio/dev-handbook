@@ -4,25 +4,25 @@
 
 ---
 
-- [13. Systemd y Gestión de Servicios](#13-systemd-y-gestión-de-servicios)
+- [1. Systemd y Gestión de Servicios](#1-systemd-y-gestión-de-servicios)
   - [Gestión básica de servicios](#gestión-básica-de-servicios)
   - [Targets (equivalente a runlevels)](#targets-equivalente-a-runlevels)
   - [Crear un servicio personalizado](#crear-un-servicio-personalizado)
   - [Apagado y reinicio](#apagado-y-reinicio)
   - [Análisis del arranque](#análisis-del-arranque)
-- [14. Logs y Monitorización con journalctl](#14-logs-y-monitorización-con-journalctl)
+- [2. Logs y Monitorización con journalctl](#2-logs-y-monitorización-con-journalctl)
   - [Consultas básicas](#consultas-básicas)
   - [Filtrar por servicio y tiempo](#filtrar-por-servicio-y-tiempo)
   - [Filtrar por prioridad y otros criterios](#filtrar-por-prioridad-y-otros-criterios)
   - [Gestión del espacio de logs](#gestión-del-espacio-de-logs)
   - [Logs tradicionales en /var/log](#logs-tradicionales-en-varlog)
-- [15. Hardening y Seguridad Básica del Sistema](#15-hardening-y-seguridad-básica-del-sistema)
+- [3. Hardening y Seguridad Básica del Sistema](#3-hardening-y-seguridad-básica-del-sistema)
   - [Lista de verificación de seguridad básica](#lista-de-verificación-de-seguridad-básica)
   - [Comprobación rápida del estado de seguridad](#comprobación-rápida-del-estado-de-seguridad)
 
 ---
 
-# 13. Systemd y Gestión de Servicios
+# 1. Systemd y Gestión de Servicios
 
 systemd es el sistema de init moderno (PID 1) presente en todas las distribuciones principales. Gestiona el arranque, los servicios y los logs del sistema.
 
@@ -123,9 +123,7 @@ systemd-analyze critical-chain              # Árbol de dependencias críticas d
 systemd-analyze plot > arranque.svg         # Generar diagrama SVG del arranque
 ```
 
----
-
-# 14. Logs y Monitorización con journalctl
+# 2. Logs y Monitorización con journalctl
 
 systemd incluye `journald`, un servicio de logging centralizado que almacena logs binarios con metadatos ricos (servicio, usuario, PID, etc.).
 
@@ -203,9 +201,7 @@ ls /etc/logrotate.d/                    # Configuraciones por servicio
 sudo logrotate -f /etc/logrotate.conf   # Forzar rotación ahora
 ```
 
----
-
-# 15. Hardening y Seguridad Básica del Sistema
+# 3. Hardening y Seguridad Básica del Sistema
 
 El hardening es el proceso de reducir la **superficie de ataque** de un servidor. Estos son los pasos esenciales tras una instalación limpia.
 
@@ -302,9 +298,3 @@ last -5
 echo "=== Intentos Fallidos SSH (últimas 24h) ==="
 journalctl -u ssh --since "1 day ago" 2>/dev/null | grep "Failed" | wc -l
 ```
-
----
-
-<div align="center">
-
----
