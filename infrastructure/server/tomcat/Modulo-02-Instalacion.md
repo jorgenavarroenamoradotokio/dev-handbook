@@ -4,52 +4,48 @@
 
 ---
 
-- [Módulo 02: Instalación, Estructura de Directorios y Arranque](#módulo-02-instalación-estructura-de-directorios-y-arranque)
-  - [2.1 Requisitos Previos: JDK Compatible por Versión](#21-requisitos-previos-jdk-compatible-por-versión)
-    - [¿Qué es el JDK y por qué importa?](#qué-es-el-jdk-y-por-qué-importa)
-    - [Verificación del entorno](#verificación-del-entorno)
-  - [2.2 Métodos de Instalación](#22-métodos-de-instalación)
-    - [2.2.1 Instalación desde binario (.zip / .tar.gz) — Recomendado para producción](#221-instalación-desde-binario-zip--targz--recomendado-para-producción)
-      - [Linux / macOS](#linux--macos)
-      - [Windows](#windows)
-    - [2.2.2 Instalación via gestor de paquetes (apt/yum) — Solo desarrollo/testing](#222-instalación-via-gestor-de-paquetes-aptyum--solo-desarrollotesting)
-    - [2.2.3 Instalación via Docker — Entornos containerizados](#223-instalación-via-docker--entornos-containerizados)
-  - [2.3 Estructura de Directorios Completa](#23-estructura-de-directorios-completa)
-    - [¿Por qué es importante conocer los directorios?](#por-qué-es-importante-conocer-los-directorios)
-  - [2.4 Separación CATALINA\_HOME vs CATALINA\_BASE](#24-separación-catalina_home-vs-catalina_base)
-    - [El problema que resuelve](#el-problema-que-resuelve)
-    - [Estructura para múltiples instancias](#estructura-para-múltiples-instancias)
-    - [Script de arranque para una instancia específica](#script-de-arranque-para-una-instancia-específica)
-  - [2.5 El Archivo setenv.sh / setenv.bat](#25-el-archivo-setenvsh--setenvbat)
-    - [¿Qué es y por qué existe?](#qué-es-y-por-qué-existe)
-    - [setenv.sh (Linux/macOS) — Configuración de producción completa](#setenvsh-linuxmacos--configuración-de-producción-completa)
-    - [setenv.bat (Windows)](#setenvbat-windows)
-  - [2.6 Scripts de Arranque y Control](#26-scripts-de-arranque-y-control)
-    - [2.6.1 Comandos principales](#261-comandos-principales)
-    - [2.6.2 Integración con systemd (Linux — Producción)](#262-integración-con-systemd-linux--producción)
-    - [2.6.3 Variable CATALINA\_PID](#263-variable-catalina_pid)
-  - [2.7 Configuración Inicial de Seguridad Post-Instalación](#27-configuración-inicial-de-seguridad-post-instalación)
+- [1. Requisitos Previos: JDK Compatible por Versión](#1-requisitos-previos-jdk-compatible-por-versión)
+  - [¿Qué es el JDK y por qué importa?](#qué-es-el-jdk-y-por-qué-importa)
+  - [Verificación del entorno](#verificación-del-entorno)
+- [2. Métodos de Instalación](#2-métodos-de-instalación)
+  - [Instalación desde binario (.zip / .tar.gz) — Recomendado para producción](#instalación-desde-binario-zip--targz--recomendado-para-producción)
+    - [Linux / macOS](#linux--macos)
+    - [Windows](#windows)
+  - [Instalación via gestor de paquetes (apt/yum) — Solo desarrollo/testing](#instalación-via-gestor-de-paquetes-aptyum--solo-desarrollotesting)
+  - [Instalación via Docker — Entornos containerizados](#instalación-via-docker--entornos-containerizados)
+- [3. Estructura de Directorios Completa](#3-estructura-de-directorios-completa)
+  - [¿Por qué es importante conocer los directorios?](#por-qué-es-importante-conocer-los-directorios)
+- [4. Separación CATALINA\_HOME vs CATALINA\_BASE](#4-separación-catalina_home-vs-catalina_base)
+  - [El problema que resuelve](#el-problema-que-resuelve)
+  - [Estructura para múltiples instancias](#estructura-para-múltiples-instancias)
+  - [Script de arranque para una instancia específica](#script-de-arranque-para-una-instancia-específica)
+- [5. El Archivo setenv.sh / setenv.bat](#5-el-archivo-setenvsh--setenvbat)
+  - [¿Qué es y por qué existe?](#qué-es-y-por-qué-existe)
+  - [setenv.sh (Linux/macOS) — Configuración de producción completa](#setenvsh-linuxmacos--configuración-de-producción-completa)
+  - [setenv.bat (Windows)](#setenvbat-windows)
+- [6. Scripts de Arranque y Control](#6-scripts-de-arranque-y-control)
+  - [Comandos principales](#comandos-principales)
+  - [Integración con systemd (Linux — Producción)](#integración-con-systemd-linux--producción)
+- [7. Configuración Inicial de Seguridad Post-Instalación](#7-configuración-inicial-de-seguridad-post-instalación)
     - [¿Por qué este paso es crítico?](#por-qué-este-paso-es-crítico)
-    - [2.7.1 Eliminar aplicaciones por defecto](#271-eliminar-aplicaciones-por-defecto)
-    - [2.7.2 Configurar tomcat-users.xml para Manager](#272-configurar-tomcat-usersxml-para-manager)
-    - [2.7.3 Restringir acceso al Manager por IP](#273-restringir-acceso-al-manager-por-ip)
-  - [2.8 Verificación del Arranque](#28-verificación-del-arranque)
-    - [2.8.1 Verificación via logs](#281-verificación-via-logs)
-    - [2.8.2 Verificación via curl](#282-verificación-via-curl)
-    - [2.8.3 Verificación de la JVM y Tomcat en ejecución](#283-verificación-de-la-jvm-y-tomcat-en-ejecución)
-  - [2.9 Gestión de Logs: JULI (Java Util Logging Implementation)](#29-gestión-de-logs-juli-java-util-logging-implementation)
-    - [¿Qué es JULI y por qué Tomcat tiene su propio sistema de logging?](#qué-es-juli-y-por-qué-tomcat-tiene-su-propio-sistema-de-logging)
-    - [Configuración de logging.properties](#configuración-de-loggingproperties)
-  - [2.10 Tabla de Puertos por Defecto y su Función](#210-tabla-de-puertos-por-defecto-y-su-función)
-  - [Puntos Clave](#puntos-clave)
+  - [Eliminar aplicaciones por defecto](#eliminar-aplicaciones-por-defecto)
+  - [Configurar tomcat-users.xml para Manager](#configurar-tomcat-usersxml-para-manager)
+  - [Restringir acceso al Manager por IP](#restringir-acceso-al-manager-por-ip)
+- [8. Verificación del Arranque](#8-verificación-del-arranque)
+  - [Verificación via logs](#verificación-via-logs)
+  - [Verificación via curl](#verificación-via-curl)
+  - [Verificación de la JVM y Tomcat en ejecución](#verificación-de-la-jvm-y-tomcat-en-ejecución)
+- [9. Gestión de Logs: JULI (Java Util Logging Implementation)](#9-gestión-de-logs-juli-java-util-logging-implementation)
+  - [¿Qué es JULI y por qué Tomcat tiene su propio sistema de logging?](#qué-es-juli-y-por-qué-tomcat-tiene-su-propio-sistema-de-logging)
+  - [Configuración de logging.properties](#configuración-de-loggingproperties)
+- [10. Tabla de Puertos por Defecto y su Función](#10-tabla-de-puertos-por-defecto-y-su-función)
+- [11. Puntos Clave](#11-puntos-clave)
 
 ---
 
-# Módulo 02: Instalación, Estructura de Directorios y Arranque
+# 1. Requisitos Previos: JDK Compatible por Versión
 
-## 2.1 Requisitos Previos: JDK Compatible por Versión
-
-### ¿Qué es el JDK y por qué importa?
+## ¿Qué es el JDK y por qué importa?
 
 Tomcat es una aplicación Java. Para ejecutarla necesitas tener instalado el **JDK** (Java Development Kit) en el servidor. El JDK incluye la máquina virtual de Java (JVM) que ejecuta el código, además de herramientas de compilación.
 
@@ -68,7 +64,7 @@ Cada versión de Tomcat requiere **como mínimo** una versión concreta de Java.
 
 > 💡 **¿Qué es LTS?** Las versiones LTS (Long-Term Support) de Java son las que reciben actualizaciones de seguridad durante muchos años. Las versiones no-LTS solo duran 6 meses. Para producción, usa siempre una versión LTS: Java 11, Java 17 o Java 21.
 
-### Verificación del entorno
+## Verificación del entorno
 
 Antes de instalar Tomcat, comprueba que tienes Java instalado correctamente y que la variable `JAVA_HOME` apunta al directorio correcto. `JAVA_HOME` es la forma estándar de decirle a Tomcat (y a otras herramientas Java) dónde está instalado el JDK.
 
@@ -98,13 +94,11 @@ export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 export PATH=$JAVA_HOME/bin:$PATH
 ```
 
----
-
-## 2.2 Métodos de Instalación
+# 2. Métodos de Instalación
 
 Hay tres formas de instalar Tomcat. Cada una tiene sus casos de uso:
 
-### 2.2.1 Instalación desde binario (.zip / .tar.gz) — Recomendado para producción
+## Instalación desde binario (.zip / .tar.gz) — Recomendado para producción
 
 Este método consiste en descargar el archivo comprimido directamente desde la web oficial de Apache y descomprimirlo manualmente. Es el más recomendado para producción porque:
 
@@ -113,7 +107,7 @@ Este método consiste en descargar el archivo comprimido directamente desde la w
 - La estructura de directorios es **exactamente la oficial** (no la modificada por los distribuidores de Linux)
 - Puedes **verificar la integridad** del archivo antes de usarlo
 
-#### Linux / macOS
+### Linux / macOS
 
 Cada paso está explicado con su propósito:
 
@@ -178,7 +172,7 @@ EOF
 source /etc/environment
 ```
 
-#### Windows
+### Windows
 
 ```batch
 REM 1. Descargar apache-tomcat-10.1.20-windows-x64.zip
@@ -204,7 +198,7 @@ net start TomcatService
 
 ---
 
-### 2.2.2 Instalación via gestor de paquetes (apt/yum) — Solo desarrollo/testing
+## Instalación via gestor de paquetes (apt/yum) — Solo desarrollo/testing
 
 Los gestores de paquetes como `apt` (Ubuntu/Debian) o `dnf` (RHEL/Rocky Linux) permiten instalar Tomcat con un solo comando:
 
@@ -231,7 +225,7 @@ Los paquetes de los repositorios de Linux tienen dos problemas:
 
 ---
 
-### 2.2.3 Instalación via Docker — Entornos containerizados
+## Instalación via Docker — Entornos containerizados
 
 Docker permite empaquetar Tomcat junto con tu aplicación y su configuración en un **contenedor**: una unidad autocontenida y reproducible que funciona igual en cualquier máquina.
 
@@ -317,11 +311,9 @@ networks:
     driver: bridge
 ```
 
----
+# 3. Estructura de Directorios Completa
 
-## 2.3 Estructura de Directorios Completa
-
-### ¿Por qué es importante conocer los directorios?
+## ¿Por qué es importante conocer los directorios?
 
 Cuando algo falla en Tomcat, la primera pregunta siempre es: "¿dónde está el log?". La segunda: "¿dónde está el archivo de configuración que debo cambiar?". Conocer la estructura de directorios te permite responder estas preguntas sin tener que buscar.
 
@@ -401,11 +393,9 @@ $CATALINA_HOME/
 
 > 💡 **El directorio `work/` y los JSPs:** Cuando un usuario accede por primera vez a una página JSP, Tomcat la convierte en código Java, la compila y guarda el resultado en `work/`. Las siguientes peticiones usan directamente el `.class` compilado, por eso la primera petición a un JSP es más lenta que las siguientes. Si borras `work/`, Tomcat recompilará todos los JSPs en la próxima petición.
 
----
+# 4. Separación CATALINA_HOME vs CATALINA_BASE
 
-## 2.4 Separación CATALINA_HOME vs CATALINA_BASE
-
-### El problema que resuelve
+## El problema que resuelve
 
 Imagina que tienes un servidor y necesitas ejecutar dos aplicaciones en él: una en el puerto 8080 y otra en el 8090, cada una con su propia configuración. La solución obvia sería instalar Tomcat dos veces. Pero eso significa tener dos copias idénticas de todos los binarios y librerías, lo que complica las actualizaciones (tendrías que actualizar en dos sitios).
 
@@ -418,7 +408,7 @@ La separación `CATALINA_HOME` / `CATALINA_BASE` resuelve esto: los **binarios s
 
 Cuando ambas variables apuntan al mismo directorio (instalación simple con una sola instancia), Tomcat funciona exactamente igual que antes. Solo tiene sentido separarlas cuando necesitas múltiples instancias.
 
-### Estructura para múltiples instancias
+## Estructura para múltiples instancias
 
 ```
 /opt/tomcat-binaries/          ← CATALINA_HOME (un único directorio, solo lectura)
@@ -448,7 +438,7 @@ Cuando ambas variables apuntan al mismo directorio (instalación simple con una 
     └── work/
 ```
 
-### Script de arranque para una instancia específica
+## Script de arranque para una instancia específica
 
 ```bash
 #!/bin/bash
@@ -474,11 +464,9 @@ export CATALINA_OPTS="-Xms512m -Xmx2g -XX:+UseG1GC \
 $CATALINA_HOME/bin/startup.sh
 ```
 
----
+# 5. El Archivo setenv.sh / setenv.bat
 
-## 2.5 El Archivo setenv.sh / setenv.bat
-
-### ¿Qué es y por qué existe?
+## ¿Qué es y por qué existe?
 
 Cuando arrancas Tomcat, el script `catalina.sh` se ejecuta y pone en marcha la JVM con una serie de opciones (cuánta memoria usar, qué recolector de basura activar, etc.). Esas opciones se pueden definir en un archivo llamado `setenv.sh` que Tomcat carga automáticamente si existe.
 
@@ -488,7 +476,7 @@ Porque `catalina.sh` pertenece a la distribución de Tomcat: cuando actualices T
 
 > ⚠️ **Regla de oro:** Todo lo que configures sobre la JVM va en `setenv.sh`. Nunca edites `catalina.sh` directamente.
 
-### setenv.sh (Linux/macOS) — Configuración de producción completa
+## setenv.sh (Linux/macOS) — Configuración de producción completa
 
 Cada opción está explicada con su propósito:
 
@@ -593,7 +581,7 @@ CATALINA_OPTS="$CATALINA_OPTS -Dapp.config.dir=/opt/config/myapp"
 export CATALINA_OPTS
 ```
 
-### setenv.bat (Windows)
+## setenv.bat (Windows)
 
 ```batch
 @echo off
@@ -609,11 +597,9 @@ set CATALINA_OPTS=%CATALINA_OPTS% -XX:+HeapDumpOnOutOfMemoryError
 set CATALINA_OPTS=%CATALINA_OPTS% -XX:HeapDumpPath=%CATALINA_BASE%\logs\heapdump.hprof
 ```
 
----
+# 6. Scripts de Arranque y Control
 
-## 2.6 Scripts de Arranque y Control
-
-### 2.6.1 Comandos principales
+## Comandos principales
 
 Tomcat incluye varios scripts en la carpeta `bin/` para controlarlo. Son los siguientes:
 
@@ -648,7 +634,7 @@ $CATALINA_HOME/bin/version.sh
 $CATALINA_HOME/bin/digest.sh -a SHA-256 -h org.apache.catalina.realm.MessageDigestCredentialHandler mipassword
 ```
 
-### 2.6.2 Integración con systemd (Linux — Producción)
+## Integración con systemd (Linux — Producción)
 
 En producción en Linux, no se gestiona Tomcat manualmente con `startup.sh`. En su lugar se usa **systemd**, el gestor de servicios del sistema operativo. Systemd se encarga de:
 
@@ -740,7 +726,7 @@ sudo journalctl -u tomcat -f
 sudo systemctl restart tomcat
 ```
 
-### 2.6.3 Variable CATALINA_PID
+##Variable CATALINA_PID
 
 `CATALINA_PID` es la ruta a un archivo donde Tomcat escribe su PID (identificador de proceso del sistema operativo) al arrancar. Sirve para que:
 
@@ -752,9 +738,7 @@ sudo systemctl restart tomcat
 export CATALINA_PID="$CATALINA_BASE/temp/tomcat.pid"
 ```
 
----
-
-## 2.7 Configuración Inicial de Seguridad Post-Instalación
+# 7. Configuración Inicial de Seguridad Post-Instalación
 
 ### ¿Por qué este paso es crítico?
 
@@ -766,7 +750,7 @@ Tomcat viene de fábrica con aplicaciones de demostración y herramientas de adm
 
 Los siguientes pasos son **obligatorios** antes de exponer Tomcat a Internet o a una red no confiable.
 
-### 2.7.1 Eliminar aplicaciones por defecto
+## Eliminar aplicaciones por defecto
 
 ```bash
 cd $CATALINA_HOME/webapps
@@ -787,7 +771,7 @@ rm -rf ROOT/
 # rm -rf host-manager/
 ```
 
-### 2.7.2 Configurar tomcat-users.xml para Manager
+## Configurar tomcat-users.xml para Manager
 
 Si mantienes las aplicaciones `manager` y `host-manager`, debes configurar usuarios con contraseñas seguras. Las contraseñas **nunca** deben estar en texto plano en el archivo.
 
@@ -834,7 +818,7 @@ Luego, edita `conf/tomcat-users.xml`:
 </tomcat-users>
 ```
 
-### 2.7.3 Restringir acceso al Manager por IP
+## Restringir acceso al Manager por IP
 
 Aunque tengas contraseñas seguras, lo mejor es que el Manager solo sea accesible desde IPs conocidas (tu máquina de administración o tu red interna). Esto se configura en el `context.xml` de cada aplicación de administración:
 
@@ -873,11 +857,9 @@ Aunque tengas contraseñas seguras, lo mejor es que el Manager solo sea accesibl
 </Context>
 ```
 
----
+# 8. Verificación del Arranque
 
-## 2.8 Verificación del Arranque
-
-### 2.8.1 Verificación via logs
+## Verificación via logs
 
 El primer lugar donde mirar cuando hay un problema de arranque es `logs/catalina.out`. Este archivo recoge toda la salida estándar del proceso de Tomcat:
 
@@ -899,7 +881,7 @@ INFO: Server startup in [XXXX] milliseconds    ← Esta línea confirma el arran
 
 Si el arranque falla, busca líneas con `SEVERE` o `ERROR` en el log: te indicarán la causa.
 
-### 2.8.2 Verificación via curl
+## Verificación via curl
 
 Una vez que los logs indican que Tomcat ha arrancado, puedes verificar que responde a peticiones HTTP desde la línea de comandos:
 
@@ -922,7 +904,7 @@ ss -tlnp | grep 8080
 netstat -tlnp | grep 8080
 ```
 
-### 2.8.3 Verificación de la JVM y Tomcat en ejecución
+## Verificación de la JVM y Tomcat en ejecución
 
 ```bash
 # Ver si el proceso de Tomcat está corriendo y su PID
@@ -954,11 +936,9 @@ JVM Vendor:     Eclipse Adoptium
 
 Esta información es esencial para reportar bugs o buscar vulnerabilidades conocidas para tu versión exacta.
 
----
+# 9. Gestión de Logs: JULI (Java Util Logging Implementation)
 
-## 2.9 Gestión de Logs: JULI (Java Util Logging Implementation)
-
-### ¿Qué es JULI y por qué Tomcat tiene su propio sistema de logging?
+## ¿Qué es JULI y por qué Tomcat tiene su propio sistema de logging?
 
 Java incluye su propio sistema de logging llamado `java.util.logging` (JUL). Sin embargo, JUL tiene una limitación importante para un servidor de aplicaciones: es un sistema global para toda la JVM. Esto significa que no puede tener configuraciones de logging diferentes por aplicación.
 
@@ -966,7 +946,7 @@ Java incluye su propio sistema de logging llamado `java.util.logging` (JUL). Sin
 - **Logging por aplicación:** cada aplicación puede tener su propio archivo de log y su propio nivel de verbosidad, sin interferir con las demás
 - **Rotación automática de logs:** los archivos se rotan diariamente y se pueden limpiar automáticamente pasados N días
 
-### Configuración de logging.properties
+## Configuración de logging.properties
 
 ```properties
 # $CATALINA_BASE/conf/logging.properties
@@ -1038,9 +1018,7 @@ org.apache.tomcat.util.net.level = WARNING
 
 > 💡 **AsyncFileHandler vs FileHandler:** Tomcat usa `AsyncFileHandler` en lugar del `FileHandler` estándar de Java. La diferencia es que `AsyncFileHandler` escribe en disco en un hilo separado, de modo que las operaciones de logging no bloquean los hilos que procesan peticiones HTTP. Esto mejora el rendimiento bajo carga alta.
 
----
-
-## 2.10 Tabla de Puertos por Defecto y su Función
+# 10. Tabla de Puertos por Defecto y su Función
 
 Tomcat abre varios puertos al arrancar. Es importante saber para qué sirve cada uno y cuáles son riesgos de seguridad si quedan expuestos:
 
@@ -1066,9 +1044,7 @@ Tomcat abre varios puertos al arrancar. Es importante saber para qué sirve cada
            secretRequired="true"/>
 ```
 
----
-
-## Puntos Clave
+# 11. Puntos Clave
 
 - **Verificar siempre JDK ↔ Tomcat** antes de instalar. Tomcat 11 requiere Java 17 como mínimo. Un JDK incompatible produce errores de arranque inmediatos que pueden confundir.
 

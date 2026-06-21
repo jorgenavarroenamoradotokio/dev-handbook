@@ -4,48 +4,45 @@
 
 ---
 
-- [Módulo 07: Pools de Conexiones JNDI y DataSources](#módulo-07-pools-de-conexiones-jndi-y-datasources)
-  - [7.1 Arquitectura JNDI en Tomcat](#71-arquitectura-jndi-en-tomcat)
-    - [¿Por qué necesitamos un pool de conexiones?](#por-qué-necesitamos-un-pool-de-conexiones)
-    - [¿Qué es JNDI y por qué se usa para el pool?](#qué-es-jndi-y-por-qué-se-usa-para-el-pool)
-    - [7.1.1 Jerarquía del árbol JNDI en Tomcat](#711-jerarquía-del-árbol-jndi-en-tomcat)
-    - [7.1.2 Lookup de recursos JNDI en código Java](#712-lookup-de-recursos-jndi-en-código-java)
-  - [7.2 Implementaciones de Pool de Conexiones en Tomcat](#72-implementaciones-de-pool-de-conexiones-en-tomcat)
-    - [Comparativa de rendimiento](#comparativa-de-rendimiento)
-  - [7.3 Configuración con Apache DBCP2](#73-configuración-con-apache-dbcp2)
-    - [7.3.1 Configuración completa en Context descriptor](#731-configuración-completa-en-context-descriptor)
-    - [7.3.2 Configuración para múltiples bases de datos](#732-configuración-para-múltiples-bases-de-datos)
-  - [7.4 Configuración con Tomcat JDBC Pool](#74-configuración-con-tomcat-jdbc-pool)
-    - [7.4.1 Configuración completa](#741-configuración-completa)
-    - [7.4.2 Interceptor personalizado para auditoría](#742-interceptor-personalizado-para-auditoría)
-  - [7.5 Configuración con HikariCP (Externa)](#75-configuración-con-hikaricp-externa)
-    - [7.5.1 Configuración via Context descriptor con factory personalizado](#751-configuración-via-context-descriptor-con-factory-personalizado)
-    - [7.5.2 Configuración programática con ServletContextListener](#752-configuración-programática-con-servletcontextlistener)
-  - [7.6 Recursos JNDI Globales y ResourceLink](#76-recursos-jndi-globales-y-resourcelink)
-    - [¿Cuándo usar recursos globales?](#cuándo-usar-recursos-globales)
-    - [7.6.1 Definición de recursos globales](#761-definición-de-recursos-globales)
-    - [7.6.2 ResourceLink: conectar recursos globales con aplicaciones](#762-resourcelink-conectar-recursos-globales-con-aplicaciones)
-  - [7.7 Monitorización del Pool de Conexiones](#77-monitorización-del-pool-de-conexiones)
-    - [¿Por qué monitorizar el pool?](#por-qué-monitorizar-el-pool)
-    - [7.7.1 Monitorización via JMX](#771-monitorización-via-jmx)
-    - [7.7.2 Endpoint de health check del pool](#772-endpoint-de-health-check-del-pool)
-  - [7.8 Anti-Patrones y Problemas Comunes del Pool](#78-anti-patrones-y-problemas-comunes-del-pool)
-    - [7.8.1 Connection Leak — Conexión no devuelta al pool](#781-connection-leak--conexión-no-devuelta-al-pool)
-    - [7.8.2 Pool Exhaustion bajo carga](#782-pool-exhaustion-bajo-carga)
-    - [7.8.3 Tabla de síntomas y diagnóstico](#783-tabla-de-síntomas-y-diagnóstico)
-  - [7.9 Configuración de JNDI para Otros Recursos](#79-configuración-de-jndi-para-otros-recursos)
-    - [7.9.1 JavaMail Session](#791-javamail-session)
-    - [7.9.2 Variable de entorno JNDI](#792-variable-de-entorno-jndi)
-  - [7.10 Diferencias de JNDI y Pools entre Versiones de Tomcat](#710-diferencias-de-jndi-y-pools-entre-versiones-de-tomcat)
-  - [Puntos Clave](#puntos-clave)
+- [1. Arquitectura JNDI en Tomcat](#1-arquitectura-jndi-en-tomcat)
+  - [¿Por qué necesitamos un pool de conexiones?](#por-qué-necesitamos-un-pool-de-conexiones)
+  - [¿Qué es JNDI y por qué se usa para el pool?](#qué-es-jndi-y-por-qué-se-usa-para-el-pool)
+  - [Jerarquía del árbol JNDI en Tomcat](#jerarquía-del-árbol-jndi-en-tomcat)
+  - [Lookup de recursos JNDI en código Java](#lookup-de-recursos-jndi-en-código-java)
+- [2. Implementaciones de Pool de Conexiones en Tomcat](#2-implementaciones-de-pool-de-conexiones-en-tomcat)
+  - [Comparativa de rendimiento](#comparativa-de-rendimiento)
+- [3. Configuración con Apache DBCP2](#3-configuración-con-apache-dbcp2)
+  - [Configuración completa en Context descriptor](#configuración-completa-en-context-descriptor)
+  - [Configuración para múltiples bases de datos](#configuración-para-múltiples-bases-de-datos)
+- [4. Configuración con Tomcat JDBC Pool](#4-configuración-con-tomcat-jdbc-pool)
+  - [Configuración completa](#configuración-completa)
+  - [Interceptor personalizado para auditoría](#interceptor-personalizado-para-auditoría)
+- [5. Configuración con HikariCP (Externa)](#5-configuración-con-hikaricp-externa)
+  - [Configuración via Context descriptor con factory personalizado](#configuración-via-context-descriptor-con-factory-personalizado)
+  - [Configuración programática con ServletContextListener](#configuración-programática-con-servletcontextlistener)
+- [6. Recursos JNDI Globales y ResourceLink](#6-recursos-jndi-globales-y-resourcelink)
+  - [¿Cuándo usar recursos globales?](#cuándo-usar-recursos-globales)
+  - [Definición de recursos globales](#definición-de-recursos-globales)
+  - [ResourceLink: conectar recursos globales con aplicaciones](#resourcelink-conectar-recursos-globales-con-aplicaciones)
+- [7. Monitorización del Pool de Conexiones](#7-monitorización-del-pool-de-conexiones)
+  - [¿Por qué monitorizar el pool?](#por-qué-monitorizar-el-pool)
+  - [Monitorización via JMX](#monitorización-via-jmx)
+  - [Endpoint de health check del pool](#endpoint-de-health-check-del-pool)
+- [8. Anti-Patrones y Problemas Comunes del Pool](#8-anti-patrones-y-problemas-comunes-del-pool)
+  - [Connection Leak — Conexión no devuelta al pool](#connection-leak--conexión-no-devuelta-al-pool)
+  - [Pool Exhaustion bajo carga](#pool-exhaustion-bajo-carga)
+  - [Tabla de síntomas y diagnóstico](#tabla-de-síntomas-y-diagnóstico)
+- [9. Configuración de JNDI para Otros Recursos](#9-configuración-de-jndi-para-otros-recursos)
+  - [JavaMail Session](#javamail-session)
+  - [Variable de entorno JNDI](#variable-de-entorno-jndi)
+- [10. Diferencias de JNDI y Pools entre Versiones de Tomcat](#10-diferencias-de-jndi-y-pools-entre-versiones-de-tomcat)
+- [11. Puntos Clave](#11-puntos-clave)
 
 ---
 
-# Módulo 07: Pools de Conexiones JNDI y DataSources
+# 1. Arquitectura JNDI en Tomcat
 
-## 7.1 Arquitectura JNDI en Tomcat
-
-### ¿Por qué necesitamos un pool de conexiones?
+## ¿Por qué necesitamos un pool de conexiones?
 
 Antes de entrar en la arquitectura, es necesario entender el problema que resuelve.
 
@@ -55,7 +52,7 @@ Si tu aplicación abre una conexión nueva para cada petición HTTP y la cierra 
 
 Un **pool de conexiones** resuelve esto manteniendo un conjunto de conexiones ya abiertas y listas para usar. Cuando tu código necesita una conexión, la *toma prestada* del pool (operación instantánea); cuando termina, la *devuelve* al pool (no la cierra). La conexión vuelve al pool disponible para la siguiente petición.
 
-### ¿Qué es JNDI y por qué se usa para el pool?
+## ¿Qué es JNDI y por qué se usa para el pool?
 
 **JNDI** (*Java Naming and Directory Interface*) es un servicio de nombres estándar de Java EE / Jakarta EE. Funciona como una "guía telefónica" o "registro" donde los objetos Java se registran bajo un nombre, y los consumidores los buscan por ese nombre sin saber cómo están implementados.
 
@@ -63,7 +60,7 @@ En el contexto del pool de conexiones, JNDI desacopla la **configuración** del 
 
 Este desacoplamiento tiene ventajas prácticas: se puede cambiar la implementación del pool, mover la BD o cambiar contraseñas sin tocar el código de la aplicación, solo modificando la configuración del servidor.
 
-### 7.1.1 Jerarquía del árbol JNDI en Tomcat
+## Jerarquía del árbol JNDI en Tomcat
 
 El espacio de nombres JNDI en Tomcat tiene una estructura jerárquica similar a un sistema de archivos:
 
@@ -90,7 +87,7 @@ java:
 
 **`java:global/`** (o `GlobalNamingResources`): Son recursos definidos a nivel de servidor en `server.xml`. Son accesibles desde cualquier aplicación del servidor, pero las aplicaciones no acceden a ellos directamente — lo hacen a través de un `ResourceLink` que los "proyecta" en su propio `java:comp/env/`.
 
-### 7.1.2 Lookup de recursos JNDI en código Java
+## Lookup de recursos JNDI en código Java
 
 El siguiente ejemplo muestra el patrón estándar para usar el pool de conexiones en un DAO (*Data Access Object*):
 
@@ -260,9 +257,7 @@ public class UserDao {
 }
 ```
 
----
-
-## 7.2 Implementaciones de Pool de Conexiones en Tomcat
+# 2. Implementaciones de Pool de Conexiones en Tomcat
 
 Tomcat incluye dos implementaciones propias y es compatible con librerías externas. La elección depende del rendimiento requerido y la complejidad de configuración aceptable.
 
@@ -281,7 +276,7 @@ Tomcat incluye dos implementaciones propias y es compatible con librerías exter
 
 **c3p0**: Implementación legacy, prácticamente en desuso. Solo mantener si ya existe código heredado que la use.
 
-### Comparativa de rendimiento
+## Comparativa de rendimiento
 
 | Métrica                        | DBCP2     | Tomcat JDBC | HikariCP  |
 |--------------------------------|-----------|-------------|-----------|
@@ -296,11 +291,9 @@ Tomcat incluye dos implementaciones propias y es compatible con librerías exter
 **¿Cuándo importa el rendimiento del pool?**
 En la mayoría de aplicaciones, el cuello de botella no está en el pool sino en las propias queries SQL. DBCP2 es completamente adecuado para cargas de cientos de peticiones por segundo. HikariCP empieza a marcar diferencia en sistemas con miles de peticiones por segundo o con conexiones muy cortas y frecuentes.
 
----
+# 3. Configuración con Apache DBCP2
 
-## 7.3 Configuración con Apache DBCP2
-
-### 7.3.1 Configuración completa en Context descriptor
+## Configuración completa en Context descriptor
 
 El Context descriptor es un archivo XML en `conf/Catalina/localhost/nombre-app.xml` (o en `META-INF/context.xml` dentro del WAR) que configura el contexto de despliegue de una aplicación específica.
 
@@ -588,7 +581,7 @@ Dentro de él, el elemento `<Resource>` define un recurso JNDI — en este caso,
 </Context>
 ```
 
-### 7.3.2 Configuración para múltiples bases de datos
+## Configuración para múltiples bases de datos
 
 Una aplicación puede usar múltiples bases de datos simultáneamente. Se definen múltiples elementos `<Resource>` con nombres JNDI diferentes, uno por cada BD.
 
@@ -726,13 +719,11 @@ Una aplicación puede usar múltiples bases de datos simultáneamente. Se define
 </Context>
 ```
 
----
-
-## 7.4 Configuración con Tomcat JDBC Pool
+# 4. Configuración con Tomcat JDBC Pool
 
 El Tomcat JDBC Pool es una alternativa a DBCP2 con mayor rendimiento en entornos de alta carga, diseñada específicamente para el modelo de concurrencia de Tomcat. Su característica más importante son los **Interceptors**: un sistema de AOP (*Aspect-Oriented Programming*) que permite interceptar operaciones del pool para añadir funcionalidad transversal.
 
-### 7.4.1 Configuración completa
+## Configuración completa
 
 ```xml
 <Resource
@@ -881,7 +872,7 @@ El Tomcat JDBC Pool es una alternativa a DBCP2 con mayor rendimiento en entornos
                         socketTimeout=30000"/>
 ```
 
-### 7.4.2 Interceptor personalizado para auditoría
+## Interceptor personalizado para auditoría
 
 Los Interceptors del Tomcat JDBC Pool son extensibles. Puedes crear tu propia implementación para añadir lógica de auditoría, métricas personalizadas o integraciones con sistemas externos.
 
@@ -984,9 +975,7 @@ public class AuditQueryInterceptor extends AbstractQueryReport {
 }
 ```
 
----
-
-## 7.5 Configuración con HikariCP (Externa)
+# 5. Configuración con HikariCP (Externa)
 
 HikariCP es la implementación de pool de conexiones con mayor rendimiento disponible para Java. Es el pool por defecto en Spring Boot desde la versión 2.0. Su filosofía de diseño se centra en la mínima latencia y el mínimo overhead de memoria.
 
@@ -994,7 +983,7 @@ HikariCP es la implementación de pool de conexiones con mayor rendimiento dispo
 
 Requiere añadir `HikariCP-*.jar` en `$CATALINA_HOME/lib/` o en `WEB-INF/lib/`.
 
-### 7.5.1 Configuración via Context descriptor con factory personalizado
+## Configuración via Context descriptor con factory personalizado
 
 Esta aproximación mantiene la configuración centralizada en el context descriptor XML, como con DBCP2, pero requiere implementar una factory propia.
 
@@ -1200,7 +1189,7 @@ public class HikariDataSourceFactory implements ObjectFactory {
 }
 ```
 
-### 7.5.2 Configuración programática con ServletContextListener
+## Configuración programática con ServletContextListener
 
 Esta alternativa crea el DataSource directamente en código Java dentro del `contextInitialized()` del Listener, y lo publica en el `ServletContext` (en lugar de en JNDI).
 
@@ -1322,11 +1311,9 @@ public class DataSourceInitializer implements ServletContextListener {
 }
 ```
 
----
+# 6. Recursos JNDI Globales y ResourceLink
 
-## 7.6 Recursos JNDI Globales y ResourceLink
-
-### ¿Cuándo usar recursos globales?
+## ¿Cuándo usar recursos globales?
 
 Cuando tienes múltiples aplicaciones desplegadas en el mismo Tomcat que todas necesitan conectar a la misma base de datos, hay dos opciones:
 
@@ -1334,7 +1321,7 @@ Cuando tienes múltiples aplicaciones desplegadas en el mismo Tomcat que todas n
 
 2. **Recursos globales + ResourceLink**: El pool se define una sola vez a nivel del servidor. Todas las aplicaciones comparten ese único pool. Con `maxTotal=100`, nunca habrá más de 100 conexiones independientemente de cuántas aplicaciones haya. Mucho más eficiente.
 
-### 7.6.1 Definición de recursos globales
+## Definición de recursos globales
 
 Los recursos globales se definen en el elemento `<GlobalNamingResources>` de `server.xml`:
 
@@ -1406,7 +1393,7 @@ Los recursos globales se definen en el elemento `<GlobalNamingResources>` de `se
 </GlobalNamingResources>
 ```
 
-### 7.6.2 ResourceLink: conectar recursos globales con aplicaciones
+## ResourceLink: conectar recursos globales con aplicaciones
 
 El `<ResourceLink>` crea un enlace entre el nombre JNDI global y el nombre local que la aplicación usa para buscarlo. Es como un enlace simbólico en el sistema de archivos.
 
@@ -1461,11 +1448,9 @@ Context initCtx = new InitialContext();
 DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/MyDB");
 ```
 
----
+# 7. Monitorización del Pool de Conexiones
 
-## 7.7 Monitorización del Pool de Conexiones
-
-### ¿Por qué monitorizar el pool?
+## ¿Por qué monitorizar el pool?
 
 El pool de conexiones es un recurso compartido y finito. Si se agota (todas las conexiones están en uso), las peticiones comienzan a fallar o a retrasarse. Los problemas típicos que la monitorización permite detectar antes de que afecten a usuarios son:
 
@@ -1473,7 +1458,7 @@ El pool de conexiones es un recurso compartido y finito. Si se agota (todas las 
 - **Pool exhaustion:** Picos de carga hacen que el pool llegue al 100% de uso. Puede requerir aumentar `maxTotal` o detectar queries lentas que retienen conexiones durante demasiado tiempo.
 - **Conexiones rotas:** El servidor de BD se restaureó y el pool tiene conexiones inválidas que dan errores cuando se usan.
 
-### 7.7.1 Monitorización via JMX
+## Monitorización via JMX
 
 **JMX** (*Java Management Extensions*) es el sistema estándar de Java para exponer métricas y operaciones de gestión en tiempo de ejecución. DBCP2 y Tomcat JDBC Pool registran automáticamente MBeans (Managed Beans) en el servidor JMX de la JVM con estadísticas del pool.
 
@@ -1595,7 +1580,7 @@ public class ConnectionPoolMonitor {
 }
 ```
 
-### 7.7.2 Endpoint de health check del pool
+## Endpoint de health check del pool
 
 Un health check endpoint es una URL HTTP que los **load balancers** y orquestadores (Kubernetes, AWS ELB, HAProxy) consultan periódicamente para saber si una instancia de la aplicación está sana y puede recibir tráfico.
 
@@ -1795,13 +1780,11 @@ public class HealthCheckServlet extends HttpServlet {
 }
 ```
 
----
-
-## 7.8 Anti-Patrones y Problemas Comunes del Pool
+# 8. Anti-Patrones y Problemas Comunes del Pool
 
 Esta sección muestra los errores más frecuentes que causan problemas de rendimiento y disponibilidad relacionados con el pool de conexiones.
 
-### 7.8.1 Connection Leak — Conexión no devuelta al pool
+## Connection Leak — Conexión no devuelta al pool
 
 Un **connection leak** ocurre cuando el código toma una conexión del pool pero no la devuelve. La conexión queda "prestada" indefinidamente, reduciendo las conexiones disponibles. Con suficientes leaks, el pool se agota y todas las peticiones comienzan a fallar con `Cannot get connection, pool timeout`.
 
@@ -1830,7 +1813,7 @@ public void goodExample() throws SQLException {
 }
 ```
 
-### 7.8.2 Pool Exhaustion bajo carga
+## Pool Exhaustion bajo carga
 
 El **pool exhaustion** ocurre cuando todas las conexiones del pool están en uso y no hay disponibles para nuevas peticiones. Las causas más comunes son connection leaks, queries muy lentas que retienen conexiones durante mucho tiempo, o un pool demasiado pequeño para la carga real.
 
@@ -1879,7 +1862,7 @@ public void goodScope() throws SQLException {
 }
 ```
 
-### 7.8.3 Tabla de síntomas y diagnóstico
+## Tabla de síntomas y diagnóstico
 
 Cuando el pool da problemas, los errores en los logs pueden ser crípticos. Esta tabla mapea síntomas a causas y soluciones:
 
@@ -1901,13 +1884,11 @@ Cuando el pool da problemas, los errores en los logs pueden ser crípticos. Esta
 
 **BD rechaza conexiones:** Cada base de datos tiene un límite de conexiones simultáneas (`max_connections` en PostgreSQL, `max_connections` en MySQL). Si `maxTotal * instancias_tomcat > max_connections`, la BD empezará a rechazar conexiones bajo carga. La solución es usar recursos globales con `ResourceLink` para compartir un pool entre aplicaciones, o reducir `maxTotal`.
 
----
-
-## 7.9 Configuración de JNDI para Otros Recursos
+# 9. Configuración de JNDI para Otros Recursos
 
 JNDI no solo gestiona DataSources de bases de datos. Puede registrar cualquier tipo de recurso compartido que la aplicación necesite.
 
-### 7.9.1 JavaMail Session
+## JavaMail Session
 
 JavaMail es la API de Java para enviar y recibir correo electrónico. Configurar la sesión SMTP via JNDI permite cambiar el servidor de correo o las credenciales sin recompilar la aplicación.
 
@@ -1981,7 +1962,7 @@ transport.sendMessage(message, message.getAllRecipients());
 transport.close(); // IMPORTANTE: cerrar el Transport al terminar
 ```
 
-### 7.9.2 Variable de entorno JNDI
+## Variable de entorno JNDI
 
 JNDI también puede usarse para publicar constantes de configuración (no solo DataSources). Es una alternativa a los `context-param` de `web.xml` para configuración que cambia entre entornos.
 
@@ -2039,9 +2020,7 @@ String apiUrl = (String) ctx.lookup(
     "java:comp/env/config/apiBaseUrl");
 ```
 
----
-
-## 7.10 Diferencias de JNDI y Pools entre Versiones de Tomcat
+# 10. Diferencias de JNDI y Pools entre Versiones de Tomcat
 
 | Característica                              | 8.0   | 8.5   | 9.0   | 10.x  | 11.0  |
 |---------------------------------------------|-------|-------|-------|-------|-------|
@@ -2062,9 +2041,7 @@ String apiUrl = (String) ctx.lookup(
 
 **`maxConnLifetimeMillis`** disponible desde DBCP2 2.1, incluido en Tomcat 8.5+. En Tomcat 8.0 (DBCP2 anterior), las conexiones no tenían tiempo de vida máximo, lo que podía causar que conexiones muy antiguas con problemas persistieran indefinidamente.
 
----
-
-## Puntos Clave
+# 11. Puntos Clave
 
 - Un **pool de conexiones** mantiene conexiones abiertas y reutilizables a la BD. Abrirlas en cada petición es demasiado costoso (20-100 ms por conexión) para un servidor de alta carga.
 

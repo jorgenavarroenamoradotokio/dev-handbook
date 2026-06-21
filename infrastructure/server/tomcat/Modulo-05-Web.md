@@ -4,55 +4,52 @@
 
 ---
 
-- [Módulo 05: Gestión de Aplicaciones Web y web.xml](#módulo-05-gestión-de-aplicaciones-web-y-webxml)
-  - [5.1 Estructura de una Aplicación Web Java EE / Jakarta EE](#51-estructura-de-una-aplicación-web-java-ee--jakarta-ee)
-    - [¿Qué es una aplicación web Java y cómo se empaqueta?](#qué-es-una-aplicación-web-java-y-cómo-se-empaqueta)
-    - [¿Por qué una estructura estándar?](#por-qué-una-estructura-estándar)
-    - [La estructura completa](#la-estructura-completa)
-    - [Explicación directorio por directorio](#explicación-directorio-por-directorio)
-  - [5.2 El Descriptor de Despliegue web.xml](#52-el-descriptor-de-despliegue-webxml)
-    - [¿Qué es y para qué sirve?](#qué-es-y-para-qué-sirve)
-    - [Alternativa a web.xml: anotaciones](#alternativa-a-webxml-anotaciones)
-    - [Versiones del descriptor por especificación](#versiones-del-descriptor-por-especificación)
-  - [5.3 web.xml Completo de Referencia](#53-webxml-completo-de-referencia)
-    - [5.3.1 Para Tomcat 8.x y 9.x (namespace javax.\*)](#531-para-tomcat-8x-y-9x-namespace-javax)
-    - [5.3.2 Para Tomcat 10.x y 11.x (namespace jakarta.\*)](#532-para-tomcat-10x-y-11x-namespace-jakarta)
-  - [5.4 Implementación de Componentes Web](#54-implementación-de-componentes-web)
-    - [5.4.1 Servlet con anotaciones — Tomcat 8+ / 9](#541-servlet-con-anotaciones--tomcat-8--9)
-    - [5.4.2 Servlet Asíncrono — Servlet 3.x / 4.0 / 5.0+](#542-servlet-asíncrono--servlet-3x--40--50)
-      - [¿Por qué procesamiento asíncrono?](#por-qué-procesamiento-asíncrono)
-    - [5.4.3 Filtro HTTP completo](#543-filtro-http-completo)
-    - [5.4.4 Listener de Contexto](#544-listener-de-contexto)
-  - [5.5 Despliegue de Aplicaciones: Métodos y Estrategias](#55-despliegue-de-aplicaciones-métodos-y-estrategias)
-    - [5.5.1 Métodos de despliegue](#551-métodos-de-despliegue)
-    - [5.5.2 Despliegue Zero-Downtime con Context Descriptor](#552-despliegue-zero-downtime-con-context-descriptor)
-  - [5.6 El DefaultServlet de Tomcat](#56-el-defaultservlet-de-tomcat)
-  - [5.7 El JspServlet y Configuración de Jasper](#57-el-jspservlet-y-configuración-de-jasper)
-  - [5.8 metadata-complete y Orden de Procesamiento](#58-metadata-complete-y-orden-de-procesamiento)
-    - [El impacto de metadata-complete en el arranque](#el-impacto-de-metadata-complete-en-el-arranque)
-    - [Optimización del escaneo de JARs](#optimización-del-escaneo-de-jars)
-  - [5.9 Diferencias de web.xml y APIs entre Versiones de Tomcat](#59-diferencias-de-webxml-y-apis-entre-versiones-de-tomcat)
-  - [5.10 Herramienta de Migración Jakarta EE (Tomcat 9 → 10+)](#510-herramienta-de-migración-jakarta-ee-tomcat-9--10)
-    - [Integración en el pipeline de build con Maven](#integración-en-el-pipeline-de-build-con-maven)
-  - [Puntos Clave](#puntos-clave)
+- [1. Estructura de una Aplicación Web Java EE / Jakarta EE](#1-estructura-de-una-aplicación-web-java-ee--jakarta-ee)
+  - [¿Qué es una aplicación web Java y cómo se empaqueta?](#qué-es-una-aplicación-web-java-y-cómo-se-empaqueta)
+  - [¿Por qué una estructura estándar?](#por-qué-una-estructura-estándar)
+  - [La estructura completa](#la-estructura-completa)
+  - [Explicación directorio por directorio](#explicación-directorio-por-directorio)
+- [2. El Descriptor de Despliegue web.xml](#2-el-descriptor-de-despliegue-webxml)
+  - [¿Qué es y para qué sirve?](#qué-es-y-para-qué-sirve)
+  - [Alternativa a web.xml: anotaciones](#alternativa-a-webxml-anotaciones)
+  - [Versiones del descriptor por especificación](#versiones-del-descriptor-por-especificación)
+- [3. web.xml Completo de Referencia](#3-webxml-completo-de-referencia)
+  - [Para Tomcat 8.x y 9.x (namespace javax.\*)](#para-tomcat-8x-y-9x-namespace-javax)
+  - [Para Tomcat 10.x y 11.x (namespace jakarta.\*)](#para-tomcat-10x-y-11x-namespace-jakarta)
+- [4 Implementación de Componentes Web](#4-implementación-de-componentes-web)
+  - [Servlet con anotaciones — Tomcat 8+ / 9](#servlet-con-anotaciones--tomcat-8--9)
+  - [Servlet Asíncrono — Servlet 3.x / 4.0 / 5.0+](#servlet-asíncrono--servlet-3x--40--50)
+    - [¿Por qué procesamiento asíncrono?](#por-qué-procesamiento-asíncrono)
+  - [Filtro HTTP completo](#filtro-http-completo)
+  - [Listener de Contexto](#listener-de-contexto)
+- [5. Despliegue de Aplicaciones: Métodos y Estrategias](#5-despliegue-de-aplicaciones-métodos-y-estrategias)
+  - [Métodos de despliegue](#métodos-de-despliegue)
+  - [Despliegue Zero-Downtime con Context Descriptor](#despliegue-zero-downtime-con-context-descriptor)
+- [6. El DefaultServlet de Tomcat](#6-el-defaultservlet-de-tomcat)
+- [7. El JspServlet y Configuración de Jasper](#7-el-jspservlet-y-configuración-de-jasper)
+- [8. metadata-complete y Orden de Procesamiento](#8-metadata-complete-y-orden-de-procesamiento)
+  - [El impacto de metadata-complete en el arranque](#el-impacto-de-metadata-complete-en-el-arranque)
+  - [Optimización del escaneo de JARs](#optimización-del-escaneo-de-jars)
+- [9. Diferencias de web.xml y APIs entre Versiones de Tomcat](#9-diferencias-de-webxml-y-apis-entre-versiones-de-tomcat)
+- [10. Herramienta de Migración Jakarta EE (Tomcat 9 → 10+)](#10-herramienta-de-migración-jakarta-ee-tomcat-9--10)
+  - [Integración en el pipeline de build con Maven](#integración-en-el-pipeline-de-build-con-maven)
+- [11. Puntos Clave](#11-puntos-clave)
 
 ---
 
-# Módulo 05: Gestión de Aplicaciones Web y web.xml
+# 1. Estructura de una Aplicación Web Java EE / Jakarta EE
 
-## 5.1 Estructura de una Aplicación Web Java EE / Jakarta EE
-
-### ¿Qué es una aplicación web Java y cómo se empaqueta?
+## ¿Qué es una aplicación web Java y cómo se empaqueta?
 
 Cuando desarrollas una aplicación web en Java, el resultado final no es un simple archivo `.jar` (como ocurre con las aplicaciones de escritorio). En su lugar, la especificación Java EE/Jakarta EE define un formato de empaquetado específico llamado **WAR** (*Web Application Archive*).
 
 Un archivo WAR es, en esencia, un archivo ZIP con extensión `.war` que contiene toda tu aplicación: el código compilado, las librerías de las que depende, los archivos de configuración y los recursos estáticos (HTML, CSS, imágenes). Cuando despliegas un WAR en Tomcat, este sabe exactamente dónde buscar cada tipo de componente porque la estructura de directorios es **estándar y obligatoria**, definida por la especificación Servlet.
 
-### ¿Por qué una estructura estándar?
+## ¿Por qué una estructura estándar?
 
 La estandarización permite que cualquier servidor de aplicaciones compatible (Tomcat, JBoss/WildFly, Jetty, etc.) pueda desplegar el mismo WAR sin modificaciones. Es la misma idea que un formato de archivo ZIP: todos los programas que saben abrir ZIPs pueden abrir el tuyo.
 
-### La estructura completa
+## La estructura completa
 
 ```
 myapp.war (o directorio myapp/)
@@ -87,7 +84,7 @@ myapp.war (o directorio myapp/)
         └── slf4j-api-2.0.jar
 ```
 
-### Explicación directorio por directorio
+## Explicación directorio por directorio
 
 **Raíz del WAR (archivos en la raíz):**
 Son los recursos accesibles directamente desde el navegador. Si tienes `index.html` en la raíz, un usuario puede acceder a él con `http://servidor/miapp/index.html`. Lo mismo aplica a cualquier archivo CSS, JS o imagen que pongas aquí o en subdirectorios (como `static/`). Todo lo que está **fuera** de `WEB-INF/` y `META-INF/` es potencialmente accesible desde el navegador.
@@ -105,11 +102,9 @@ Dentro de `WEB-INF/`:
 
 > ⚠️ **WEB-INF es inaccesible desde el navegador.** Cualquier petición HTTP a `/WEB-INF/` retorna 404. Esto es una garantía de seguridad de la especificación Servlet. Los archivos de configuración, clases y librerías son seguros dentro de este directorio.
 
----
+# 2. El Descriptor de Despliegue web.xml
 
-## 5.2 El Descriptor de Despliegue web.xml
-
-### ¿Qué es y para qué sirve?
+## ¿Qué es y para qué sirve?
 
 El `web.xml` es el archivo de configuración central de tu aplicación web. Su nombre oficial es *deployment descriptor* (descriptor de despliegue). Es un archivo XML que le dice a Tomcat todo lo que necesita saber para ejecutar tu aplicación:
 
@@ -121,11 +116,11 @@ El `web.xml` es el archivo de configuración central de tu aplicación web. Su n
 - Cómo proteger ciertas URLs (seguridad declarativa).
 - Qué recursos externos usa la aplicación (bases de datos via JNDI).
 
-### Alternativa a web.xml: anotaciones
+## Alternativa a web.xml: anotaciones
 
 A partir de Servlet 3.0 (Tomcat 7+), puedes configurar Servlets, Filtros y Listeners directamente en el código Java usando **anotaciones** (`@WebServlet`, `@WebFilter`, `@WebListener`). Esto evita tener que modificar el `web.xml` para registrar un nuevo componente. Sin embargo, `web.xml` sigue siendo necesario para la configuración global de la aplicación (sesiones, errores, seguridad, etc.) y en muchos equipos se prefiere tener toda la configuración centralizada en un solo lugar.
 
-### Versiones del descriptor por especificación
+## Versiones del descriptor por especificación
 
 Cada versión de Tomcat implementa una versión de la especificación Servlet, y cada versión de la especificación usa un formato y namespace XML diferente. Es importante usar el namespace correcto, porque si usas el de Tomcat 9 en Tomcat 10, la aplicación fallará al arrancar con errores de validación XML.
 
@@ -142,11 +137,9 @@ Cada versión de Tomcat implementa una versión de la especificación Servlet, y
 
 **Nota crítica sobre Tomcat 10+:** En 2019, Oracle transfirió Java EE a la Fundación Eclipse, que lo renombró a **Jakarta EE**. Como consecuencia, todos los paquetes Java que antes empezaban por `javax.*` (p.ej. `javax.servlet.http.HttpServlet`) pasaron a llamarse `jakarta.*` (p.ej. `jakarta.servlet.http.HttpServlet`). Este cambio afecta a **todo el código fuente** de tu aplicación, no solo al `web.xml`. Tomcat 10+ solo acepta aplicaciones compiladas contra el namespace `jakarta.*`. Una aplicación compilada para Tomcat 9 no funcionará en Tomcat 10 sin migración.
 
----
+# 3. web.xml Completo de Referencia
 
-## 5.3 web.xml Completo de Referencia
-
-### 5.3.1 Para Tomcat 8.x y 9.x (namespace javax.*)
+## Para Tomcat 8.x y 9.x (namespace javax.*)
 
 A continuación se muestra un `web.xml` completo con todas las secciones posibles, comentadas en detalle. No todos los proyectos necesitan todas las secciones; incluye solo las que tu aplicación requiera.
 
@@ -1022,7 +1015,7 @@ A continuación se muestra un `web.xml` completo con todas las secciones posible
 </web-app>
 ```
 
-### 5.3.2 Para Tomcat 10.x y 11.x (namespace jakarta.*)
+## Para Tomcat 10.x y 11.x (namespace jakarta.*)
 
 El contenido del descriptor es idéntico en estructura, pero cambian dos cosas fundamentales:
 
@@ -1067,11 +1060,9 @@ El contenido del descriptor es idéntico en estructura, pero cambian dos cosas f
 </web-app>
 ```
 
----
+# 4 Implementación de Componentes Web
 
-## 5.4 Implementación de Componentes Web
-
-### 5.4.1 Servlet con anotaciones — Tomcat 8+ / 9
+## Servlet con anotaciones — Tomcat 8+ / 9
 
 A partir de Servlet 3.0, puedes registrar un Servlet directamente con la anotación `@WebServlet` en el código Java, sin necesidad de declararlo en `web.xml`. Las anotaciones son equivalentes a la configuración XML: Tomcat las lee en el arranque y registra el Servlet automáticamente.
 
@@ -1246,9 +1237,9 @@ public class ApiServlet extends HttpServlet {
 }
 ```
 
-### 5.4.2 Servlet Asíncrono — Servlet 3.x / 4.0 / 5.0+
+## Servlet Asíncrono — Servlet 3.x / 4.0 / 5.0+
 
-#### ¿Por qué procesamiento asíncrono?
+### ¿Por qué procesamiento asíncrono?
 
 Tomcat tiene un pool de hilos limitado (configurable, típicamente 200). Cada petición HTTP ocupa un hilo del pool durante toda su duración. Si tu Servlet hace operaciones lentas (consultas a BD que tardan 2 segundos, llamadas a servicios externos, etc.) mientras espera la respuesta, ese hilo está bloqueado sin hacer nada útil.
 
@@ -1407,7 +1398,7 @@ public class AsyncApiServlet extends HttpServlet {
 }
 ```
 
-### 5.4.3 Filtro HTTP completo
+## Filtro HTTP completo
 
 El siguiente ejemplo implementa un filtro de cabeceras de seguridad. Aplica las recomendaciones OWASP para proteger contra los ataques web más comunes.
 
@@ -1592,7 +1583,7 @@ public class SecurityHeadersFilter implements Filter {
 }
 ```
 
-### 5.4.4 Listener de Contexto
+## Listener de Contexto
 
 El `ServletContextListener` es el lugar correcto para inicializar y destruir los recursos compartidos de la aplicación. Se ejecuta una sola vez al arrancar y al parar.
 
@@ -1780,11 +1771,9 @@ public class AppContextListener implements ServletContextListener {
 }
 ```
 
----
+# 5. Despliegue de Aplicaciones: Métodos y Estrategias
 
-## 5.5 Despliegue de Aplicaciones: Métodos y Estrategias
-
-### 5.5.1 Métodos de despliegue
+## Métodos de despliegue
 
 Hay tres formas principales de desplegar una aplicación en Tomcat:
 
@@ -1865,7 +1854,7 @@ curl -u deployer:password \
 #         path="/myapp" war="file:${dist}/myapp.war" update="true"/>
 ```
 
-### 5.5.2 Despliegue Zero-Downtime con Context Descriptor
+## Despliegue Zero-Downtime con Context Descriptor
 
 El *zero-downtime deployment* (despliegue sin tiempo de inactividad) es una estrategia que permite actualizar una aplicación sin interrumpir el servicio a los usuarios. La estrategia descrita aquí despliega la nueva versión en paralelo, verifica que funciona correctamente, y solo entonces elimina la versión antigua.
 
@@ -1954,9 +1943,7 @@ curl -s -u "$MANAGER_USER:$MANAGER_PASS" \
 echo "=== Despliegue completado ==="
 ```
 
----
-
-## 5.6 El DefaultServlet de Tomcat
+# 6. El DefaultServlet de Tomcat
 
 Tomcat incluye un Servlet especial llamado `DefaultServlet` que se encarga de servir los archivos estáticos (HTML, CSS, JS, imágenes, etc.) directamente desde el sistema de archivos. Está configurado en el `web.xml` **global** de Tomcat (`$CATALINA_HOME/conf/web.xml`), no en el `web.xml` de tu aplicación.
 
@@ -2031,9 +2018,7 @@ Tomcat incluye un Servlet especial llamado `DefaultServlet` que se encarga de se
 </servlet>
 ```
 
----
-
-## 5.7 El JspServlet y Configuración de Jasper
+# 7. El JspServlet y Configuración de Jasper
 
 **¿Qué son las JSP?**
 JSP (JavaServer Pages) son archivos de texto con extensión `.jsp` que mezclan HTML estático con código Java dinámico. Cuando un cliente solicita una JSP, Tomcat (mediante su motor Jasper) la compila a un Servlet Java la primera vez, y desde entonces ejecuta el Servlet compilado. Esta compilación solo ocurre una vez (o cuando el archivo JSP cambia).
@@ -2125,11 +2110,9 @@ El `JspServlet` (componente de Jasper) gestiona este proceso. Como el `DefaultSe
 </servlet>
 ```
 
----
+# 8. metadata-complete y Orden de Procesamiento
 
-## 5.8 metadata-complete y Orden de Procesamiento
-
-### El impacto de metadata-complete en el arranque
+## El impacto de metadata-complete en el arranque
 
 Cuando Tomcat despliega una aplicación, necesita descubrir todos los Servlets, Filtros y Listeners que la componen. Si `metadata-complete="false"` (el valor por defecto), Tomcat realiza un **escaneo completo** de todos los JARs en `WEB-INF/lib/` buscando:
 - Anotaciones `@WebServlet`, `@WebFilter`, `@WebListener` en las clases.
@@ -2158,7 +2141,7 @@ Este escaneo puede ser muy lento cuando hay muchos JARs (50-100+ JARs es habitua
 <web-app ... metadata-complete="true">
 ```
 
-### Optimización del escaneo de JARs
+## Optimización del escaneo de JARs
 
 Si no puedes usar `metadata-complete="true"` (porque algunos JARs necesitan sus `web-fragment.xml`), puedes configurar Tomcat para escanear solo los JARs necesarios, ignorando el resto:
 
@@ -2200,9 +2183,7 @@ Si no puedes usar `metadata-complete="true"` (porque algunos JARs necesitan sus 
 </Context>
 ```
 
----
-
-## 5.9 Diferencias de web.xml y APIs entre Versiones de Tomcat
+# 9. Diferencias de web.xml y APIs entre Versiones de Tomcat
 
 Esta tabla resume las diferencias más relevantes entre versiones para tomar decisiones de actualización o compatibilidad:
 
@@ -2226,9 +2207,7 @@ Esta tabla resume las diferencias más relevantes entre versiones para tomar dec
 - **`PushBuilder` (HTTP/2 Server Push):** Permite que el servidor envíe recursos (CSS, JS) al cliente antes de que los solicite, anticipando que los necesitará. Mejora el rendimiento de la primera carga. Requiere HTTP/2.
 - **`doTrace()` deshabilitado en Tomcat 11:** El método HTTP TRACE puede usarse para ataques XST (Cross-Site Tracing). Deshabilitar `doTrace()` por defecto es una mejora de seguridad.
 
----
-
-## 5.10 Herramienta de Migración Jakarta EE (Tomcat 9 → 10+)
+# 10. Herramienta de Migración Jakarta EE (Tomcat 9 → 10+)
 
 El cambio de `javax.*` a `jakarta.*` afecta a **todo el código fuente** de la aplicación: todos los imports de clases Servlet, Filter, Listener, etc. Hacer este cambio manualmente en un proyecto grande es propenso a errores y muy tedioso.
 
@@ -2261,7 +2240,7 @@ java -jar jakartaee-migration-1.0.6-shaded.jar \
   myapp-jakarta.war
 ```
 
-### Integración en el pipeline de build con Maven
+## Integración en el pipeline de build con Maven
 
 En lugar de ejecutar la herramienta manualmente, puedes integrarla en tu proceso de build Maven para que se ejecute automáticamente en cada compilación:
 
@@ -2294,9 +2273,7 @@ En lugar de ejecutar la herramienta manualmente, puedes integrarla en tu proceso
 
 Con esta configuración, cada `mvn package` genera dos WARs: el original (`-javax`) y el migrado (`-jakarta`). Esto permite mantener un único repositorio de código que produce WARs compatibles con Tomcat 9 y Tomcat 10+ simultáneamente, útil durante procesos de migración graduales.
 
----
-
-## Puntos Clave
+# 11. Puntos Clave
 
 - La estructura WAR es estándar y obligatoria: `WEB-INF/` es inaccesible desde HTTP, protegiendo clases, librerías y configuración. Todo lo que esté fuera de `WEB-INF/` y `META-INF/` es potencialmente accesible por el navegador.
 

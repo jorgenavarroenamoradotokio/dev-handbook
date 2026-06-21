@@ -4,58 +4,55 @@
 
 ---
 
-- [Módulo 04: Conectores HTTP/1.1, HTTP/2 y AJP](#módulo-04-conectores-http11-http2-y-ajp)
-  - [4.1 Arquitectura Interna de los Conectores: Coyote](#41-arquitectura-interna-de-los-conectores-coyote)
-    - [¿Qué es Coyote y qué problema resuelve?](#qué-es-coyote-y-qué-problema-resuelve)
-    - [Componentes internos del Endpoint](#componentes-internos-del-endpoint)
-  - [4.2 Implementaciones de Protocolo Disponibles](#42-implementaciones-de-protocolo-disponibles)
-  - [4.3 Modelo BIO vs NIO vs NIO2 vs APR](#43-modelo-bio-vs-nio-vs-nio2-vs-apr)
-    - [4.3.1 BIO — Blocking I/O (eliminado en Tomcat 9)](#431-bio--blocking-io-eliminado-en-tomcat-9)
-    - [4.3.2 NIO — Non-Blocking I/O (recomendado)](#432-nio--non-blocking-io-recomendado)
-    - [4.3.3 NIO2 — Asynchronous I/O](#433-nio2--asynchronous-io)
-    - [4.3.4 APR — Apache Portable Runtime](#434-apr--apache-portable-runtime)
-  - [4.4 Configuración Detallada del Conector HTTP/1.1 NIO](#44-configuración-detallada-del-conector-http11-nio)
-    - [4.4.1 Atributos de red y conexión](#441-atributos-de-red-y-conexión)
-    - [4.4.2 Tabla de atributos críticos para tuning de rendimiento](#442-tabla-de-atributos-críticos-para-tuning-de-rendimiento)
-  - [4.5 HTTP/2 en Tomcat 8.5+](#45-http2-en-tomcat-85)
-    - [¿Qué es HTTP/2 y qué mejora respecto a HTTP/1.1?](#qué-es-http2-y-qué-mejora-respecto-a-http11)
-    - [4.5.1 ¿Cómo implementa Tomcat HTTP/2?](#451-cómo-implementa-tomcat-http2)
-    - [4.5.2 Configuración HTTP/2 sobre HTTPS (h2)](#452-configuración-http2-sobre-https-h2)
-    - [4.5.3 Configuración HTTP/2 cleartext (h2c) — Solo redes internas](#453-configuración-http2-cleartext-h2c--solo-redes-internas)
-    - [4.5.4 Server Push HTTP/2 desde un Servlet](#454-server-push-http2-desde-un-servlet)
-    - [4.5.5 Atributos Http2Protocol más relevantes](#455-atributos-http2protocol-más-relevantes)
-  - [4.6 Conector AJP — Apache JServ Protocol](#46-conector-ajp--apache-jserv-protocol)
-    - [¿Qué es AJP y cuándo tiene sentido usarlo?](#qué-es-ajp-y-cuándo-tiene-sentido-usarlo)
-    - [4.6.1 La vulnerabilidad Ghostcat (CVE-2020-1938)](#461-la-vulnerabilidad-ghostcat-cve-2020-1938)
-    - [4.6.2 Configuración completa del Conector AJP (post-Ghostcat)](#462-configuración-completa-del-conector-ajp-post-ghostcat)
-    - [4.6.3 Configuración de Apache httpd con mod\_proxy\_ajp](#463-configuración-de-apache-httpd-con-mod_proxy_ajp)
-    - [4.6.4 Configuración de mod\_jk (alternativa legacy)](#464-configuración-de-mod_jk-alternativa-legacy)
-  - [4.7 Conector HTTP con Proxy Inverso (Nginx / HAProxy)](#47-conector-http-con-proxy-inverso-nginx--haproxy)
-    - [¿Por qué poner Tomcat detrás de un proxy inverso?](#por-qué-poner-tomcat-detrás-de-un-proxy-inverso)
-    - [4.7.1 Configuración Tomcat detrás de Nginx (HTTP proxy)](#471-configuración-tomcat-detrás-de-nginx-http-proxy)
-    - [4.7.2 RemoteIpValve — Procesar las cabeceras del proxy en Tomcat](#472-remoteipvalve--procesar-las-cabeceras-del-proxy-en-tomcat)
-    - [4.7.3 Conector HTTP optimizado para funcionar detrás de proxy](#473-conector-http-optimizado-para-funcionar-detrás-de-proxy)
-  - [4.8 Gestión de Timeouts: Guía Completa](#48-gestión-de-timeouts-guía-completa)
-  - [4.9 Monitorización de Conectores via JMX](#49-monitorización-de-conectores-via-jmx)
-    - [¿Qué es JMX y por qué es útil para los Conectores?](#qué-es-jmx-y-por-qué-es-útil-para-los-conectores)
-    - [MBeans relevantes del Connector](#mbeans-relevantes-del-connector)
-  - [4.10 Virtual Threads en Tomcat 11 (Project Loom)](#410-virtual-threads-en-tomcat-11-project-loom)
-    - [¿Qué son los Virtual Threads y por qué son importantes?](#qué-son-los-virtual-threads-y-por-qué-son-importantes)
-    - [4.10.1 Configuración de Virtual Threads en Tomcat 11](#4101-configuración-de-virtual-threads-en-tomcat-11)
-    - [4.10.2 ¿Cuándo conviene usar Virtual Threads?](#4102-cuándo-conviene-usar-virtual-threads)
-  - [4.11 Diagnóstico y Troubleshooting de Conectores](#411-diagnóstico-y-troubleshooting-de-conectores)
-    - [4.11.1 Síntomas y soluciones comunes](#4111-síntomas-y-soluciones-comunes)
-    - [4.11.2 Script de diagnóstico de conectores](#4112-script-de-diagnóstico-de-conectores)
-  - [4.12 Comparativa Final de Conectores](#412-comparativa-final-de-conectores)
-  - [Puntos Clave](#puntos-clave)
+- [1 Arquitectura Interna de los Conectores: Coyote](#1-arquitectura-interna-de-los-conectores-coyote)
+  - [¿Qué es Coyote y qué problema resuelve?](#qué-es-coyote-y-qué-problema-resuelve)
+  - [Componentes internos del Endpoint](#componentes-internos-del-endpoint)
+- [2. Implementaciones de Protocolo Disponibles](#2-implementaciones-de-protocolo-disponibles)
+- [3. Modelo BIO vs NIO vs NIO2 vs APR](#3-modelo-bio-vs-nio-vs-nio2-vs-apr)
+  - [BIO — Blocking I/O (eliminado en Tomcat 9)](#bio--blocking-io-eliminado-en-tomcat-9)
+  - [NIO — Non-Blocking I/O (recomendado)](#nio--non-blocking-io-recomendado)
+  - [NIO2 — Asynchronous I/O](#nio2--asynchronous-io)
+  - [APR — Apache Portable Runtime](#apr--apache-portable-runtime)
+- [4. Configuración Detallada del Conector HTTP/1.1 NIO](#4-configuración-detallada-del-conector-http11-nio)
+  - [Atributos de red y conexión](#atributos-de-red-y-conexión)
+  - [Tabla de atributos críticos para tuning de rendimiento](#tabla-de-atributos-críticos-para-tuning-de-rendimiento)
+- [5. HTTP/2 en Tomcat 8.5+](#5-http2-en-tomcat-85)
+  - [¿Qué es HTTP/2 y qué mejora respecto a HTTP/1.1?](#qué-es-http2-y-qué-mejora-respecto-a-http11)
+  - [¿Cómo implementa Tomcat HTTP/2?](#cómo-implementa-tomcat-http2)
+  - [Configuración HTTP/2 sobre HTTPS (h2)](#configuración-http2-sobre-https-h2)
+  - [Configuración HTTP/2 cleartext (h2c) — Solo redes internas](#configuración-http2-cleartext-h2c--solo-redes-internas)
+  - [Server Push HTTP/2 desde un Servlet](#server-push-http2-desde-un-servlet)
+  - [Atributos Http2Protocol más relevantes](#atributos-http2protocol-más-relevantes)
+- [6. Conector AJP — Apache JServ Protocol](#6-conector-ajp--apache-jserv-protocol)
+  - [¿Qué es AJP y cuándo tiene sentido usarlo?](#qué-es-ajp-y-cuándo-tiene-sentido-usarlo)
+  - [La vulnerabilidad Ghostcat (CVE-2020-1938)](#la-vulnerabilidad-ghostcat-cve-2020-1938)
+  - [Configuración completa del Conector AJP (post-Ghostcat)](#configuración-completa-del-conector-ajp-post-ghostcat)
+  - [Configuración de Apache httpd con mod\_proxy\_ajp](#configuración-de-apache-httpd-con-mod_proxy_ajp)
+  - [Configuración de mod\_jk (alternativa legacy)](#configuración-de-mod_jk-alternativa-legacy)
+- [7. Conector HTTP con Proxy Inverso (Nginx / HAProxy)](#7-conector-http-con-proxy-inverso-nginx--haproxy)
+  - [¿Por qué poner Tomcat detrás de un proxy inverso?](#por-qué-poner-tomcat-detrás-de-un-proxy-inverso)
+  - [Configuración Tomcat detrás de Nginx (HTTP proxy)](#configuración-tomcat-detrás-de-nginx-http-proxy)
+  - [RemoteIpValve — Procesar las cabeceras del proxy en Tomcat](#remoteipvalve--procesar-las-cabeceras-del-proxy-en-tomcat)
+  - [Conector HTTP optimizado para funcionar detrás de proxy](#conector-http-optimizado-para-funcionar-detrás-de-proxy)
+- [8. Gestión de Timeouts: Guía Completa](#8-gestión-de-timeouts-guía-completa)
+- [9. Monitorización de Conectores via JMX](#9-monitorización-de-conectores-via-jmx)
+  - [¿Qué es JMX y por qué es útil para los Conectores?](#qué-es-jmx-y-por-qué-es-útil-para-los-conectores)
+  - [MBeans relevantes del Connector](#mbeans-relevantes-del-connector)
+- [10. Virtual Threads en Tomcat 11 (Project Loom)](#10-virtual-threads-en-tomcat-11-project-loom)
+  - [¿Qué son los Virtual Threads y por qué son importantes?](#qué-son-los-virtual-threads-y-por-qué-son-importantes)
+  - [Configuración de Virtual Threads en Tomcat 11](#configuración-de-virtual-threads-en-tomcat-11)
+  - [¿Cuándo conviene usar Virtual Threads?](#cuándo-conviene-usar-virtual-threads)
+- [11. Diagnóstico y Troubleshooting de Conectores](#11-diagnóstico-y-troubleshooting-de-conectores)
+  - [Síntomas y soluciones comunes](#síntomas-y-soluciones-comunes)
+  - [Script de diagnóstico de conectores](#script-de-diagnóstico-de-conectores)
+- [12. Comparativa Final de Conectores](#12-comparativa-final-de-conectores)
+- [13. Puntos Clave](#13-puntos-clave)
 
 ---
 
-# Módulo 04: Conectores HTTP/1.1, HTTP/2 y AJP
+# 1 Arquitectura Interna de los Conectores: Coyote
 
-## 4.1 Arquitectura Interna de los Conectores: Coyote
-
-### ¿Qué es Coyote y qué problema resuelve?
+## ¿Qué es Coyote y qué problema resuelve?
 
 Cuando un navegador se conecta a Tomcat, alguien tiene que encargarse del trabajo "sucio" de la red: abrir el socket TCP, leer los bytes que llegan, interpretarlos como una petición HTTP, y al final serializar la respuesta de vuelta en bytes para enviarla.
 
@@ -86,7 +83,7 @@ Cliente HTTP (navegador, app móvil, otra API)
                     (aquí viven tus Servlets y JSPs)
 ```
 
-### Componentes internos del Endpoint
+## Componentes internos del Endpoint
 
 Dentro de Coyote hay varios subcomponentes con roles muy específicos:
 
@@ -99,9 +96,7 @@ Dentro de Coyote hay varios subcomponentes con roles muy específicos:
 
 El flujo completo es: **Acceptor** acepta la conexión → **Poller** detecta que hay datos → **Handler** lo asigna a un hilo del pool → **Processor** parsea HTTP → **Catalina** ejecuta tu código.
 
----
-
-## 4.2 Implementaciones de Protocolo Disponibles
+# 2. Implementaciones de Protocolo Disponibles
 
 Tomcat ofrece varias implementaciones del protocolo HTTP. La elección afecta al modelo de I/O utilizado y a las características disponibles:
 
@@ -118,13 +113,11 @@ Tomcat ofrece varias implementaciones del protocolo HTTP. La elección afecta al
 
 *HTTP/2 requiere añadir un elemento `UpgradeProtocol` dentro del Connector (ver sección 4.5).
 
----
-
-## 4.3 Modelo BIO vs NIO vs NIO2 vs APR
+# 3. Modelo BIO vs NIO vs NIO2 vs APR
 
 Esta es una de las preguntas más frecuentes al configurar Tomcat: "¿Qué protocolo elijo?". Para responderla hay que entender qué hace cada uno.
 
-### 4.3.1 BIO — Blocking I/O (eliminado en Tomcat 9)
+## BIO — Blocking I/O (eliminado en Tomcat 9)
 
 **Modelo:** un hilo de Java por cada conexión activa.
 
@@ -140,7 +133,7 @@ Petición → Hilo dedicado (bloqueado durante toda la petición)
 
 **Estado:** deprecado en Tomcat 8.5, **eliminado en Tomcat 9**. Si tienes `Http11BioProtocol` en tu `server.xml` y actualizas a Tomcat 9, el servidor no arrancará.
 
-### 4.3.2 NIO — Non-Blocking I/O (recomendado)
+## NIO — Non-Blocking I/O (recomendado)
 
 **Modelo:** un pequeño conjunto de hilos gestiona miles de conexiones usando un mecanismo de eventos.
 
@@ -166,7 +159,7 @@ Resultado: con 25 hilos puedes gestionar 10.000 conexiones keep-alive activas. L
 
 **Recomendado para la gran mayoría de deployments de producción.**
 
-### 4.3.3 NIO2 — Asynchronous I/O
+## NIO2 — Asynchronous I/O
 
 **Modelo:** similar a NIO, pero las operaciones de I/O son completamente asíncronas con callbacks.
 
@@ -174,7 +167,7 @@ NIO2 usa `AsynchronousSocketChannel` de Java 7+. La diferencia con NIO "clásico
 
 **¿Cuándo elegirlo sobre NIO?** En la práctica el rendimiento es muy similar. NIO2 puede tener ligeras ventajas en cargas con altísima tasa de conexiones nuevas por segundo (miles por segundo), pero para la mayoría de aplicaciones web la diferencia es imperceptible. Si tienes dudas, usa NIO.
 
-### 4.3.4 APR — Apache Portable Runtime
+## APR — Apache Portable Runtime
 
 **Modelo:** NIO, pero usando librerías nativas del sistema operativo en lugar de Java puro.
 
@@ -205,11 +198,9 @@ make && make install
 export LD_LIBRARY_PATH="$CATALINA_HOME/lib:$LD_LIBRARY_PATH"
 ```
 
----
+# 4. Configuración Detallada del Conector HTTP/1.1 NIO
 
-## 4.4 Configuración Detallada del Conector HTTP/1.1 NIO
-
-### 4.4.1 Atributos de red y conexión
+## Atributos de red y conexión
 
 Este es el conector más usado en producción. A continuación, todos sus atributos más relevantes agrupados por categoría, con una explicación de para qué sirve cada uno y qué impacto tiene si lo ajustas:
 
@@ -434,7 +425,7 @@ Este es el conector más usado en producción. A continuación, todos sus atribu
            redirectPort="8443"/>
 ```
 
-### 4.4.2 Tabla de atributos críticos para tuning de rendimiento
+## Tabla de atributos críticos para tuning de rendimiento
 
 | Atributo                 | Impacto en producción                                               | Valor recomendado  |
 |--------------------------|---------------------------------------------------------------------|--------------------|
@@ -449,11 +440,9 @@ Este es el conector más usado en producción. A continuación, todos sus atribu
 | `maxParameterCount`      | Protección contra Hash Collision DoS                                | `500`-`2000`       |
 | `compressionMinSize`     | Umbral para comprimir respuestas (no comprimir las muy pequeñas)    | `1024`-`4096` bytes|
 
----
+# 5. HTTP/2 en Tomcat 8.5+
 
-## 4.5 HTTP/2 en Tomcat 8.5+
-
-### ¿Qué es HTTP/2 y qué mejora respecto a HTTP/1.1?
+## ¿Qué es HTTP/2 y qué mejora respecto a HTTP/1.1?
 
 HTTP/1.1 tiene una limitación fundamental: por cada conexión TCP solo puede haber una petición activa a la vez. Si el navegador necesita cargar una página con 20 recursos (CSS, JS, imágenes), tiene que abrir 6-8 conexiones paralelas al servidor y turnar las peticiones entre ellas. Esto introduce latencia y complejidad.
 
@@ -465,7 +454,7 @@ HTTP/2 resuelve esto con **multiplexación**: múltiples peticiones y respuestas
 - **Compresión de cabeceras HPACK:** las cabeceras se comprimen, reduciendo overhead
 - **Priorización de streams:** el servidor puede dar prioridad a ciertos recursos
 
-### 4.5.1 ¿Cómo implementa Tomcat HTTP/2?
+## ¿Cómo implementa Tomcat HTTP/2?
 
 HTTP/2 en Tomcat no es un Connector independiente. Se implementa como un **UpgradeProtocol** que se añade dentro del Connector HTTPS existente. Cuando un cliente que soporta HTTP/2 se conecta, durante el handshake TLS negocia el protocolo via **ALPN** (Application-Layer Protocol Negotiation): básicamente, el cliente le dice al servidor "puedo hablar h2 o HTTP/1.1, ¿cuál prefieres?". Tomcat responde "h2" y ambos cambian a HTTP/2. Si el cliente no soporta HTTP/2, cae a HTTP/1.1 automáticamente, sin errores.
 
@@ -473,7 +462,7 @@ Hay dos variantes:
 - **h2 (sobre TLS):** Lo recomendado. Requiere HTTPS.
 - **h2c (cleartext):** HTTP/2 sin TLS. Solo para redes internas de confianza.
 
-### 4.5.2 Configuración HTTP/2 sobre HTTPS (h2)
+## Configuración HTTP/2 sobre HTTPS (h2)
 
 ```xml
 <Connector port="8443"
@@ -559,7 +548,7 @@ Hay dos variantes:
 </Connector>
 ```
 
-### 4.5.3 Configuración HTTP/2 cleartext (h2c) — Solo redes internas
+## Configuración HTTP/2 cleartext (h2c) — Solo redes internas
 
 ```xml
 <!-- h2c: HTTP/2 sin TLS.
@@ -581,7 +570,7 @@ Hay dos variantes:
 </Connector>
 ```
 
-### 4.5.4 Server Push HTTP/2 desde un Servlet
+## Server Push HTTP/2 desde un Servlet
 
 Una de las características más potentes de HTTP/2 es el **Server Push**: el servidor puede enviar recursos al cliente antes de que éste los pida. Por ejemplo, cuando el cliente pide `/index.html`, el servidor ya sabe que esa página necesita `app.css` y `app.js`, así que los envía proactivamente antes de que el navegador procese el HTML y descubra que los necesita.
 
@@ -643,7 +632,7 @@ public class IndexServlet extends HttpServlet {
 
 > 💡 **¿Cuándo usar Server Push?** Es útil para recursos críticos "above the fold" (lo que el usuario ve sin hacer scroll). No abuses: si pushes demasiados recursos, el navegador puede rechazarlos o el cliente puede ya tenerlos en caché. Un uso excesivo de push puede empeorar el rendimiento.
 
-### 4.5.5 Atributos Http2Protocol más relevantes
+## Atributos Http2Protocol más relevantes
 
 | Atributo                       | Qué controla                                                               | Valor por defecto |
 |--------------------------------|----------------------------------------------------------------------------|-------------------|
@@ -656,11 +645,9 @@ public class IndexServlet extends HttpServlet {
 | `streamReadTimeout`            | Timeout de lectura de un stream individual                                 | `20000` ms        |
 | `overheadResetFactor`          | Penalización por frames RST_STREAM excesivos (protección DoS)              | `50`              |
 
----
+# 6. Conector AJP — Apache JServ Protocol
 
-## 4.6 Conector AJP — Apache JServ Protocol
-
-### ¿Qué es AJP y cuándo tiene sentido usarlo?
+## ¿Qué es AJP y cuándo tiene sentido usarlo?
 
 AJP (Apache JServ Protocol v1.3) es un protocolo de comunicación **binario** entre un servidor web frontal (Apache httpd) y Tomcat. Es la alternativa al proxy HTTP estándar.
 
@@ -685,13 +672,13 @@ Usuarios de Internet
 - Si Tomcat está expuesto directamente (sin proxy) → usa HTTPS directo
 - Si no tienes Apache httpd en el stack → deshabilita completamente el conector AJP
 
-### 4.6.1 La vulnerabilidad Ghostcat (CVE-2020-1938)
+## La vulnerabilidad Ghostcat (CVE-2020-1938)
 
 En febrero de 2020 se descubrió una vulnerabilidad crítica en el conector AJP llamada **Ghostcat**. El problema: el protocolo AJP, por diseño, permite al proxy frontal decirle a Tomcat que incluya archivos del servidor en las peticiones. Esto se pensó para acceder a recursos del WAR. Pero sin autenticación, cualquiera que pudiera conectarse al puerto 8009 podía aprovechar este mecanismo para leer cualquier archivo del servidor, incluyendo `WEB-INF/web.xml` con credenciales de base de datos.
 
 La gravedad era tal (score CVSS 9.8/10) que el equipo de Tomcat la parcheó con urgencia añadiendo autenticación obligatoria con secreto compartido.
 
-### 4.6.2 Configuración completa del Conector AJP (post-Ghostcat)
+## Configuración completa del Conector AJP (post-Ghostcat)
 
 ```xml
 <!--
@@ -765,7 +752,7 @@ La gravedad era tal (score CVSS 9.8/10) que el equipo de Tomcat la parcheó con 
            URIEncoding="UTF-8"/>
 ```
 
-### 4.6.3 Configuración de Apache httpd con mod_proxy_ajp
+## Configuración de Apache httpd con mod_proxy_ajp
 
 Esta es la configuración de Apache httpd que habla con Tomcat via AJP:
 
@@ -825,7 +812,7 @@ Esta es la configuración de Apache httpd que habla con Tomcat via AJP:
 </VirtualHost>
 ```
 
-### 4.6.4 Configuración de mod_jk (alternativa legacy)
+## Configuración de mod_jk (alternativa legacy)
 
 `mod_jk` es el módulo más antiguo para conectar Apache httpd con Tomcat via AJP. Ha sido reemplazado en gran medida por `mod_proxy_ajp` (más moderno y soportado), pero todavía se encuentra en instalaciones legacy:
 
@@ -871,11 +858,9 @@ worker.jkstatus.type=status
 worker.jkstatus.read_only=true
 ```
 
----
+# 7. Conector HTTP con Proxy Inverso (Nginx / HAProxy)
 
-## 4.7 Conector HTTP con Proxy Inverso (Nginx / HAProxy)
-
-### ¿Por qué poner Tomcat detrás de un proxy inverso?
+## ¿Por qué poner Tomcat detrás de un proxy inverso?
 
 En muchas arquitecturas, Tomcat no está directamente expuesto a Internet. En cambio, hay un **proxy inverso** (Nginx, HAProxy, un load balancer en la nube) que recibe el tráfico público y lo reenvía a Tomcat:
 
@@ -897,7 +882,7 @@ Ventajas de este patrón:
 
 **El problema que esto crea:** cuando Tomcat recibe la petición del proxy, la IP de origen es la del proxy (ej: 127.0.0.1), no la del cliente real. Y el esquema es HTTP aunque el cliente usara HTTPS. Tomcat necesita saber la verdad.
 
-### 4.7.1 Configuración Tomcat detrás de Nginx (HTTP proxy)
+## Configuración Tomcat detrás de Nginx (HTTP proxy)
 
 Primero, la configuración de Nginx que añade las cabeceras necesarias:
 
@@ -959,7 +944,7 @@ server {
 }
 ```
 
-### 4.7.2 RemoteIpValve — Procesar las cabeceras del proxy en Tomcat
+## RemoteIpValve — Procesar las cabeceras del proxy en Tomcat
 
 Nginx añade las cabeceras `X-Forwarded-For` y `X-Forwarded-Proto`, pero Tomcat no las lee por defecto. El **RemoteIpValve** se encarga de leerlas y actualizar los objetos `Request` internos para que `request.getRemoteAddr()` devuelva la IP real del cliente (no la del proxy) y `request.isSecure()` devuelva `true` cuando el cliente usó HTTPS:
 
@@ -1005,7 +990,7 @@ Nginx añade las cabeceras `X-Forwarded-For` y `X-Forwarded-Proto`, pero Tomcat 
        requestAttributesEnabled="true"/>
 ```
 
-### 4.7.3 Conector HTTP optimizado para funcionar detrás de proxy
+## Conector HTTP optimizado para funcionar detrás de proxy
 
 Cuando hay un proxy delante, el Connector de Tomcat puede simplificarse: no necesita gestionar TLS (lo hace el proxy) y conviene que solo escuche en la IP interna:
 
@@ -1037,9 +1022,7 @@ Cuando hay un proxy delante, el Connector de Tomcat puede simplificarse: no nece
            rejectIllegalHeader="true"/>
 ```
 
----
-
-## 4.8 Gestión de Timeouts: Guía Completa
+# 8. Gestión de Timeouts: Guía Completa
 
 Los timeouts son una de las configuraciones más delicadas en producción. Un timeout demasiado corto causa errores innecesarios para usuarios con conexiones lentas o aplicaciones que procesan datos grandes. Un timeout demasiado largo hace que hilos y conexiones se queden bloqueados indefinidamente ante fallos, agotando los recursos del servidor.
 
@@ -1061,11 +1044,9 @@ Esta tabla reúne todos los timeouts relevantes:
 
 > 💡 **Regla práctica para troubleshooting de timeouts:** Si ves errores HTTP 504 (Gateway Timeout), el timeout está en el proxy (Nginx/Apache). Si ves errores en los logs de Tomcat sobre "timed out", el problema está en los timeouts del Connector o de la aplicación.
 
----
+# 9. Monitorización de Conectores via JMX
 
-## 4.9 Monitorización de Conectores via JMX
-
-### ¿Qué es JMX y por qué es útil para los Conectores?
+## ¿Qué es JMX y por qué es útil para los Conectores?
 
 **JMX** (Java Management Extensions) es el sistema de monitorización y gestión de Java. Tomcat expone métricas en tiempo real de sus conectores como **MBeans** (Management Beans): objetos Java accesibles remotamente con herramientas como JConsole, VisualVM o sistemas de monitorización como Prometheus (via jmx_exporter).
 
@@ -1133,7 +1114,7 @@ public class TomcatConnectorMonitor {
 }
 ```
 
-### MBeans relevantes del Connector
+## MBeans relevantes del Connector
 
 | MBean ObjectName                                              | Qué métricas da                                                    |
 |---------------------------------------------------------------|--------------------------------------------------------------------|
@@ -1143,11 +1124,9 @@ public class TomcatConnectorMonitor {
 | `Catalina:type=ThreadPool,name="http-nio-8443"`               | Igual para el conector HTTPS                                       |
 | `Catalina:type=ThreadPool,name="ajp-nio-8009"`                | Igual para el conector AJP (si está activo)                        |
 
----
+# 10. Virtual Threads en Tomcat 11 (Project Loom)
 
-## 4.10 Virtual Threads en Tomcat 11 (Project Loom)
-
-### ¿Qué son los Virtual Threads y por qué son importantes?
+## ¿Qué son los Virtual Threads y por qué son importantes?
 
 Para entenderlo, hay que entender primero el problema:
 
@@ -1173,7 +1152,7 @@ Modelo Virtual Threads (Tomcat 11 + Java 21):
 
 La parte más importante: **el código de tu aplicación no necesita cambiar**. Sigues escribiendo código Java síncrono normal. La JVM se encarga de la magia debajo.
 
-### 4.10.1 Configuración de Virtual Threads en Tomcat 11
+## Configuración de Virtual Threads en Tomcat 11
 
 ```xml
 <!--
@@ -1210,7 +1189,7 @@ export CATALINA_OPTS="$CATALINA_OPTS \
   # No se necesita --enable-preview: los VT son estables en Java 21
 ```
 
-### 4.10.2 ¿Cuándo conviene usar Virtual Threads?
+## ¿Cuándo conviene usar Virtual Threads?
 
 | Escenario                                      | Platform Threads             | Virtual Threads               |
 |------------------------------------------------|------------------------------|-------------------------------|
@@ -1223,11 +1202,9 @@ export CATALINA_OPTS="$CATALINA_OPTS \
 
 > 💡 **En resumen:** si tu aplicación hace muchas operaciones de I/O (que es el caso típico: consultas a BD, llamadas a microservicios, lecturas de disco), los Virtual Threads son un cambio de paradigma. Si tu aplicación es CPU-bound (procesamiento de video, cálculo científico), los VT no aportan nada.
 
----
+# 11. Diagnóstico y Troubleshooting de Conectores
 
-## 4.11 Diagnóstico y Troubleshooting de Conectores
-
-### 4.11.1 Síntomas y soluciones comunes
+## Síntomas y soluciones comunes
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1316,7 +1293,7 @@ DIAGNÓSTICO:
   3. Verificar conectividad: nc -zv tomcat-host 8009
 ```
 
-### 4.11.2 Script de diagnóstico de conectores
+## Script de diagnóstico de conectores
 
 ```bash
 #!/bin/bash
@@ -1384,9 +1361,7 @@ echo ""
 echo "=== Fin del diagnóstico ==="
 ```
 
----
-
-## 4.12 Comparativa Final de Conectores
+# 12. Comparativa Final de Conectores
 
 | Característica               | HTTP NIO          | HTTP NIO2         | HTTP APR          | AJP NIO            |
 |------------------------------|-------------------|-------------------|-------------------|--------------------|
@@ -1406,9 +1381,7 @@ echo "=== Fin del diagnóstico ==="
 - **Si usas Tomcat 11 con Java 21 y tienes carga I/O-bound:** Virtual Threads + HTTP NIO
 - **Si ya tienes NIO y no tienes problemas:** no cambies nada
 
----
-
-## Puntos Clave
+# 13. Puntos Clave
 
 - **NIO es el protocolo recomendado** para la inmensa mayoría de deployments de producción. NIO2 como alternativa prácticamente equivalente. APR solo si el análisis de rendimiento confirma que JSSE es el cuello de botella.
 

@@ -4,56 +4,53 @@
 
 ---
 
-- [Módulo 10: Migración entre Versiones (8.0 → 8.5 → 9 → 10 → 11)](#módulo-10-migración-entre-versiones-80--85--9--10--11)
-  - [10.1 Visión General del Mapa de Migración](#101-visión-general-del-mapa-de-migración)
-    - [¿Por qué migrar de versión?](#por-qué-migrar-de-versión)
-    - [El mapa completo de versiones](#el-mapa-completo-de-versiones)
-    - [Tabla de compatibilidad: ¿qué implica cada salto?](#tabla-de-compatibilidad-qué-implica-cada-salto)
-  - [10.2 Migración de Tomcat 8.0 a Tomcat 8.5](#102-migración-de-tomcat-80-a-tomcat-85)
-    - [¿Qué cambia realmente?](#qué-cambia-realmente)
-    - [10.2.1 Checklist de migración 8.0 → 8.5](#1021-checklist-de-migración-80--85)
-    - [10.2.2 Cambios en server.xml para 8.5](#1022-cambios-en-serverxml-para-85)
-  - [10.3 Migración de Tomcat 8.5 a Tomcat 9.0](#103-migración-de-tomcat-85-a-tomcat-90)
-    - [¿Qué cambia?](#qué-cambia)
-    - [10.3.1 Checklist de migración 8.5 → 9.0](#1031-checklist-de-migración-85--90)
-    - [10.3.2 Cambios en configuración para Tomcat 9.0](#1032-cambios-en-configuración-para-tomcat-90)
-  - [10.4 Migración de Tomcat 9 a Tomcat 10 — El Cambio Crítico](#104-migración-de-tomcat-9-a-tomcat-10--el-cambio-crítico)
-    - [El cambio más importante en la historia de Tomcat](#el-cambio-más-importante-en-la-historia-de-tomcat)
-    - [¿Por qué ocurrió este cambio?](#por-qué-ocurrió-este-cambio)
-    - [10.4.1 Alcance completo del cambio de namespace](#1041-alcance-completo-del-cambio-de-namespace)
-    - [10.4.2 Impacto en el código de la aplicación](#1042-impacto-en-el-código-de-la-aplicación)
-    - [10.4.3 Migración automática con la Jakarta EE Migration Tool](#1043-migración-automática-con-la-jakarta-ee-migration-tool)
-    - [10.4.4 Cambios en web.xml para Tomcat 10+](#1044-cambios-en-webxml-para-tomcat-10)
-    - [10.4.5 Migración de dependencias de terceros](#1045-migración-de-dependencias-de-terceros)
-  - [10.5 Migración de Tomcat 10.0 a Tomcat 10.1](#105-migración-de-tomcat-100-a-tomcat-101)
-    - [¿Qué cambia?](#qué-cambia-1)
-    - [10.5.1 Checklist de migración 10.0 → 10.1](#1051-checklist-de-migración-100--101)
-  - [10.6 Migración de Tomcat 10.1 a Tomcat 11.0](#106-migración-de-tomcat-101-a-tomcat-110)
-    - [¿Qué cambia?](#qué-cambia-2)
-    - [10.6.1 La gran novedad: Virtual Threads](#1061-la-gran-novedad-virtual-threads)
-  - [10.7 Estrategias de Migración en Producción](#107-estrategias-de-migración-en-producción)
-    - [¿Por qué no actualizar directamente?](#por-qué-no-actualizar-directamente)
-    - [10.7.1 Estrategia Blue-Green Deployment](#1071-estrategia-blue-green-deployment)
-    - [10.7.2 Estrategia Canary Release](#1072-estrategia-canary-release)
-  - [10.8 Script de Migración Integral](#108-script-de-migración-integral)
-  - [10.9 Tabla Maestra de Cambios por Versión](#109-tabla-maestra-de-cambios-por-versión)
-  - [10.10 Guía de Rollback de Emergencia](#1010-guía-de-rollback-de-emergencia)
-    - [¿Qué es un rollback y cuándo ejecutarlo?](#qué-es-un-rollback-y-cuándo-ejecutarlo)
-  - [Puntos Clave](#puntos-clave)
+- [1. Visión General del Mapa de Migración](#1-visión-general-del-mapa-de-migración)
+  - [¿Por qué migrar de versión?](#por-qué-migrar-de-versión)
+  - [El mapa completo de versiones](#el-mapa-completo-de-versiones)
+  - [Tabla de compatibilidad: ¿qué implica cada salto?](#tabla-de-compatibilidad-qué-implica-cada-salto)
+- [2. Migración de Tomcat 8.0 a Tomcat 8.5](#2-migración-de-tomcat-80-a-tomcat-85)
+  - [¿Qué cambia realmente?](#qué-cambia-realmente)
+  - [Checklist de migración 8.0 → 8.5](#checklist-de-migración-80--85)
+  - [Cambios en server.xml para 8.5](#cambios-en-serverxml-para-85)
+- [3. Migración de Tomcat 8.5 a Tomcat 9.0](#3-migración-de-tomcat-85-a-tomcat-90)
+  - [¿Qué cambia?](#qué-cambia)
+  - [Checklist de migración 8.5 → 9.0](#checklist-de-migración-85--90)
+  - [Cambios en configuración para Tomcat 9.0](#cambios-en-configuración-para-tomcat-90)
+- [4. Migración de Tomcat 9 a Tomcat 10 — El Cambio Crítico](#4-migración-de-tomcat-9-a-tomcat-10--el-cambio-crítico)
+  - [El cambio más importante en la historia de Tomcat](#el-cambio-más-importante-en-la-historia-de-tomcat)
+  - [¿Por qué ocurrió este cambio?](#por-qué-ocurrió-este-cambio)
+  - [Alcance completo del cambio de namespace](#alcance-completo-del-cambio-de-namespace)
+  - [Impacto en el código de la aplicación](#impacto-en-el-código-de-la-aplicación)
+  - [Migración automática con la Jakarta EE Migration Tool](#migración-automática-con-la-jakarta-ee-migration-tool)
+  - [Cambios en web.xml para Tomcat 10+](#cambios-en-webxml-para-tomcat-10)
+  - [Migración de dependencias de terceros](#migración-de-dependencias-de-terceros)
+- [5.Migración de Tomcat 10.0 a Tomcat 10.1](#5migración-de-tomcat-100-a-tomcat-101)
+  - [¿Qué cambia?](#qué-cambia-1)
+  - [Checklist de migración 10.0 → 10.1](#checklist-de-migración-100--101)
+- [6. Migración de Tomcat 10.1 a Tomcat 11.0](#6-migración-de-tomcat-101-a-tomcat-110)
+  - [¿Qué cambia?](#qué-cambia-2)
+  - [La gran novedad: Virtual Threads](#la-gran-novedad-virtual-threads)
+- [7. Estrategias de Migración en Producción](#7-estrategias-de-migración-en-producción)
+  - [¿Por qué no actualizar directamente?](#por-qué-no-actualizar-directamente)
+  - [Estrategia Blue-Green Deployment](#estrategia-blue-green-deployment)
+  - [Estrategia Canary Release](#estrategia-canary-release)
+- [8. Script de Migración Integral](#8-script-de-migración-integral)
+- [9. Tabla Maestra de Cambios por Versión](#9-tabla-maestra-de-cambios-por-versión)
+- [10. Guía de Rollback de Emergencia](#10-guía-de-rollback-de-emergencia)
+  - [¿Qué es un rollback y cuándo ejecutarlo?](#qué-es-un-rollback-y-cuándo-ejecutarlo)
+- [11. Puntos Clave](#11-puntos-clave)
 
 ---
 
-# Módulo 10: Migración entre Versiones (8.0 → 8.5 → 9 → 10 → 11)
+# 1. Visión General del Mapa de Migración
 
-## 10.1 Visión General del Mapa de Migración
-
-### ¿Por qué migrar de versión?
+## ¿Por qué migrar de versión?
 
 Las razones para migrar Tomcat a una versión más reciente son varias: recibir parches de seguridad, adoptar nuevas especificaciones de Servlet que permiten nuevas funcionalidades, aprovechar mejoras de rendimiento, o simplemente porque la versión actual llega al fin de su ciclo de soporte.
 
 Pero no todas las migraciones tienen el mismo coste. Algunas son casi transparentes (cambiar un par de líneas en `server.xml`) y otras requieren modificar toda la aplicación Java. Saber de antemano qué te espera en cada salto es fundamental para planificarlo correctamente.
 
-### El mapa completo de versiones
+## El mapa completo de versiones
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
@@ -103,7 +100,7 @@ Pero no todas las migraciones tienen el mismo coste. Algunas son casi transparen
 └──────────────────────────────────────────────────────────────────────┘
 ```
 
-### Tabla de compatibilidad: ¿qué implica cada salto?
+## Tabla de compatibilidad: ¿qué implica cada salto?
 
 | Salto de versión  | ¿Cambia el namespace de APIs? | ¿Cambia el JDK mínimo? | Complejidad | Riesgo   |
 |-------------------|-------------------------------|------------------------|-------------|----------|
@@ -117,11 +114,9 @@ Pero no todas las migraciones tienen el mismo coste. Algunas son casi transparen
 
 > 💡 **Consejo práctico:** Si tienes una aplicación en Tomcat 9 y quieres ir a Tomcat 11, el salto más difícil no es el cambio de JDK (que puedes actualizar de forma independiente), sino el cambio de namespace de APIs (javax → jakarta). Ese trabajo solo lo haces una vez, así que tiene sentido subir directamente a la última versión estable en lugar de hacer paradas intermedias.
 
----
+# 2. Migración de Tomcat 8.0 a Tomcat 8.5
 
-## 10.2 Migración de Tomcat 8.0 a Tomcat 8.5
-
-### ¿Qué cambia realmente?
+## ¿Qué cambia realmente?
 
 Esta es la migración más sencilla del mapa. No hay cambio de namespace, no hay cambio de JDK mínimo, y la gran mayoría de aplicaciones funciona sin tocar una línea de código. Los cambios principales están en la configuración del servidor:
 
@@ -136,7 +131,7 @@ Esta es la migración más sencilla del mapa. No hay cambio de namespace, no hay
 
 El cambio con más impacto práctico es el **nuevo formato de configuración SSL**. En 8.0, el certificado y los parámetros TLS se configuraban como atributos directamente en el `<Connector>`. En 8.5, se introdujo una estructura más flexible y expresiva con `<SSLHostConfig>` y `<Certificate>` que permite, entre otras cosas, configurar diferentes certificados por dominio (SNI) sin necesitar varias IPs.
 
-### 10.2.1 Checklist de migración 8.0 → 8.5
+## Checklist de migración 8.0 → 8.5
 
 Este script detecta los cambios necesarios en tu instalación actual antes de que instales 8.5:
 
@@ -197,7 +192,7 @@ echo ""
 echo "=== Verificación completada ==="
 ```
 
-### 10.2.2 Cambios en server.xml para 8.5
+## Cambios en server.xml para 8.5
 
 El cambio más visible es la forma de configurar SSL. Aquí está el antes y el después completo:
 
@@ -267,11 +262,9 @@ El cambio más visible es la forma de configurar SSL. Aquí está el antes y el 
      (port, maxThreads, etc.) son los mismos. -->
 ```
 
----
+# 3. Migración de Tomcat 8.5 a Tomcat 9.0
 
-## 10.3 Migración de Tomcat 8.5 a Tomcat 9.0
-
-### ¿Qué cambia?
+## ¿Qué cambia?
 
 La migración más importante de este salto tiene dos aspectos: uno técnico (el BIO se elimina definitivamente) y uno de funcionalidad (se actualiza a Servlet 4.0, que introduce HTTP/2 PushBuilder y otras mejoras). Pero el namespace de las APIs **no cambia**: sigues usando `javax.*`.
 
@@ -287,7 +280,7 @@ La migración más importante de este salto tiene dos aspectos: uno técnico (el
 
 > ⚠️ **El bloqueante principal es el BIO.** Si en tu `server.xml` tienes `Http11BioProtocol`, Tomcat 9 no arrancará. El error en el log será algo como `ClassNotFoundException: Http11BioProtocol`. Asegúrate de cambiar a `Http11NioProtocol` antes de instalar Tomcat 9.
 
-### 10.3.1 Checklist de migración 8.5 → 9.0
+## Checklist de migración 8.5 → 9.0
 
 ```bash
 #!/bin/bash
@@ -362,7 +355,7 @@ echo ""
 echo "=== Verificación completada ==="
 ```
 
-### 10.3.2 Cambios en configuración para Tomcat 9.0
+## Cambios en configuración para Tomcat 9.0
 
 ```xml
 <!-- ===== 1. AJP con secreto (seguridad post-Ghostcat) ===== -->
@@ -409,21 +402,19 @@ echo "=== Verificación completada ==="
 </Connector>
 ```
 
----
+# 4. Migración de Tomcat 9 a Tomcat 10 — El Cambio Crítico
 
-## 10.4 Migración de Tomcat 9 a Tomcat 10 — El Cambio Crítico
-
-### El cambio más importante en la historia de Tomcat
+## El cambio más importante en la historia de Tomcat
 
 Este salto es cualitativamente diferente a todos los anteriores. En las migraciones anteriores (8.0→8.5→9.0), el código Java de tu aplicación no necesitaba cambios: solo la configuración del servidor.
 
 En el salto a Tomcat 10, **todas las clases Java de tu aplicación que usen APIs de Servlet, JSP, EL o WebSocket necesitan ser actualizadas**. La razón es el cambio de namespace: el prefijo de todos los paquetes de estas APIs cambia de `javax.*` a `jakarta.*`.
 
-### ¿Por qué ocurrió este cambio?
+## ¿Por qué ocurrió este cambio?
 
 En 2017, Oracle donó Java EE a la fundación Eclipse. La condición era que Eclipse podía continuar desarrollando la plataforma, pero **no podía usar el nombre "javax"** en nuevos paquetes, porque Oracle retiene la marca registrada de "Java". Como resultado, la fundación Eclipse (que gestiona Jakarta EE, el sucesor de Java EE) tuvo que renombrar todos los paquetes.
 
-### 10.4.1 Alcance completo del cambio de namespace
+## Alcance completo del cambio de namespace
 
 ```
 APIs que cambian (debes actualizar tu código):
@@ -448,7 +439,7 @@ APIs que NO cambian (siguen siendo javax.*):
 
 > 💡 **Regla fácil:** si el paquete es de Java EE / Jakarta EE (Servlet, JSP, WebSocket, JPA, JAX-RS...) cambia de `javax.*` a `jakarta.*`. Si es de Java SE (la plataforma base de Java: JDBC, JNDI, SSL, XML...) **no cambia**.
 
-### 10.4.2 Impacto en el código de la aplicación
+## Impacto en el código de la aplicación
 
 El cambio es mecánico y consiste exclusivamente en actualizar los imports. La lógica del código no cambia en absoluto. Aquí el mismo filtro Servlet antes y después:
 
@@ -520,7 +511,7 @@ public class AuthFilter implements Filter {
 }
 ```
 
-### 10.4.3 Migración automática con la Jakarta EE Migration Tool
+## Migración automática con la Jakarta EE Migration Tool
 
 Hacer el cambio de imports manualmente en una aplicación grande es tedioso y propenso a errores. Apache proporciona una herramienta oficial que automatiza el proceso:
 
@@ -668,7 +659,7 @@ Actualización del `pom.xml` de Maven para compilar contra las nuevas APIs:
 </project>
 ```
 
-### 10.4.4 Cambios en web.xml para Tomcat 10+
+## Cambios en web.xml para Tomcat 10+
 
 El `web.xml` también tiene que actualizarse: el namespace XML del descriptor cambia junto con los paquetes Java. Si no se actualiza, Tomcat puede rechazar el descriptor o procesarlo incorrectamente:
 
@@ -713,7 +704,7 @@ El `web.xml` también tiene que actualizarse: el namespace XML del descriptor ca
 </web-app>
 ```
 
-### 10.4.5 Migración de dependencias de terceros
+## Migración de dependencias de terceros
 
 No basta con migrar tu propio código. Las librerías de terceros que incluyes en `WEB-INF/lib/` también deben ser compatibles con jakarta.*. Los frameworks más populares tienen versiones separadas para javax.* y para jakarta.*:
 
@@ -787,11 +778,9 @@ No basta con migrar tu propio código. Las librerías de terceros que incluyes e
 
 > ⚠️ **La parte más difícil de la migración a Tomcat 10 no suele ser el cambio de `javax.*` a `jakarta.*` en tu propio código (que la herramienta automatiza). La parte difícil es actualizar los frameworks de terceros que también cambian de versión mayor, con sus propios cambios de API. Planifica tiempo suficiente para revisar los breaking changes de cada framework.**
 
----
+# 5.Migración de Tomcat 10.0 a Tomcat 10.1
 
-## 10.5 Migración de Tomcat 10.0 a Tomcat 10.1
-
-### ¿Qué cambia?
+## ¿Qué cambia?
 
 Comparado con el salto 9→10, esta migración es mucho más tranquila. No hay cambio de namespace. Los cambios principales son:
 
@@ -807,7 +796,7 @@ Comparado con el salto 9→10, esta migración es mucho más tranquila. No hay c
 
 El cambio práctico más importante es el **requisito de Java 11**. Si tu servidor tiene Java 8, necesitarás actualizar el JDK antes de instalar Tomcat 10.1.
 
-### 10.5.1 Checklist de migración 10.0 → 10.1
+## Checklist de migración 10.0 → 10.1
 
 ```bash
 #!/bin/bash
@@ -864,11 +853,9 @@ echo ""
 echo "=== Verificación completada ==="
 ```
 
----
+# 6. Migración de Tomcat 10.1 a Tomcat 11.0
 
-## 10.6 Migración de Tomcat 10.1 a Tomcat 11.0
-
-### ¿Qué cambia?
+## ¿Qué cambia?
 
 El requisito de **Java 17** es el cambio más impactante. Java 17 es una versión LTS y muy madura, por lo que la actualización del JDK suele ser el trabajo principal de esta migración. El resto de cambios son mejoras y nuevas funcionalidades:
 
@@ -881,7 +868,7 @@ El requisito de **Java 17** es el cambio más impactante. Java 17 es una versió
 | HTTP TRACE               | Deshabilitado           | Deshabilitado                       |
 | TLS 1.0/1.1              | Deshabilitado           | Deshabilitado                       |
 
-### 10.6.1 La gran novedad: Virtual Threads
+## La gran novedad: Virtual Threads
 
 Tomcat 11 con Java 21 permite usar Virtual Threads para procesar peticiones. Esto cambia fundamentalmente la ecuación de escalabilidad:
 
@@ -941,11 +928,9 @@ CATALINA_OPTS="$CATALINA_OPTS -Duser.timezone=Europe/Madrid"
 export CATALINA_OPTS
 ```
 
----
+# 7. Estrategias de Migración en Producción
 
-## 10.7 Estrategias de Migración en Producción
-
-### ¿Por qué no actualizar directamente?
+## ¿Por qué no actualizar directamente?
 
 Actualizar Tomcat directamente en el servidor de producción "apagando uno y arrancando el otro" es técnicamente posible pero muy arriesgado:
 
@@ -955,7 +940,7 @@ Actualizar Tomcat directamente en el servidor de producción "apagando uno y arr
 
 Las estrategias profesionales permiten **hacer la migración sin downtime** y con la posibilidad de revertir en segundos si algo falla.
 
-### 10.7.1 Estrategia Blue-Green Deployment
+## Estrategia Blue-Green Deployment
 
 La idea es sencilla: tienes dos entornos idénticos. El "Blue" es el actual (producción). Instalas la nueva versión en el "Green" (preparación). Cuando el Green está listo y verificado, cambias el balanceador de carga para que apunte al Green. El Blue queda en standby. Si algo falla, cambias el balanceador de vuelta al Blue en segundos.
 
@@ -1142,7 +1127,7 @@ echo "Nueva versión activa: $GREEN_TOMCAT"
 echo "El Blue queda en $BLUE_TOMCAT para rollback si es necesario"
 ```
 
-### 10.7.2 Estrategia Canary Release
+## Estrategia Canary Release
 
 En lugar de hacer el switchover completo de golpe, el Canary Release envía un pequeño porcentaje del tráfico (por ejemplo, el 5% o el 10%) a la nueva versión mientras el 90-95% restante sigue en la versión antigua. Esto permite detectar problemas con tráfico real pero con impacto limitado:
 
@@ -1218,9 +1203,7 @@ echo "Para completar la migración:    ./canary-migration.sh 100"
 echo "Para rollback:                  ./canary-migration.sh 0"
 ```
 
----
-
-## 10.8 Script de Migración Integral
+# 8. Script de Migración Integral
 
 Este script analiza una instalación Tomcat existente y genera un informe completo de qué hay que hacer antes de migrar a la versión objetivo:
 
@@ -1446,9 +1429,7 @@ echo "╚═══════════════════════�
 [ $ISSUES -gt 0 ] && exit 1 || exit 0
 ```
 
----
-
-## 10.9 Tabla Maestra de Cambios por Versión
+# 9. Tabla Maestra de Cambios por Versión
 
 Esta tabla consolida todos los cambios importantes de configuración a lo largo de las versiones, útil como referencia rápida cuando necesitas saber exactamente cuándo apareció o desapareció una funcionalidad:
 
@@ -1480,11 +1461,9 @@ Esta tabla consolida todos los cambios importantes de configuración a lo largo 
 *Requiere JDK 11+
 **Disponible en versiones de parche posteriores a la corrección de Ghostcat (8.5.51+, 9.0.31+)
 
----
+# 10. Guía de Rollback de Emergencia
 
-## 10.10 Guía de Rollback de Emergencia
-
-### ¿Qué es un rollback y cuándo ejecutarlo?
+## ¿Qué es un rollback y cuándo ejecutarlo?
 
 Un rollback es volver a la versión anterior cuando la nueva versión tiene un problema grave que no puedes resolver rápidamente. Los criterios para decidir hacer rollback son:
 
@@ -1576,10 +1555,7 @@ echo "  3. Revisar los logs de la versión nueva para entender el fallo:"
 echo "     tail -100 $CURRENT_TOMCAT/logs/catalina.out"
 echo "  4. No eliminar $CURRENT_TOMCAT hasta entender la causa del fallo"
 ```
-
----
-
-## Puntos Clave
+# 11. Puntos Clave
 
 - El cambio más crítico en la historia de Tomcat es el **cambio de namespace `javax.*` → `jakarta.*`** en Tomcat 10. Todas las aplicaciones que usan APIs Servlet, JSP, EL o WebSocket deben migrar sus imports o convertirse con la Migration Tool. Es un trabajo que se hace una vez y no hay que repetirlo.
 

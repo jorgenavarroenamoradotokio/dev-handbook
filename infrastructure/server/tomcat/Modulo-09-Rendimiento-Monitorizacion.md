@@ -4,50 +4,45 @@
 
 ---
 
-- [Módulo 09: Rendimiento, Tuning y Monitorización con JMX](#módulo-09-rendimiento-tuning-y-monitorización-con-jmx)
-  - [9.1 Metodología de Tuning: Enfoque Sistemático](#91-metodología-de-tuning-enfoque-sistemático)
-    - [¿Qué significa hacer "tuning" y por qué hay que hacerlo bien?](#qué-significa-hacer-tuning-y-por-qué-hay-que-hacerlo-bien)
-    - [Jerarquía de cuellos de botella: ¿por dónde empezar a buscar?](#jerarquía-de-cuellos-de-botella-por-dónde-empezar-a-buscar)
-  - [9.2 Tuning de la JVM](#92-tuning-de-la-jvm)
+- [1. Metodología de Tuning: Enfoque Sistemático](#1-metodología-de-tuning-enfoque-sistemático)
+  - [¿Qué significa hacer "tuning" y por qué hay que hacerlo bien?](#qué-significa-hacer-tuning-y-por-qué-hay-que-hacerlo-bien)
+  - [Jerarquía de cuellos de botella: ¿por dónde empezar a buscar?](#jerarquía-de-cuellos-de-botella-por-dónde-empezar-a-buscar)
+- [2. Tuning de la JVM](#2-tuning-de-la-jvm)
     - [¿Por qué ajustar la JVM y no solo Tomcat?](#por-qué-ajustar-la-jvm-y-no-solo-tomcat)
-    - [9.2.1 Configuración de Heap y Garbage Collector](#921-configuración-de-heap-y-garbage-collector)
-    - [9.2.2 Comparativa de Garbage Collectors para Tomcat](#922-comparativa-de-garbage-collectors-para-tomcat)
-  - [9.3 Tuning del Conector HTTP](#93-tuning-del-conector-http)
-    - [9.3.1 Dimensionamiento del pool de hilos](#931-dimensionamiento-del-pool-de-hilos)
-    - [9.3.2 Análisis de keep-alive vs nuevas conexiones](#932-análisis-de-keep-alive-vs-nuevas-conexiones)
-  - [9.4 Tuning de JSP y Recursos Estáticos](#94-tuning-de-jsp-y-recursos-estáticos)
-    - [9.4.1 Pre-compilación de JSPs](#941-pre-compilación-de-jsps)
-      - [¿Por qué las primeras peticiones a JSPs son lentas?](#por-qué-las-primeras-peticiones-a-jsps-son-lentas)
-    - [9.4.2 Caché de recursos estáticos del DefaultServlet](#942-caché-de-recursos-estáticos-del-defaultservlet)
-  - [9.5 Monitorización con JMX](#95-monitorización-con-jmx)
-    - [¿Qué es JMX y para qué sirve en Tomcat?](#qué-es-jmx-y-para-qué-sirve-en-tomcat)
-    - [9.5.1 Configuración de JMX Remoto](#951-configuración-de-jmx-remoto)
-    - [9.5.2 Catálogo completo de MBeans de Tomcat](#952-catálogo-completo-de-mbeans-de-tomcat)
-  - [9.6 Profiling con Java Flight Recorder (JFR)](#96-profiling-con-java-flight-recorder-jfr)
-    - [¿Qué es JFR y por qué es la herramienta de profiling preferida en producción?](#qué-es-jfr-y-por-qué-es-la-herramienta-de-profiling-preferida-en-producción)
-    - [9.6.1 Uso de JFR](#961-uso-de-jfr)
-    - [9.6.2 Análisis de JFR con la herramienta jfr CLI](#962-análisis-de-jfr-con-la-herramienta-jfr-cli)
-  - [9.7 Herramientas de Load Testing](#97-herramientas-de-load-testing)
-    - [¿Para qué sirve el load testing?](#para-qué-sirve-el-load-testing)
-    - [9.7.1 Apache JMeter — Plan de prueba para Tomcat](#971-apache-jmeter--plan-de-prueba-para-tomcat)
-    - [9.7.2 wrk — Load testing de alto rendimiento](#972-wrk--load-testing-de-alto-rendimiento)
-  - [9.8 Integración con Prometheus y Grafana](#98-integración-con-prometheus-y-grafana)
-    - [¿Qué es Prometheus y cómo encaja con Tomcat?](#qué-es-prometheus-y-cómo-encaja-con-tomcat)
-    - [9.8.1 Exposición de métricas con JMX Exporter](#981-exposición-de-métricas-con-jmx-exporter)
-    - [9.8.2 Dashboard Grafana — Métricas clave](#982-dashboard-grafana--métricas-clave)
-  - [9.9 Script de Diagnóstico de Rendimiento Completo](#99-script-de-diagnóstico-de-rendimiento-completo)
-  - [9.10 Tabla de Referencia Rápida de Tuning](#910-tabla-de-referencia-rápida-de-tuning)
-    - [Valores recomendados según carga](#valores-recomendados-según-carga)
-  - [9.11 Diferencias de Rendimiento y Monitorización entre Versiones](#911-diferencias-de-rendimiento-y-monitorización-entre-versiones)
-  - [Puntos Clave](#puntos-clave)
+  - [Configuración de Heap y Garbage Collector](#configuración-de-heap-y-garbage-collector)
+  - [Comparativa de Garbage Collectors para Tomcat](#comparativa-de-garbage-collectors-para-tomcat)
+- [3. Tuning del Conector HTTP](#3-tuning-del-conector-http)
+  - [Dimensionamiento del pool de hilos](#dimensionamiento-del-pool-de-hilos)
+  - [Análisis de keep-alive vs nuevas conexiones](#análisis-de-keep-alive-vs-nuevas-conexiones)
+- [4. Tuning de JSP y Recursos Estáticos](#4-tuning-de-jsp-y-recursos-estáticos)
+  - [Pre-compilación de JSPs](#pre-compilación-de-jsps)
+    - [¿Por qué las primeras peticiones a JSPs son lentas?](#por-qué-las-primeras-peticiones-a-jsps-son-lentas)
+  - [Caché de recursos estáticos del DefaultServlet](#caché-de-recursos-estáticos-del-defaultservlet)
+- [5. Monitorización con JMX](#5-monitorización-con-jmx)
+  - [¿Qué es JMX y para qué sirve en Tomcat?](#qué-es-jmx-y-para-qué-sirve-en-tomcat)
+  - [Configuración de JMX Remoto](#configuración-de-jmx-remoto)
+  - [Catálogo completo de MBeans de Tomcat](#catálogo-completo-de-mbeans-de-tomcat)
+- [6 Profiling con Java Flight Recorder (JFR)](#6-profiling-con-java-flight-recorder-jfr)
+  - [¿Qué es JFR y por qué es la herramienta de profiling preferida en producción?](#qué-es-jfr-y-por-qué-es-la-herramienta-de-profiling-preferida-en-producción)
+  - [Uso de JFR](#uso-de-jfr)
+  - [Análisis de JFR con la herramienta jfr CLI](#análisis-de-jfr-con-la-herramienta-jfr-cli)
+- [7 Herramientas de Load Testing](#7-herramientas-de-load-testing)
+  - [¿Para qué sirve el load testing?](#para-qué-sirve-el-load-testing)
+  - [Apache JMeter — Plan de prueba para Tomcat](#apache-jmeter--plan-de-prueba-para-tomcat)
+  - [wrk — Load testing de alto rendimiento](#wrk--load-testing-de-alto-rendimiento)
+- [8. Integración con Prometheus y Grafana](#8-integración-con-prometheus-y-grafana)
+  - [¿Qué es Prometheus y cómo encaja con Tomcat?](#qué-es-prometheus-y-cómo-encaja-con-tomcat)
+  - [Exposición de métricas con JMX Exporter](#exposición-de-métricas-con-jmx-exporter)
+  - [Dashboard Grafana — Métricas clave](#dashboard-grafana--métricas-clave)
+- [9. Script de Diagnóstico de Rendimiento Completo](#9-script-de-diagnóstico-de-rendimiento-completo)
+- [10. Tabla de Referencia Rápida de Tuning](#10-tabla-de-referencia-rápida-de-tuning)
+- [11. Diferencias de Rendimiento y Monitorización entre Versiones](#11-diferencias-de-rendimiento-y-monitorización-entre-versiones)
+- [12. Puntos Clave](#12-puntos-clave)
 
----
 
-# Módulo 09: Rendimiento, Tuning y Monitorización con JMX
+# 1. Metodología de Tuning: Enfoque Sistemático
 
-## 9.1 Metodología de Tuning: Enfoque Sistemático
-
-### ¿Qué significa hacer "tuning" y por qué hay que hacerlo bien?
+## ¿Qué significa hacer "tuning" y por qué hay que hacerlo bien?
 
 "Tuning" es el proceso de ajustar la configuración de Tomcat y la JVM para que el servidor rinda mejor: responda más rápido, aguante más carga, consuma menos memoria, o todo a la vez.
 
@@ -75,7 +70,7 @@ La regla de oro del tuning es: **primero medir, después cambiar, después volve
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### Jerarquía de cuellos de botella: ¿por dónde empezar a buscar?
+## Jerarquía de cuellos de botella: ¿por dónde empezar a buscar?
 
 Antes de tocar ningún parámetro de Tomcat, conviene conocer el orden de frecuencia con que aparecen los problemas de rendimiento en aplicaciones Java web. Empezar siempre por arriba:
 
@@ -101,9 +96,7 @@ Antes de tocar ningún parámetro de Tomcat, conviene conocer el orden de frecue
 
 > 💡 Si las consultas a tu base de datos tardan 2 segundos cada una, aumentar `maxThreads` de 200 a 400 solo significa que ahora tienes el doble de hilos esperando esos 2 segundos. El problema sigue siendo la BD.
 
----
-
-## 9.2 Tuning de la JVM
+# 2. Tuning de la JVM
 
 ### ¿Por qué ajustar la JVM y no solo Tomcat?
 
@@ -113,7 +106,7 @@ Tomcat corre dentro de la JVM (Java Virtual Machine). La JVM gestiona la memoria
 - **Demasiado heap:** el Garbage Collector tarda más en hacer su trabajo, causando pausas largas
 - **GC mal elegido:** pausas frecuentes que "congelan" la aplicación durante varios cientos de milisegundos
 
-### 9.2.1 Configuración de Heap y Garbage Collector
+## Configuración de Heap y Garbage Collector
 
 Todo lo siguiente va en `$CATALINA_BASE/bin/setenv.sh`:
 
@@ -338,7 +331,7 @@ CATALINA_OPTS="$CATALINA_OPTS -Dsun.net.inetaddr.ttl=60"
 export CATALINA_OPTS
 ```
 
-### 9.2.2 Comparativa de Garbage Collectors para Tomcat
+## Comparativa de Garbage Collectors para Tomcat
 
 ¿Cuál elegir? Esta tabla resume las características más relevantes para tomar la decisión:
 
@@ -355,11 +348,9 @@ export CATALINA_OPTS
 - Para APIs de trading, gaming o cualquier cosa donde una pausa de 200ms sea inaceptable → **ZGC**
 - Si dudas → **G1GC**
 
----
+# 3. Tuning del Conector HTTP
 
-## 9.3 Tuning del Conector HTTP
-
-### 9.3.1 Dimensionamiento del pool de hilos
+## Dimensionamiento del pool de hilos
 
 El pool de hilos es el conjunto de hilos Java disponibles para procesar peticiones HTTP. Si llegan más peticiones simultáneas que hilos disponibles, las peticiones extra esperan en la cola (`acceptCount`). Si la cola también se llena, nuevas peticiones son rechazadas.
 
@@ -474,7 +465,7 @@ Si necesitas más de 500: investiga por qué las peticiones son lentas
            redirectPort="8443"/>
 ```
 
-### 9.3.2 Análisis de keep-alive vs nuevas conexiones
+## Análisis de keep-alive vs nuevas conexiones
 
 Keep-alive es una técnica donde el cliente y el servidor reutilizan la misma conexión TCP para varias peticiones HTTP. Sin keep-alive, cada recurso de una página (CSS, JS, imagen) requiere abrir y cerrar una conexión TCP, lo que añade latencia y carga al servidor.
 
@@ -506,13 +497,11 @@ echo 2    > /proc/sys/net/ipv4/tcp_keepalive_time
 # Verificar conexiones idle cada 2 minutos (default 2h)
 ```
 
----
+# 4. Tuning de JSP y Recursos Estáticos
 
-## 9.4 Tuning de JSP y Recursos Estáticos
+## Pre-compilación de JSPs
 
-### 9.4.1 Pre-compilación de JSPs
-
-#### ¿Por qué las primeras peticiones a JSPs son lentas?
+### ¿Por qué las primeras peticiones a JSPs son lentas?
 
 Cuando un usuario accede por primera vez a una página JSP, Tomcat tiene que:
 1. Leer el archivo `.jsp`
@@ -602,7 +591,7 @@ $JAVA_HOME/bin/java \
   -target 17                  # Versión de Java destino
 ```
 
-### 9.4.2 Caché de recursos estáticos del DefaultServlet
+## Caché de recursos estáticos del DefaultServlet
 
 El **DefaultServlet** es el Servlet de Tomcat que sirve los archivos estáticos de las aplicaciones: HTML, CSS, JavaScript, imágenes, fuentes. Tiene un sistema de caché en memoria que puede acelerar significativamente la entrega de recursos estáticos:
 
@@ -684,11 +673,9 @@ El **DefaultServlet** es el Servlet de Tomcat que sirve los archivos estáticos 
 
 > 💡 **Consideración importante:** Si tienes Nginx u otro proxy sirviendo los archivos estáticos directamente (lo cual es el patrón recomendado para producción), la configuración del DefaultServlet tiene menos impacto porque esos archivos nunca llegan a Tomcat.
 
----
+# 5. Monitorización con JMX
 
-## 9.5 Monitorización con JMX
-
-### ¿Qué es JMX y para qué sirve en Tomcat?
+## ¿Qué es JMX y para qué sirve en Tomcat?
 
 **JMX** (Java Management Extensions) es un sistema estándar de Java para exponer métricas y controles de una aplicación en ejecución. Tomcat usa JMX extensamente: expone cientos de métricas en tiempo real sobre su estado interno.
 
@@ -701,7 +688,7 @@ Con JMX puedes:
 - Detectar hilos bloqueados
 - Incluso recargar una aplicación sin reiniciar Tomcat
 
-### 9.5.1 Configuración de JMX Remoto
+## Configuración de JMX Remoto
 
 Para conectar herramientas de monitorización externas (JConsole, VisualVM, Prometheus) a Tomcat, hay que activar JMX remoto en `setenv.sh`:
 
@@ -762,7 +749,7 @@ chmod 600 $CATALINA_BASE/conf/jmxremote.password
 chown tomcat:tomcat $CATALINA_BASE/conf/jmxremote.password
 ```
 
-### 9.5.2 Catálogo completo de MBeans de Tomcat
+## Catálogo completo de MBeans de Tomcat
 
 Este cliente JMX en Java muestra cómo leer las métricas más importantes de Tomcat programáticamente. Sirve tanto para herramientas de monitorización personalizadas como para entender qué métricas están disponibles:
 
@@ -1091,11 +1078,9 @@ public class TomcatJmxMonitor {
 }
 ```
 
----
+# 6 Profiling con Java Flight Recorder (JFR)
 
-## 9.6 Profiling con Java Flight Recorder (JFR)
-
-### ¿Qué es JFR y por qué es la herramienta de profiling preferida en producción?
+## ¿Qué es JFR y por qué es la herramienta de profiling preferida en producción?
 
 El **Java Flight Recorder** es un sistema de grabación continua de eventos de la JVM. Desde Java 11 (donde se liberó como open source), viene incluido en el JDK sin coste adicional.
 
@@ -1108,7 +1093,7 @@ Con JFR puedes ver:
 - Qué clases se están allocando más (para encontrar memory leaks)
 - Tiempos de compilación JIT
 
-### 9.6.1 Uso de JFR
+## Uso de JFR
 
 ```bash
 # ============================================================
@@ -1162,7 +1147,7 @@ jcmd $TOMCAT_PID JFR.stop \
   filename=/tmp/tomcat-final.jfr
 ```
 
-### 9.6.2 Análisis de JFR con la herramienta jfr CLI
+## Análisis de JFR con la herramienta jfr CLI
 
 ```bash
 # Ver un resumen del archivo: cuántos eventos hay de cada tipo,
@@ -1194,17 +1179,15 @@ jfr print --json /tmp/tomcat-profile.jfr > /tmp/tomcat-profile.json
 # Descargar desde: https://jdk.java.net/jmc/
 ```
 
----
+# 7 Herramientas de Load Testing
 
-## 9.7 Herramientas de Load Testing
-
-### ¿Para qué sirve el load testing?
+## ¿Para qué sirve el load testing?
 
 Antes de configurar cualquier parámetro de rendimiento, necesitas saber cuál es el estado actual: ¿cuántas peticiones por segundo aguanta el servidor ahora mismo? ¿A partir de cuántas conexiones simultáneas empieza a degradarse la latencia?
 
 Las herramientas de load testing simulan muchos usuarios accediendo a la vez, permitiendo medir el rendimiento real del servidor bajo carga controlada.
 
-### 9.7.1 Apache JMeter — Plan de prueba para Tomcat
+## Apache JMeter — Plan de prueba para Tomcat
 
 JMeter es la herramienta de load testing más completa y popular en el ecosistema Java. Permite simular miles de usuarios con escenarios complejos (login, flujos de varias peticiones, aserciones sobre las respuestas, etc.).
 
@@ -1311,7 +1294,7 @@ jmeter -n \
   -JPORT=8443
 ```
 
-### 9.7.2 wrk — Load testing de alto rendimiento
+## wrk — Load testing de alto rendimiento
 
 `wrk` es una herramienta de load testing de línea de comandos muy eficiente, capaz de generar muchísimas peticiones por segundo desde una sola máquina. Es ideal para pruebas rápidas:
 
@@ -1363,11 +1346,9 @@ wrk -t12 -c200 -d60s \
 # 164,456 requests in 1.00m    → 2.740 req/s en total durante el test
 ```
 
----
+# 8. Integración con Prometheus y Grafana
 
-## 9.8 Integración con Prometheus y Grafana
-
-### ¿Qué es Prometheus y cómo encaja con Tomcat?
+## ¿Qué es Prometheus y cómo encaja con Tomcat?
 
 **Prometheus** es un sistema de monitorización que recoge métricas de las aplicaciones y las almacena para análisis histórico. **Grafana** es una herramienta de visualización que lee esas métricas y las muestra en dashboards interactivos.
 
@@ -1379,7 +1360,7 @@ Tomcat → JMX Exporter → Prometheus → Grafana → Dashboard
           Prometheus)      cada 15s)    alertas)
 ```
 
-### 9.8.1 Exposición de métricas con JMX Exporter
+## Exposición de métricas con JMX Exporter
 
 El **JMX Exporter** es un agente Java que se activa al arrancar Tomcat, lee los MBeans JMX y los expone en formato Prometheus en un endpoint HTTP (típicamente `:9100/metrics`). Prometheus recoge ese endpoint periódicamente.
 
@@ -1457,7 +1438,7 @@ CATALINA_OPTS="$CATALINA_OPTS \
 # Prometheus lo recoge periódicamente (cada 15s por defecto).
 ```
 
-### 9.8.2 Dashboard Grafana — Métricas clave
+## Dashboard Grafana — Métricas clave
 
 Este es un ejemplo de configuración de dashboard Grafana en JSON. Define los paneles más importantes para monitorizar Tomcat:
 
@@ -1561,9 +1542,7 @@ Este es un ejemplo de configuración de dashboard Grafana en JSON. Define los pa
 }
 ```
 
----
-
-## 9.9 Script de Diagnóstico de Rendimiento Completo
+# 9. Script de Diagnóstico de Rendimiento Completo
 
 Este script realiza un diagnóstico rápido y completo del estado de un servidor Tomcat. Útil para ejecutar cuando se detecta un problema o como parte de una revisión rutinaria:
 
@@ -1710,11 +1689,7 @@ echo "  Diagnóstico completado: $(date)"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 ```
 
----
-
-## 9.10 Tabla de Referencia Rápida de Tuning
-
-### Valores recomendados según carga
+# 10. Tabla de Referencia Rápida de Tuning
 
 Esta tabla es un punto de partida. Los valores óptimos dependen del hardware, de la aplicación y del tipo de carga. Medir y ajustar siempre:
 
@@ -1737,9 +1712,7 @@ Esta tabla es un punto de partida. Los valores óptimos dependen del hardware, d
 
 > ⚠️ **Nota sobre `connectionTimeout`:** A mayor carga, menor timeout. En un servidor muy cargado, las conexiones lentas o atacantes que abren conexiones sin enviar datos bloquean recursos que necesitan los usuarios legítimos.
 
----
-
-## 9.11 Diferencias de Rendimiento y Monitorización entre Versiones
+# 11. Diferencias de Rendimiento y Monitorización entre Versiones
 
 | Característica                          | 8.0   | 8.5   | 9.0   | 10.x  | 11.0   |
 |-----------------------------------------|-------|-------|-------|-------|--------|
@@ -1765,9 +1738,7 @@ Esta tabla es un punto de partida. Los valores óptimos dependen del hardware, d
 - **Tomcat 9+:** con JDK 11+ ya puedes usar JFR y ZGC
 - **Tomcat 11:** Virtual Threads (el cambio más grande desde NIO), OpenSSL via FFM (Foreign Function & Memory API de Java 22+) sin necesidad de compilar librerías nativas
 
----
-
-## Puntos Clave
+# 12. Puntos Clave
 
 - **Medir antes de ajustar.** El cuello de botella más frecuente es la base de datos, no Tomcat ni la JVM. Aumentar `maxThreads` cuando el problema es la BD no mejora nada.
 

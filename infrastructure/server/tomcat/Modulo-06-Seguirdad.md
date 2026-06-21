@@ -4,58 +4,55 @@
 
 ---
 
-- [Módulo 06: Seguridad — TLS/SSL, Realms y Autenticación](#módulo-06-seguridad--tlsssl-realms-y-autenticación)
-  - [6.1 Arquitectura de Seguridad en Tomcat](#61-arquitectura-de-seguridad-en-tomcat)
-    - [¿Por qué hablar de "capas" de seguridad?](#por-qué-hablar-de-capas-de-seguridad)
-  - [6.2 TLS/SSL: Conceptos Fundamentales](#62-tlsssl-conceptos-fundamentales)
-    - [¿Qué es TLS y por qué importa?](#qué-es-tls-y-por-qué-importa)
-    - [¿Cómo funciona el proceso de conexión TLS? (Handshake simplificado)](#cómo-funciona-el-proceso-de-conexión-tls-handshake-simplificado)
-    - [6.2.1 Tipos de implementación TLS en Tomcat](#621-tipos-de-implementación-tls-en-tomcat)
-    - [6.2.2 Versiones de TLS soportadas por Tomcat](#622-versiones-de-tls-soportadas-por-tomcat)
-  - [6.3 Gestión de Certificados](#63-gestión-de-certificados)
-    - [¿Qué es un certificado digital?](#qué-es-un-certificado-digital)
-    - [¿Qué es un KeyStore?](#qué-es-un-keystore)
-    - [6.3.1 Generación de KeyStore JKS con keytool](#631-generación-de-keystore-jks-con-keytool)
-    - [6.3.2 Integración con Let's Encrypt (Certbot)](#632-integración-con-lets-encrypt-certbot)
-  - [6.4 Configuración TLS Completa en server.xml](#64-configuración-tls-completa-en-serverxml)
-    - [6.4.1 HTTPS con PKCS12 — Tomcat 8.5+ (Configuración recomendada)](#641-https-con-pkcs12--tomcat-85-configuración-recomendada)
-    - [6.4.2 mTLS — Autenticación mutua con certificados de cliente](#642-mtls--autenticación-mutua-con-certificados-de-cliente)
-    - [6.4.3 Recarga de certificados TLS sin reinicio — Tomcat 8.5+](#643-recarga-de-certificados-tls-sin-reinicio--tomcat-85)
-  - [6.5 Realms: Sistema de Autenticación de Tomcat](#65-realms-sistema-de-autenticación-de-tomcat)
-    - [¿Qué es un Realm?](#qué-es-un-realm)
-    - [6.5.1 MemoryRealm — Solo desarrollo](#651-memoryrealm--solo-desarrollo)
-    - [6.5.2 JDBCRealm — Usuarios en base de datos (JDBC directo)](#652-jdbcrealm--usuarios-en-base-de-datos-jdbc-directo)
-    - [6.5.3 DataSourceRealm — Usuarios en BD via pool JNDI (recomendado)](#653-datasourcerealm--usuarios-en-bd-via-pool-jndi-recomendado)
-    - [6.5.4 JNDIRealm — Autenticación contra LDAP / Active Directory](#654-jndirealm--autenticación-contra-ldap--active-directory)
-    - [6.5.5 LockOutRealm — Protección contra fuerza bruta](#655-lockoutrealm--protección-contra-fuerza-bruta)
-    - [6.5.6 CombinedRealm — Múltiples fuentes de autenticación](#656-combinedrealm--múltiples-fuentes-de-autenticación)
-    - [6.5.7 JAASRealm — Delegación a JAAS](#657-jaasrealm--delegación-a-jaas)
-  - [6.6 CredentialHandler — Hashing de Contraseñas](#66-credentialhandler--hashing-de-contraseñas)
-    - [¿Por qué hashear contraseñas?](#por-qué-hashear-contraseñas)
-  - [6.7 Métodos de Autenticación en web.xml](#67-métodos-de-autenticación-en-webxml)
-    - [6.7.1 BASIC Authentication](#671-basic-authentication)
-    - [6.7.2 FORM Authentication](#672-form-authentication)
-    - [6.7.3 CLIENT-CERT Authentication (mTLS)](#673-client-cert-authentication-mtls)
-    - [6.7.4 DIGEST Authentication](#674-digest-authentication)
-  - [6.8 Single Sign-On (SSO) entre Aplicaciones](#68-single-sign-on-sso-entre-aplicaciones)
-    - [¿Qué es SSO?](#qué-es-sso)
-  - [6.9 Hardening de Seguridad del Servidor](#69-hardening-de-seguridad-del-servidor)
-    - [6.9.1 Checklist completo de hardening](#691-checklist-completo-de-hardening)
-    - [6.9.2 Configuración de SecurityManager (Java Security Policy)](#692-configuración-de-securitymanager-java-security-policy)
-    - [6.9.3 Filtro de cabeceras de seguridad HTTP con HttpHeaderSecurityFilter](#693-filtro-de-cabeceras-de-seguridad-http-con-httpheadersecurityfilter)
-    - [6.9.4 Filtro CORS incorporado de Tomcat](#694-filtro-cors-incorporado-de-tomcat)
-  - [6.10 Auditoría de Seguridad: Valve de Acceso Avanzado](#610-auditoría-de-seguridad-valve-de-acceso-avanzado)
-  - [6.11 Script de Auditoría de Seguridad de Tomcat](#611-script-de-auditoría-de-seguridad-de-tomcat)
-  - [6.12 Diferencias de Seguridad entre Versiones](#612-diferencias-de-seguridad-entre-versiones)
-  - [Puntos Clave](#puntos-clave)
+- [1. Arquitectura de Seguridad en Tomcat](#1-arquitectura-de-seguridad-en-tomcat)
+  - [¿Por qué hablar de "capas" de seguridad?](#por-qué-hablar-de-capas-de-seguridad)
+- [2. TLS/SSL: Conceptos Fundamentales](#2-tlsssl-conceptos-fundamentales)
+  - [¿Qué es TLS y por qué importa?](#qué-es-tls-y-por-qué-importa)
+  - [¿Cómo funciona el proceso de conexión TLS? (Handshake simplificado)](#cómo-funciona-el-proceso-de-conexión-tls-handshake-simplificado)
+  - [Tipos de implementación TLS en Tomcat](#tipos-de-implementación-tls-en-tomcat)
+  - [Versiones de TLS soportadas por Tomcat](#versiones-de-tls-soportadas-por-tomcat)
+- [3. Gestión de Certificados](#3-gestión-de-certificados)
+  - [¿Qué es un certificado digital?](#qué-es-un-certificado-digital)
+  - [¿Qué es un KeyStore?](#qué-es-un-keystore)
+  - [Generación de KeyStore JKS con keytool](#generación-de-keystore-jks-con-keytool)
+  - [Integración con Let's Encrypt (Certbot)](#integración-con-lets-encrypt-certbot)
+- [4 Configuración TLS Completa en server.xml](#4-configuración-tls-completa-en-serverxml)
+  - [HTTPS con PKCS12 — Tomcat 8.5+ (Configuración recomendada)](#https-con-pkcs12--tomcat-85-configuración-recomendada)
+  - [mTLS — Autenticación mutua con certificados de cliente](#mtls--autenticación-mutua-con-certificados-de-cliente)
+  - [Recarga de certificados TLS sin reinicio — Tomcat 8.5+](#recarga-de-certificados-tls-sin-reinicio--tomcat-85)
+- [5. Realms: Sistema de Autenticación de Tomcat](#5-realms-sistema-de-autenticación-de-tomcat)
+  - [¿Qué es un Realm?](#qué-es-un-realm)
+  - [MemoryRealm — Solo desarrollo](#memoryrealm--solo-desarrollo)
+  - [JDBCRealm — Usuarios en base de datos (JDBC directo)](#jdbcrealm--usuarios-en-base-de-datos-jdbc-directo)
+  - [DataSourceRealm — Usuarios en BD via pool JNDI (recomendado)](#datasourcerealm--usuarios-en-bd-via-pool-jndi-recomendado)
+  - [JNDIRealm — Autenticación contra LDAP / Active Directory](#jndirealm--autenticación-contra-ldap--active-directory)
+  - [LockOutRealm — Protección contra fuerza bruta](#lockoutrealm--protección-contra-fuerza-bruta)
+  - [CombinedRealm — Múltiples fuentes de autenticación](#combinedrealm--múltiples-fuentes-de-autenticación)
+  - [JAASRealm — Delegación a JAAS](#jaasrealm--delegación-a-jaas)
+- [6. CredentialHandler — Hashing de Contraseñas](#6-credentialhandler--hashing-de-contraseñas)
+  - [¿Por qué hashear contraseñas?](#por-qué-hashear-contraseñas)
+- [7. Métodos de Autenticación en web.xml](#7-métodos-de-autenticación-en-webxml)
+  - [BASIC Authentication](#basic-authentication)
+  - [FORM Authentication](#form-authentication)
+  - [CLIENT-CERT Authentication (mTLS)](#client-cert-authentication-mtls)
+  - [DIGEST Authentication](#digest-authentication)
+- [8. Single Sign-On (SSO) entre Aplicaciones](#8-single-sign-on-sso-entre-aplicaciones)
+  - [¿Qué es SSO?](#qué-es-sso)
+- [9. Hardening de Seguridad del Servidor](#9-hardening-de-seguridad-del-servidor)
+  - [Checklist completo de hardening](#checklist-completo-de-hardening)
+  - [Configuración de SecurityManager (Java Security Policy)](#configuración-de-securitymanager-java-security-policy)
+  - [Filtro de cabeceras de seguridad HTTP con HttpHeaderSecurityFilter](#filtro-de-cabeceras-de-seguridad-http-con-httpheadersecurityfilter)
+  - [Filtro CORS incorporado de Tomcat](#filtro-cors-incorporado-de-tomcat)
+- [10. Auditoría de Seguridad: Valve de Acceso Avanzado](#10-auditoría-de-seguridad-valve-de-acceso-avanzado)
+- [11. Script de Auditoría de Seguridad de Tomcat](#11-script-de-auditoría-de-seguridad-de-tomcat)
+- [12. Diferencias de Seguridad entre Versiones](#12-diferencias-de-seguridad-entre-versiones)
+- [13. Puntos Clave](#13-puntos-clave)
 
 ---
 
-# Módulo 06: Seguridad — TLS/SSL, Realms y Autenticación
+# 1. Arquitectura de Seguridad en Tomcat
 
-## 6.1 Arquitectura de Seguridad en Tomcat
-
-### ¿Por qué hablar de "capas" de seguridad?
+## ¿Por qué hablar de "capas" de seguridad?
 
 La seguridad de un servidor web no es un único mecanismo, sino un conjunto de defensas independientes que trabajan en coordinación. La idea central es la **defensa en profundidad**: si un atacante consigue saltarse una capa, las capas restantes siguen protegiéndote. Confiar en una sola capa es un error de diseño; si esa capa falla, todo queda expuesto.
 
@@ -85,11 +82,10 @@ En Tomcat, la seguridad se articula en cuatro capas independientes y complementa
 
 **Capa 4 — Hardening de infraestructura:** Son las medidas preventivas que reducen la superficie de ataque del servidor en sí: deshabilitar puertos innecesarios, ocultar información de versiones, configurar cabeceras HTTP de seguridad, restringir permisos del sistema operativo, etc.
 
----
 
-## 6.2 TLS/SSL: Conceptos Fundamentales
+# 2. TLS/SSL: Conceptos Fundamentales
 
-### ¿Qué es TLS y por qué importa?
+## ¿Qué es TLS y por qué importa?
 
 **TLS** (*Transport Layer Security*) es el protocolo criptográfico que hace que las conexiones HTTPS sean seguras. Su predecesor SSL (*Secure Sockets Layer*) está obsoleto y lleno de vulnerabilidades conocidas; cuando hoy se habla de "SSL" en el contexto de servidores web, en realidad se hace referencia a TLS.
 
@@ -99,7 +95,7 @@ TLS garantiza tres propiedades fundamentales:
 - **Integridad:** Si los datos son alterados durante el tránsito, el destinatario lo detecta y rechaza el mensaje.
 - **Autenticación del servidor:** El certificado digital del servidor demuestra al cliente que está hablando con el servidor legítimo y no con un impostor (ataque *man-in-the-middle*).
 
-### ¿Cómo funciona el proceso de conexión TLS? (Handshake simplificado)
+## ¿Cómo funciona el proceso de conexión TLS? (Handshake simplificado)
 
 1. El cliente (navegador) se conecta al servidor y anuncia qué versiones de TLS y qué algoritmos criptográficos soporta.
 2. El servidor responde con el certificado digital (que contiene su clave pública) y selecciona los algoritmos a usar.
@@ -107,7 +103,7 @@ TLS garantiza tres propiedades fundamentales:
 4. Ambas partes negocian una clave de sesión simétrica (diferente para cada conexión) usando criptografía asimétrica.
 5. A partir de ahí, todos los datos se cifran con esa clave de sesión.
 
-### 6.2.1 Tipos de implementación TLS en Tomcat
+## Tipos de implementación TLS en Tomcat
 
 Tomcat puede usar tres implementaciones diferentes del protocolo TLS, con diferentes características de rendimiento y complejidad:
 
@@ -123,7 +119,7 @@ Tomcat puede usar tres implementaciones diferentes del protocolo TLS, con difere
 
 **OpenSSL via FFM**: Disponible en Tomcat 11+, usa la *Foreign Function & Memory API* de Java 22 para acceder a OpenSSL sin necesidad de `libtcnative`. Combina el rendimiento de OpenSSL con una instalación más sencilla.
 
-### 6.2.2 Versiones de TLS soportadas por Tomcat
+## Versiones de TLS soportadas por Tomcat
 
 La versión de TLS determina qué algoritmos criptográficos se pueden usar. Versiones más antiguas tienen vulnerabilidades conocidas y deben deshabilitarse explícitamente en versiones antiguas de Tomcat.
 
@@ -141,17 +137,15 @@ La versión de TLS determina qué algoritmos criptográficos se pueden usar. Ver
 
 **TLSv1.3:** La versión más moderna y segura. Simplifica el handshake (más rápido), elimina cipher suites inseguros y mejora la privacidad. Requerida si se quiere calificación A+ en herramientas como SSL Labs.
 
----
+# 3. Gestión de Certificados
 
-## 6.3 Gestión de Certificados
-
-### ¿Qué es un certificado digital?
+## ¿Qué es un certificado digital?
 
 Un certificado digital es un documento electrónico que vincula una clave pública con la identidad de su propietario (un nombre de dominio, una organización). Lo que lo hace confiable es que está **firmado digitalmente por una Autoridad de Certificación (CA)**, que es una entidad en la que los navegadores confían por defecto.
 
 Los navegadores incluyen una lista de CAs de confianza (Root CAs). Cuando tu servidor presenta un certificado firmado por una de esas CAs, el navegador lo acepta sin mostrar advertencias.
 
-### ¿Qué es un KeyStore?
+## ¿Qué es un KeyStore?
 
 Un **KeyStore** es un archivo que almacena de forma segura claves criptográficas y certificados. Es como una caja fuerte para material criptográfico. Tomcat usa el KeyStore para:
 - Almacenar la **clave privada** del servidor (secreta, nunca sale del servidor).
@@ -162,7 +156,7 @@ Hay dos formatos principales de KeyStore:
 - **JKS** (*Java KeyStore*): Formato propietario de Java. Sigue funcionando pero está en desuso desde Java 9.
 - **PKCS12** (`.p12` o `.pfx`): Formato estándar e interoperable. Es el recomendado actualmente porque funciona con herramientas Java y no-Java (OpenSSL, etc.).
 
-### 6.3.1 Generación de KeyStore JKS con keytool
+## Generación de KeyStore JKS con keytool
 
 `keytool` es una herramienta de línea de comandos incluida en el JDK para gestionar KeyStores. No necesitas instalar nada adicional.
 
@@ -318,7 +312,7 @@ keytool -importkeystore \
   -destkeypass changeit
 ```
 
-### 6.3.2 Integración con Let's Encrypt (Certbot)
+## Integración con Let's Encrypt (Certbot)
 
 **¿Qué es Let's Encrypt?**
 Let's Encrypt es una CA gratuita, automatizada y abierta, patrocinada por grandes empresas tecnológicas (Mozilla, Google, Cisco...). Proporciona certificados TLS válidos sin coste. Sus certificados son reconocidos por todos los navegadores modernos. La única limitación es que expiran cada 90 días (lo que fomenta la automatización de la renovación).
@@ -415,9 +409,9 @@ chmod +x /opt/scripts/convert-cert-tomcat.sh
 
 ---
 
-## 6.4 Configuración TLS Completa en server.xml
+# 4 Configuración TLS Completa en server.xml
 
-### 6.4.1 HTTPS con PKCS12 — Tomcat 8.5+ (Configuración recomendada)
+## HTTPS con PKCS12 — Tomcat 8.5+ (Configuración recomendada)
 
 A partir de Tomcat 8.5, la configuración TLS usa el elemento `<SSLHostConfig>` dentro del Connector, en lugar de los atributos directos que usaban versiones anteriores. Esta estructura es más flexible: permite configurar múltiples certificados (RSA y ECDSA simultáneos) y múltiples dominios via SNI.
 
@@ -584,7 +578,7 @@ A partir de Tomcat 8.5, la configuración TLS usa el elemento `<SSLHostConfig>` 
 </Connector>
 ```
 
-### 6.4.2 mTLS — Autenticación mutua con certificados de cliente
+## mTLS — Autenticación mutua con certificados de cliente
 
 **¿Qué es mTLS?**
 En TLS estándar, solo el servidor presenta un certificado. El cliente (navegador) verifica que el servidor es legítimo, pero el servidor no verifica la identidad del cliente más allá de un usuario/contraseña.
@@ -734,7 +728,7 @@ public class MtlsServlet extends HttpServlet {
 }
 ```
 
-### 6.4.3 Recarga de certificados TLS sin reinicio — Tomcat 8.5+
+## Recarga de certificados TLS sin reinicio — Tomcat 8.5+
 
 Los certificados TLS expiran (normalmente cada 1-2 años, o cada 90 días con Let's Encrypt). En versiones antiguas de Tomcat, actualizar el certificado requería reiniciar el servidor, interrumpiendo el servicio.
 
@@ -759,11 +753,9 @@ curl -u admin:password \
   "http://localhost:8080/manager/text/sslReload?tlsHostName=app.miempresa.com"
 ```
 
----
+# 5. Realms: Sistema de Autenticación de Tomcat
 
-## 6.5 Realms: Sistema de Autenticación de Tomcat
-
-### ¿Qué es un Realm?
+## ¿Qué es un Realm?
 
 Un **Realm** es el componente de Tomcat que implementa la autenticación: verifica que un usuario existe y que la contraseña es correcta, y devuelve los roles asociados a ese usuario.
 
@@ -777,7 +769,7 @@ Cuando el usuario introduce su contraseña, Tomcat:
 5. Devuelve los roles del usuario si la autenticación es correcta.
 6. Tomcat aplica las `<security-constraint>` para decidir si el usuario tiene acceso al recurso solicitado.
 
-### 6.5.1 MemoryRealm — Solo desarrollo
+## MemoryRealm — Solo desarrollo
 
 `MemoryRealm` carga los usuarios desde el archivo `conf/tomcat-users.xml` al arrancar Tomcat. Los cambios en el archivo requieren reinicio para ser efectivos. Es extremadamente simple de configurar pero completamente inadecuado para producción: todos los usuarios están en un archivo de texto plano en el servidor, no escala, y no tiene integración con sistemas de identidad corporativos.
 
@@ -827,7 +819,7 @@ Cuando el usuario introduce su contraseña, Tomcat:
 </tomcat-users>
 ```
 
-### 6.5.2 JDBCRealm — Usuarios en base de datos (JDBC directo)
+## JDBCRealm — Usuarios en base de datos (JDBC directo)
 
 `JDBCRealm` almacena los usuarios en una base de datos relacional y hace consultas JDBC directas para autenticar. A diferencia de `MemoryRealm`, los cambios en la BD son efectivos inmediatamente sin reiniciar.
 
@@ -898,7 +890,7 @@ INSERT INTO app_user_roles (username, role_name)
 VALUES ('admin', 'admin'), ('admin', 'manager');
 ```
 
-### 6.5.3 DataSourceRealm — Usuarios en BD via pool JNDI (recomendado)
+## DataSourceRealm — Usuarios en BD via pool JNDI (recomendado)
 
 `DataSourceRealm` es funcionalmente idéntico a `JDBCRealm` pero en lugar de gestionar su propia conexión, usa un **DataSource JNDI** (el pool de conexiones configurado en Tomcat, como se vio en el Módulo 05). Esto es mejor por varios motivos:
 
@@ -943,7 +935,7 @@ VALUES ('admin', 'admin'), ('admin', 'manager');
        -->
 ```
 
-### 6.5.4 JNDIRealm — Autenticación contra LDAP / Active Directory
+## JNDIRealm — Autenticación contra LDAP / Active Directory
 
 **¿Qué es LDAP?**
 LDAP (*Lightweight Directory Access Protocol*) es un protocolo estándar para acceder a servicios de directorio. Un directorio LDAP es una base de datos optimizada para lecturas frecuentes que almacena información jerárquica: usuarios, grupos, equipos, políticas de empresa, etc.
@@ -1090,7 +1082,7 @@ LDAP (*Lightweight Directory Access Protocol*) es un protocolo estándar para ac
 </Realm>
 ```
 
-### 6.5.5 LockOutRealm — Protección contra fuerza bruta
+## LockOutRealm — Protección contra fuerza bruta
 
 Un **ataque de fuerza bruta** consiste en intentar miles o millones de contraseñas automáticamente hasta dar con la correcta. Sin ninguna protección, un atacante puede intentar contraseñas indefinidamente.
 
@@ -1151,7 +1143,7 @@ Un **ataque de fuerza bruta** consiste en intentar miles o millones de contrase�
 </Realm>
 ```
 
-### 6.5.6 CombinedRealm — Múltiples fuentes de autenticación
+## CombinedRealm — Múltiples fuentes de autenticación
 
 `CombinedRealm` permite tener **múltiples Realms en paralelo**. Cuando un usuario intenta autenticarse, Tomcat prueba cada Realm en el orden en que están definidos. El primero que autentifique al usuario con éxito "gana" y se usa su lista de roles.
 
@@ -1203,7 +1195,7 @@ Un **ataque de fuerza bruta** consiste en intentar miles o millones de contrase�
 </Realm>
 ```
 
-### 6.5.7 JAASRealm — Delegación a JAAS
+## JAASRealm — Delegación a JAAS
 
 **JAAS** (*Java Authentication and Authorization Service*) es el framework estándar de Java para autenticación y autorización. `JAASRealm` permite que Tomcat delegue la autenticación a un módulo JAAS personalizado.
 
@@ -1247,11 +1239,9 @@ TomcatLogin {
 };
 ```
 
----
+# 6. CredentialHandler — Hashing de Contraseñas
 
-## 6.6 CredentialHandler — Hashing de Contraseñas
-
-### ¿Por qué hashear contraseñas?
+## ¿Por qué hashear contraseñas?
 
 Nunca se deben almacenar contraseñas en texto plano en ninguna base de datos. Si la BD es comprometida, las contraseñas quedan expuestas directamente.
 
@@ -1367,13 +1357,11 @@ $CATALINA_HOME/bin/digest.sh \
   miPasswordSeguro
 ```
 
----
-
-## 6.7 Métodos de Autenticación en web.xml
+# 7. Métodos de Autenticación en web.xml
 
 Los métodos de autenticación definen *cómo* el cliente envía sus credenciales al servidor. Se configuran en el `<login-config>` del `web.xml` de la aplicación.
 
-### 6.7.1 BASIC Authentication
+## BASIC Authentication
 
 HTTP Basic Auth es el método más simple: el navegador muestra un diálogo nativo de usuario/contraseña. Las credenciales se envían en la cabecera `Authorization` codificadas en Base64.
 
@@ -1405,7 +1393,7 @@ HTTP Basic Auth es el método más simple: el navegador muestra un diálogo nati
 </security-constraint>
 ```
 
-### 6.7.2 FORM Authentication
+## FORM Authentication
 
 FORM Auth permite usar un formulario HTML personalizado en lugar del diálogo nativo del navegador. Es el método más flexible para aplicaciones con diseño propio.
 
@@ -1494,7 +1482,7 @@ El flujo es:
 </html>
 ```
 
-### 6.7.3 CLIENT-CERT Authentication (mTLS)
+## CLIENT-CERT Authentication (mTLS)
 
 Cuando se usa `CLIENT-CERT` como método de autenticación en `web.xml`, Tomcat usa el certificado del cliente (verificado a nivel TLS en el Conector, ver sección 6.4.2) para determinar la identidad del usuario.
 
@@ -1527,7 +1515,7 @@ El Realm busca al usuario basándose en el Subject DN del certificado del client
 </security-constraint>
 ```
 
-### 6.7.4 DIGEST Authentication
+## DIGEST Authentication
 
 HTTP Digest Auth es una mejora sobre Basic Auth: en lugar de enviar la contraseña (aunque sea codificada en Base64), envía un hash MD5 de la contraseña combinada con un *nonce* (número aleatorio generado por el servidor).
 
@@ -1543,11 +1531,9 @@ Sin embargo, MD5 está considerado criptográficamente roto, el protocolo tiene 
 
 > ⚠️ **No usar en sistemas nuevos.** DIGEST es mejor que BASIC sin TLS, pero en cualquier sistema con TLS habilitado (que debe ser todos), BASIC sobre HTTPS es más seguro que DIGEST (ya que DIGEST con MD5 es vulnerable a ataques de colisión).
 
----
+# 8. Single Sign-On (SSO) entre Aplicaciones
 
-## 6.8 Single Sign-On (SSO) entre Aplicaciones
-
-### ¿Qué es SSO?
+## ¿Qué es SSO?
 
 **SSO** (*Single Sign-On*) es el mecanismo que permite al usuario autenticarse una vez y acceder a múltiples aplicaciones sin volver a introducir sus credenciales. Es la experiencia habitual en entornos corporativos: te identificas por la mañana y puedes usar el correo, el ERP, el CRM, etc. sin más logins.
 
@@ -1594,15 +1580,13 @@ En Tomcat, el `SingleSignOn Valve` implementa SSO para múltiples aplicaciones d
 </Host>
 ```
 
----
-
-## 6.9 Hardening de Seguridad del Servidor
+# 9. Hardening de Seguridad del Servidor
 
 **Hardening** es el proceso de reducir la *superficie de ataque* de un sistema: eliminar funcionalidades innecesarias, ocultar información útil para atacantes, y aplicar configuraciones más restrictivas que las que vienen por defecto.
 
 Un servidor Tomcat recién instalado tiene configuraciones pensadas para facilidad de uso y diagnóstico, no para seguridad en producción. El hardening convierte esas configuraciones en unas apropiadas para exposición pública.
 
-### 6.9.1 Checklist completo de hardening
+## Checklist completo de hardening
 
 ```xml
 <!-- server.xml — Configuración de hardening -->
@@ -1705,7 +1689,7 @@ Un servidor Tomcat recién instalado tiene configuraciones pensadas para facilid
 </servlet>
 ```
 
-### 6.9.2 Configuración de SecurityManager (Java Security Policy)
+## Configuración de SecurityManager (Java Security Policy)
 
 El **SecurityManager** de Java es un mecanismo de seguridad que permite restringir qué operaciones puede realizar cada pieza de código (lectura/escritura de archivos, conexiones de red, lectura de propiedades del sistema, carga de clases, etc.).
 
@@ -1769,7 +1753,7 @@ grant codeBase "file:${catalina.base}/webapps/myapp/-" {
 };
 ```
 
-### 6.9.3 Filtro de cabeceras de seguridad HTTP con HttpHeaderSecurityFilter
+## Filtro de cabeceras de seguridad HTTP con HttpHeaderSecurityFilter
 
 En el Módulo 05 vimos cómo implementar un filtro personalizado de cabeceras de seguridad en Java. Tomcat incluye uno ya implementado y listo para usar: `HttpHeaderSecurityFilter`. Es más conveniente que mantener código propio.
 
@@ -1832,7 +1816,7 @@ En el Módulo 05 vimos cómo implementar un filtro personalizado de cabeceras de
 </filter-mapping>
 ```
 
-### 6.9.4 Filtro CORS incorporado de Tomcat
+## Filtro CORS incorporado de Tomcat
 
 Tomcat también incluye su propia implementación del filtro CORS (`org.apache.catalina.filters.CorsFilter`), como alternativa a implementarlo desde cero en Java.
 
@@ -1900,9 +1884,7 @@ Tomcat también incluye su propia implementación del filtro CORS (`org.apache.c
 </filter-mapping>
 ```
 
----
-
-## 6.10 Auditoría de Seguridad: Valve de Acceso Avanzado
+# 10. Auditoría de Seguridad: Valve de Acceso Avanzado
 
 Un **Valve** en Tomcat es similar a un Filtro (intercepta peticiones), pero opera a un nivel más bajo del pipeline de Tomcat, antes incluso de que la petición llegue a los Filtros de la aplicación. Se configuran en `server.xml`.
 
@@ -1972,9 +1954,7 @@ Un **Valve** en Tomcat es similar a un Filtro (intercepta peticiones), pero oper
        ipv6Canonical="false"/>
 ```
 
----
-
-## 6.11 Script de Auditoría de Seguridad de Tomcat
+# 11. Script de Auditoría de Seguridad de Tomcat
 
 Este script verifica automáticamente los puntos de hardening más críticos de una instalación de Tomcat. Debe ejecutarse después de cada instalación y antes de poner un servidor en producción.
 
@@ -2205,9 +2185,7 @@ else
 fi
 ```
 
----
-
-## 6.12 Diferencias de Seguridad entre Versiones
+# 12. Diferencias de Seguridad entre Versiones
 
 Esta tabla resume las características de seguridad disponibles en cada versión de Tomcat, útil para decisiones de actualización:
 
@@ -2239,9 +2217,7 @@ Esta tabla resume las características de seguridad disponibles en cada versión
 
 **AJP secretRequired:** La vulnerabilidad Ghostcat (CVE-2020-1938) permitía a un atacante con acceso al puerto AJP leer archivos arbitrarios del servidor o ejecutar código si podía hacer que Tomcat procesara un archivo malicioso. El parche añadió `secretRequired` que exige un secreto compartido entre Apache httpd y Tomcat para usar AJP.
 
----
-
-## Puntos Clave
+# 13. Puntos Clave
 
 - La seguridad en Tomcat se articula en **cuatro capas independientes**: transporte (TLS), autenticación (Realms), autorización (Security Constraints) e infraestructura (hardening). Nunca depender de una sola capa.
 

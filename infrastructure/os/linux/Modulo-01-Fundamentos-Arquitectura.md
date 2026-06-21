@@ -4,42 +4,39 @@
 
 ---
 
-- [1. Introducción y Arquitectura](#1-introducción-y-arquitectura)
-  - [1.1 ¿Qué es Linux?](#11-qué-es-linux)
-  - [1.2 Distribuciones populares](#12-distribuciones-populares)
-  - [1.3 El Kernel vs. El Espacio de Usuario](#13-el-kernel-vs-el-espacio-de-usuario)
+- [1. ¿Qué es Linux?](#1-qué-es-linux)
+  - [Distribuciones populares](#distribuciones-populares)
+  - [El Kernel vs. El Espacio de Usuario](#el-kernel-vs-el-espacio-de-usuario)
     - [¿Por qué importa esta distinción?](#por-qué-importa-esta-distinción)
-  - [1.4 Estándar de Jerarquía de Archivos (FHS)](#14-estándar-de-jerarquía-de-archivos-fhs)
+  - [Estándar de Jerarquía de Archivos (FHS)](#estándar-de-jerarquía-de-archivos-fhs)
     - [Directorios críticos en detalle](#directorios-críticos-en-detalle)
     - [Cheat Sheet — FHS](#cheat-sheet--fhs)
-  - [1.5 El Proceso de Boot](#15-el-proceso-de-boot)
+  - [El Proceso de Boot](#el-proceso-de-boot)
     - [Fase 1: BIOS / UEFI](#fase-1-bios--uefi)
     - [Fase 2: GRUB](#fase-2-grub)
     - [Fase 3: Kernel e initramfs](#fase-3-kernel-e-initramfs)
     - [Fase 4: systemd (PID 1)](#fase-4-systemd-pid-1)
 - [2. Manejo de Ficheros y Directorios](#2-manejo-de-ficheros-y-directorios)
-  - [2.1 Sistema de ficheros y rutas](#21-sistema-de-ficheros-y-rutas)
-  - [2.2 Tipos de ficheros](#22-tipos-de-ficheros)
-  - [2.3 Navegación esencial](#23-navegación-esencial)
-  - [2.4 Creación y Visualización de Ficheros](#24-creación-y-visualización-de-ficheros)
+  - [Sistema de ficheros y rutas](#sistema-de-ficheros-y-rutas)
+  - [Tipos de ficheros](#tipos-de-ficheros)
+  - [Navegación esencial](#navegación-esencial)
+  - [Creación y Visualización de Ficheros](#creación-y-visualización-de-ficheros)
     - [Creación rápida](#creación-rápida)
     - [Visualización de contenido](#visualización-de-contenido)
-  - [2.5 Editores de Texto](#25-editores-de-texto)
-  - [2.6 Manipulación de Ficheros y Directorios](#26-manipulación-de-ficheros-y-directorios)
-  - [2.7 Búsqueda de ficheros](#27-búsqueda-de-ficheros)
+  - [Editores de Texto](#editores-de-texto)
+  - [Manipulación de Ficheros y Directorios](#manipulación-de-ficheros-y-directorios)
+  - [Búsqueda de ficheros](#búsqueda-de-ficheros)
     - [Cheat Sheet — Ficheros](#cheat-sheet--ficheros)
 - [3. La Shell y el Entorno](#3-la-shell-y-el-entorno)
-  - [3.1 ¿Qué es la Shell?](#31-qué-es-la-shell)
-  - [3.2 Variables de Entorno](#32-variables-de-entorno)
-  - [3.3 Archivos de configuración de Bash](#33-archivos-de-configuración-de-bash)
-  - [3.4 Aliases y Funciones](#34-aliases-y-funciones)
-  - [3.5 Historial de Comandos](#35-historial-de-comandos)
+  - [¿Qué es la Shell?](#qué-es-la-shell)
+  - [Variables de Entorno](#variables-de-entorno)
+  - [Archivos de configuración de Bash](#archivos-de-configuración-de-bash)
+  - [Aliases y Funciones](#aliases-y-funciones)
+- [4. Comandos](#4-comandos)
 
 ---
 
-# 1. Introducción y Arquitectura
-
-## 1.1 ¿Qué es Linux?
+# 1. ¿Qué es Linux?
 
 Linux es un sistema operativo **libre y de código abierto**, basado en Unix, creado por Linus Torvalds en 1991. A diferencia de Windows o macOS, Linux es el núcleo (kernel) del sistema; lo que solemos llamar "Linux" es en realidad una distribución: el kernel Linux empaquetado con herramientas GNU, un gestor de paquetes y software adicional.
 
@@ -49,9 +46,7 @@ Sus pilares son:
 - **Estabilidad y seguridad:** Base de la mayoría de servidores, supercomputadoras, dispositivos embebidos y la nube.
 - **Portabilidad:** Funciona desde relojes inteligentes hasta mainframes.
 
----
-
-## 1.2 Distribuciones populares
+## Distribuciones populares
 
 Una distribución (distro) es el kernel Linux empaquetado con un ecosistema de software. Elegir la distro correcta es una decisión de arquitectura.
 
@@ -67,9 +62,7 @@ Una distribución (distro) es el kernel Linux empaquetado con un ecosistema de s
 
 > **Consejo SysAdmin:** Para servidores en producción, **Ubuntu LTS** (5 años de soporte) o **Rocky Linux** (compatibilidad RHEL) son los estándares más usados. Para contenedores Docker, **Alpine** minimiza la superficie de ataque al máximo.
 
----
-
-## 1.3 El Kernel vs. El Espacio de Usuario
+## El Kernel vs. El Espacio de Usuario
 
 ### ¿Por qué importa esta distinción?
 
@@ -107,9 +100,7 @@ cat /proc/version           # Versión detallada del kernel
 
 > **Caso de uso real:** Un proceso consume RAM de forma anormal. Con `strace -p <PID>` ves exactamente qué syscalls hace, qué archivos abre y si está en un bucle de `malloc()`. Diagnóstico sin tocar el código fuente.
 
----
-
-## 1.4 Estándar de Jerarquía de Archivos (FHS)
+## Estándar de Jerarquía de Archivos (FHS)
 
 El *Filesystem Hierarchy Standard* es el contrato que define dónde va cada tipo de archivo en Linux. Gracias a él, un script escrito para Ubuntu funciona en Rocky Linux con mínimas modificaciones.
 
@@ -216,9 +207,7 @@ du -sh /var/log/*               # Ver qué logs ocupan más espacio
 | `/opt` | Software de terceros | Sí, manual |
 | `/usr/local` | Software compilado localmente | Sí, por el admin |
 
----
-
-## 1.5 El Proceso de Boot
+## El Proceso de Boot
 
 Entender el boot es fundamental: cuando un servidor no arranca, este conocimiento es lo único que te salva.
 
@@ -281,11 +270,9 @@ systemd-analyze blame | head -20        # Qué servicio tarda más en arrancar
 systemd-analyze critical-chain          # Árbol de dependencias crítico del arranque
 ```
 
----
-
 # 2. Manejo de Ficheros y Directorios
 
-## 2.1 Sistema de ficheros y rutas
+## Sistema de ficheros y rutas
 
 A diferencia de Windows, Linux no usa letras de unidad (C:, D:). Todo cuelga de la raíz `/` en un árbol único. Los dispositivos físicos se "montan" en directorios de ese árbol.
 
@@ -309,9 +296,7 @@ cd ~otro_usuario        # Ir al home de otro usuario
 # -   → Último directorio visitado
 ```
 
----
-
-## 2.2 Tipos de ficheros
+## Tipos de ficheros
 
 En Linux, absolutamente todo es un archivo. Los tipos son:
 
@@ -338,9 +323,8 @@ readlink -f enlace_simbolico                  # Ver a dónde apunta un enlace si
 
 > **Diferencia entre enlace simbólico y duro:** Si borras el archivo original, el enlace simbólico se rompe (apunta a la nada). El enlace duro sigue funcionando porque el archivo real (el inodo) solo se elimina cuando se borran **todos** sus enlaces.
 
----
 
-## 2.3 Navegación esencial
+## Navegación esencial
 
 ```bash
 # Listar archivos
@@ -360,9 +344,7 @@ ls archivo?.txt         # archivo1.txt, archivo2.txt... (? = 1 carácter cualqui
 ls [0-9]*               # Archivos que empiezan por dígito
 ```
 
----
-
-## 2.4 Creación y Visualización de Ficheros
+## Creación y Visualización de Ficheros
 
 ### Creación rápida
 
@@ -404,9 +386,7 @@ wc -w archivo.txt               # Contar palabras
 wc -c archivo.txt               # Contar bytes
 ```
 
----
-
-## 2.5 Editores de Texto
+## Editores de Texto
 
 Existen dos mundos principales en la terminal:
 
@@ -447,9 +427,7 @@ vim archivo.conf                # Abrir archivo
 vimtutor                        # Tutorial interactivo oficial de vim (¡muy recomendado!)
 ```
 
----
-
-## 2.6 Manipulación de Ficheros y Directorios
+## Manipulación de Ficheros y Directorios
 
 ```bash
 # COPIAR
@@ -484,7 +462,7 @@ rm *.tmp                        # Eliminar todos los archivos .tmp del directori
 
 ---
 
-## 2.7 Búsqueda de ficheros
+## Búsqueda de ficheros
 
 **`find` — Búsqueda en tiempo real (el más potente)**
 
@@ -529,11 +507,9 @@ type ls                         # Distingue si es alias, función o binario
 | `diff -u file1 file2` | Ver diferencias entre archivos |
 | `wc -l archivo` | Contar líneas de un archivo |
 
----
-
 # 3. La Shell y el Entorno
 
-## 3.1 ¿Qué es la Shell?
+## ¿Qué es la Shell?
 
 La shell es el intérprete de comandos: el programa que lee lo que escribes, lo interpreta y se lo pasa al sistema operativo. Las más comunes son:
 
@@ -548,9 +524,7 @@ cat /etc/shells             # Ver todas las shells instaladas en el sistema
 chsh -s /bin/zsh            # Cambiar tu shell por defecto
 ```
 
----
-
-## 3.2 Variables de Entorno
+## Variables de Entorno
 
 ```bash
 env                         # Ver todas las variables de entorno
@@ -579,9 +553,7 @@ source ~/.bashrc                        # Recargar la config sin reiniciar la sh
 . ~/.bashrc                             # Forma abreviada de source
 ```
 
----
-
-## 3.3 Archivos de configuración de Bash
+## Archivos de configuración de Bash
 
 ```bash
 ~/.bashrc           # Se ejecuta en cada shell interactiva no-login (nueva pestaña)
@@ -593,9 +565,7 @@ source ~/.bashrc                        # Recargar la config sin reiniciar la sh
 /etc/profile.d/     # Scripts que se ejecutan al login (un archivo por aplicación)
 ```
 
----
-
-## 3.4 Aliases y Funciones
+## Aliases y Funciones
 
 ```bash
 # Aliases — atajos de comandos
@@ -625,9 +595,7 @@ hg() {
 }
 ```
 
----
-
-## 3.5 Historial de Comandos
+# 4. Comandos
 
 ```bash
 history                         # Ver el historial completo
@@ -646,5 +614,3 @@ HISTFILESIZE=20000              # Comandos guardados en el archivo ~/.bash_histo
 HISTCONTROL=ignoredups:erasedups  # No guardar duplicados consecutivos
 HISTTIMEFORMAT="%d/%m/%Y %H:%M:%S "  # Guardar fecha y hora en el historial
 ```
-
----
