@@ -26,6 +26,14 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
 
 ---
 
+## [0.5.0] — 2026-06
+
+### Added
+
+- `infrastructure/containers/Docker.git` — Guía definitiva de Docker
+
+---
+
 ## [0.4.3] — 2026-06
 
 ### Fixed
