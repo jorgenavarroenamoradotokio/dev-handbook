@@ -5,7 +5,7 @@
 <!-- BADGES:START -->
 [![GuÃ­as completadas](https://img.shields.io/badge/Gui­as-34-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
 [![CategorÃ­as activas](https://img.shields.io/badge/Categorias_activas-4-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
-[![Ãšltima actualizaciÃ³n](https://img.shields.io/badge/ultima_actualizacion-2026-06-blue?style=flat-square)](./docs/CHANGELOG.md)
+[![Última actualización](https://img.shields.io/badge/Última_actualización-2026--06-blue?style=flat-square)](./docs/CHANGELOG.md)
 <!-- BADGES:END -->
 [![Licencia](https://img.shields.io/badge/Licencia-Privado-red?style=flat-square)](#-licencia)
 
