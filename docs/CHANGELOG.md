@@ -26,11 +26,19 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
 
 ---
 
+## [0.6.0] — 2026-06
+
+### Added
+
+- `testing/unitario/jUnit.md` — Guía definitiva de jUnit
+
+---
+
 ## [0.5.0] — 2026-06
 
 ### Added
 
-- `infrastructure/containers/Docker.git` — Guía definitiva de Docker
+- `infrastructure/containers/Docker.md` — Guía definitiva de Docker
 
 ---
 

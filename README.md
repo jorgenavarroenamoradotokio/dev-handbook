@@ -3,8 +3,8 @@
 > Referencia técnica personal de ingeniería de software. Guías de producción sobre lenguajes, frameworks, bases de datos, infraestructura, testing y certificaciones — con arquitectura interna, ejemplos reales y antipatrones.
 
 <!-- BADGES:START -->
-[![GuÃ­as completadas](https://img.shields.io/badge/GuÃ­as-33-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
-[![CategorÃ­as activas](https://img.shields.io/badge/CategorÃ­as_activas-3-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
+[![GuÃ­as completadas](https://img.shields.io/badge/GuÃ­as-34-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
+[![CategorÃ­as activas](https://img.shields.io/badge/CategorÃ­as_activas-4-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
 [![Ãšltima actualizaciÃ³n](https://img.shields.io/badge/Ãšltima_actualizaciÃ³n-2026-06-blue?style=flat-square)](./docs/CHANGELOG.md)
 <!-- BADGES:END -->
 [![Licencia](https://img.shields.io/badge/Licencia-Privado-red?style=flat-square)](#-licencia)
@@ -116,7 +116,11 @@ Apache Tomcat: instalación, configuración, seguridad, rendimiento y operacione
 
 | Tipo | Herramienta | Guía | Estado |
 |:-----|:------------|:-----|:------:|
-| — | — | Próximamente | 🔜 |
+| Unitario | JUnit 5 | [jUnit.md](./testing/unitario/jUnit.md) | ✅ |
+| Integración | — | Próximamente | 🔜 |
+| E2E | — | Próximamente | 🔜 |
+| Contract | — | Próximamente | 🔜 |
+| Performance | — | Próximamente | 🔜 |
 
 ### 🐳 Infrastructure — Containers (`/infrastructure/containers`)
 
@@ -270,6 +274,6 @@ Qué hace (ambas versiones, misma lógica):
 1. Cuenta archivos `.md` reales bajo cada categoría de nivel superior (excluye `docs/`, `scripts/`, `README.md`).
 2. Cuenta cuántas de esas categorías tienen al menos un archivo (= "categoría activa").
 3. Reescribe los badges entre `<!-- BADGES:START -->` y `<!-- BADGES:END -->` en este README.
-[![GuÃ­as completadas](https://img.shields.io/badge/GuÃ­as-33-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
-[![CategorÃ­as activas](https://img.shields.io/badge/CategorÃ­as_activas-3-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
+[![GuÃ­as completadas](https://img.shields.io/badge/GuÃ­as-34-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
+[![CategorÃ­as activas](https://img.shields.io/badge/CategorÃ­as_activas-4-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
 [![Ãšltima actualizaciÃ³n](https://img.shields.io/badge/Ãšltima_actualizaciÃ³n-2026-06-blue?style=flat-square)](./docs/CHANGELOG.md)
