@@ -4,52 +4,49 @@
 
 ---
 
-- [Módulo 03: Configuración de server.xml en Profundidad](#módulo-03-configuración-de-serverxml-en-profundidad)
-  - [3.1 Visión General del Archivo server.xml](#31-visión-general-del-archivo-serverxml)
-    - [¿Qué es server.xml y por qué es tan importante?](#qué-es-serverxml-y-por-qué-es-tan-importante)
-    - [Estructura esquemática completa](#estructura-esquemática-completa)
-  - [3.2 Elemento `<Server>`](#32-elemento-server)
-    - [Atributos detallados](#atributos-detallados)
-    - [Configuración de producción recomendada](#configuración-de-producción-recomendada)
-  - [3.3 Listeners del Ciclo de Vida](#33-listeners-del-ciclo-de-vida)
-    - [¿Qué es un Listener?](#qué-es-un-listener)
-  - [3.4 GlobalNamingResources](#34-globalnamingresources)
-    - [¿Qué es JNDI y para qué sirve aquí?](#qué-es-jndi-y-para-qué-sirve-aquí)
-    - [Referenciar un recurso global desde un Context](#referenciar-un-recurso-global-desde-un-context)
-  - [3.5 Elemento `<Service>`](#35-elemento-service)
-    - [Caso de uso con múltiples Services](#caso-de-uso-con-múltiples-services)
-  - [3.6 Elemento `<Connector>` — Configuración Exhaustiva](#36-elemento-connector--configuración-exhaustiva)
-    - [3.6.1 Conector HTTP/1.1 NIO — Producción estándar](#361-conector-http11-nio--producción-estándar)
-    - [3.6.2 Conector HTTPS/TLS con JSSE — Tomcat 8.5+](#362-conector-httpstls-con-jsse--tomcat-85)
-    - [3.6.3 Conector HTTPS con mTLS (mutual TLS / certificados de cliente)](#363-conector-https-con-mtls-mutual-tls--certificados-de-cliente)
-    - [3.6.4 Conector con Executor compartido](#364-conector-con-executor-compartido)
-    - [3.6.5 Conector AJP (post Ghostcat)](#365-conector-ajp-post-ghostcat)
-  - [3.7 Elemento `<Engine>`](#37-elemento-engine)
-  - [3.8 Elemento `<Host>` — Hosts Virtuales](#38-elemento-host--hosts-virtuales)
-    - [Configuración completa de un Host virtual](#configuración-completa-de-un-host-virtual)
-    - [Atributos críticos del Host — Resumen](#atributos-críticos-del-host--resumen)
-  - [3.9 Elemento `<Context>` en server.xml vs Archivos Externos](#39-elemento-context-en-serverxml-vs-archivos-externos)
-    - [¿Por qué NO definir el Context en server.xml?](#por-qué-no-definir-el-context-en-serverxml)
-    - [Jerarquía de búsqueda de configuración del Context](#jerarquía-de-búsqueda-de-configuración-del-context)
-    - [Archivo de Context descriptor externo — Producción](#archivo-de-context-descriptor-externo--producción)
-    - [context.xml global (aplica a TODOS los contextos)](#contextxml-global-aplica-a-todos-los-contextos)
-  - [3.10 Configuración del Engine con Realm Encadenado](#310-configuración-del-engine-con-realm-encadenado)
-    - [¿Qué es un Realm encadenado y por qué usarlo?](#qué-es-un-realm-encadenado-y-por-qué-usarlo)
-  - [3.11 Configuración de ErrorReportValve](#311-configuración-de-errorreportvalve)
-    - [El problema que resuelve](#el-problema-que-resuelve)
-  - [3.12 server.xml Completo de Referencia para Producción](#312-serverxml-completo-de-referencia-para-producción)
-  - [3.13 Variables del Sistema en server.xml](#313-variables-del-sistema-en-serverxml)
-    - [¿Por qué externalizar valores de server.xml?](#por-qué-externalizar-valores-de-serverxml)
-  - [3.14 Diferencias en server.xml por Versión de Tomcat](#314-diferencias-en-serverxml-por-versión-de-tomcat)
-  - [Puntos Clave](#puntos-clave)
+- [1. Visión General del Archivo server.xml](#1-visión-general-del-archivo-serverxml)
+  - [¿Qué es server.xml y por qué es tan importante?](#qué-es-serverxml-y-por-qué-es-tan-importante)
+  - [Estructura esquemática completa](#estructura-esquemática-completa)
+- [2. Elemento `<Server>`](#2-elemento-server)
+  - [Atributos detallados](#atributos-detallados)
+  - [Configuración de producción recomendada](#configuración-de-producción-recomendada)
+- [3. Listeners del Ciclo de Vida](#3-listeners-del-ciclo-de-vida)
+  - [¿Qué es un Listener?](#qué-es-un-listener)
+- [4. GlobalNamingResources](#4-globalnamingresources)
+  - [¿Qué es JNDI y para qué sirve aquí?](#qué-es-jndi-y-para-qué-sirve-aquí)
+  - [Referenciar un recurso global desde un Context](#referenciar-un-recurso-global-desde-un-context)
+- [5. Elemento `<Service>`](#5-elemento-service)
+  - [Caso de uso con múltiples Services](#caso-de-uso-con-múltiples-services)
+- [6. Elemento `<Connector>` — Configuración Exhaustiva](#6-elemento-connector--configuración-exhaustiva)
+  - [Conector HTTP/1.1 NIO — Producción estándar](#conector-http11-nio--producción-estándar)
+  - [Conector HTTPS/TLS con JSSE — Tomcat 8.5+](#conector-httpstls-con-jsse--tomcat-85)
+  - [Conector HTTPS con mTLS (mutual TLS / certificados de cliente)](#conector-https-con-mtls-mutual-tls--certificados-de-cliente)
+  - [Conector con Executor compartido](#conector-con-executor-compartido)
+  - [Conector AJP (post Ghostcat)](#conector-ajp-post-ghostcat)
+- [7. Elemento `<Engine>`](#7-elemento-engine)
+- [8. Elemento `<Host>` — Hosts Virtuales](#8-elemento-host--hosts-virtuales)
+  - [Configuración completa de un Host virtual](#configuración-completa-de-un-host-virtual)
+  - [Atributos críticos del Host — Resumen](#atributos-críticos-del-host--resumen)
+- [9. Elemento `<Context>` en server.xml vs Archivos Externos](#9-elemento-context-en-serverxml-vs-archivos-externos)
+  - [¿Por qué NO definir el Context en server.xml?](#por-qué-no-definir-el-context-en-serverxml)
+  - [Jerarquía de búsqueda de configuración del Context](#jerarquía-de-búsqueda-de-configuración-del-context)
+  - [Archivo de Context descriptor externo — Producción](#archivo-de-context-descriptor-externo--producción)
+  - [context.xml global (aplica a TODOS los contextos)](#contextxml-global-aplica-a-todos-los-contextos)
+- [10. Configuración del Engine con Realm Encadenado](#10-configuración-del-engine-con-realm-encadenado)
+  - [¿Qué es un Realm encadenado y por qué usarlo?](#qué-es-un-realm-encadenado-y-por-qué-usarlo)
+- [11. Configuración de ErrorReportValve](#11-configuración-de-errorreportvalve)
+  - [El problema que resuelve](#el-problema-que-resuelve)
+- [12. server.xml Completo de Referencia para Producción](#12-serverxml-completo-de-referencia-para-producción)
+- [13. Variables del Sistema en server.xml](#13-variables-del-sistema-en-serverxml)
+  - [¿Por qué externalizar valores de server.xml?](#por-qué-externalizar-valores-de-serverxml)
+- [14. Diferencias en server.xml por Versión de Tomcat](#14-diferencias-en-serverxml-por-versión-de-tomcat)
+- [15. Puntos Clave](#15-puntos-clave)
 
 ---
 
-# Módulo 03: Configuración de server.xml en Profundidad
+# 1. Visión General del Archivo server.xml
 
-## 3.1 Visión General del Archivo server.xml
-
-### ¿Qué es server.xml y por qué es tan importante?
+## ¿Qué es server.xml y por qué es tan importante?
 
 `server.xml` es el **archivo de configuración central** de Apache Tomcat. Si Tomcat fuera una empresa, `server.xml` sería el organigrama: define quién existe, qué hace cada uno y cómo se relacionan entre sí.
 
@@ -65,7 +62,7 @@ El archivo se encuentra en `$CATALINA_BASE/conf/server.xml`.
 
 > ⚠️ **Regla fundamental:** Cualquier cambio en `server.xml` requiere **reiniciar completamente Tomcat** para que tenga efecto. No hay forma de recargar solo este archivo en caliente.
 
-### Estructura esquemática completa
+## Estructura esquemática completa
 
 Es útil entender primero la "foto de familia" de todos los elementos que pueden aparecer en `server.xml`, antes de estudiar cada uno en detalle:
 
@@ -109,9 +106,7 @@ Es útil entender primero la "foto de familia" de todos los elementos que pueden
 </Server>
 ```
 
----
-
-## 3.2 Elemento `<Server>`
+# 2. Elemento `<Server>`
 
 El elemento `<Server>` es la **raíz del documento** XML: contiene a todos los demás. Solo puede haber uno por instancia de Tomcat.
 
@@ -124,7 +119,7 @@ Su función principal en el archivo es configurar el **socket de shutdown**: el 
         className="org.apache.catalina.core.StandardServer">
 ```
 
-### Atributos detallados
+## Atributos detallados
 
 | Atributo    | Tipo    | Qué hace                                                              | Valor recomendado en producción |
 |-------------|---------|-----------------------------------------------------------------------|---------------------------------|
@@ -133,7 +128,7 @@ Su función principal en el archivo es configurar el **socket de shutdown**: el 
 | `address`   | texto   | Desde qué IP acepta el comando de apagado                             | `127.0.0.1` (solo localhost)    |
 | `className` | texto   | Clase Java que implementa el Server (raramente se cambia)             | Dejar el valor por defecto      |
 
-### Configuración de producción recomendada
+## Configuración de producción recomendada
 
 ```xml
 <!-- En producción, desactivamos el puerto de shutdown por socket.
@@ -146,11 +141,9 @@ Su función principal en el archivo es configurar el **socket de shutdown**: el 
 > ⚠️ **¿Qué pasa cuando desactivas el puerto con `port="-1"`?**
 > El comando `shutdown.sh` que viene con Tomcat dejará de funcionar, porque usa internamente ese socket para comunicarse con el servidor. En cambio, systemd (o el gestor de servicios del sistema operativo) sigue pudiendo parar el proceso normalmente. Es el precio a pagar por la seguridad: usas una herramienta más robusta para gestionar el proceso.
 
----
+# 3. Listeners del Ciclo de Vida
 
-## 3.3 Listeners del Ciclo de Vida
-
-### ¿Qué es un Listener?
+## ¿Qué es un Listener?
 
 Un **Listener** es un componente que "escucha" los eventos del ciclo de vida de Tomcat (arranque, parada, etc.) y ejecuta código cuando ocurren. Es el equivalente a los "event handlers" de JavaScript, pero para el propio servidor.
 
@@ -233,11 +226,9 @@ Se declaran como elementos hijos directos de `<Server>` y Tomcat los llama autom
 </Server>
 ```
 
----
+# 4. GlobalNamingResources
 
-## 3.4 GlobalNamingResources
-
-### ¿Qué es JNDI y para qué sirve aquí?
+## ¿Qué es JNDI y para qué sirve aquí?
 
 **JNDI** (Java Naming and Directory Interface) es un sistema de "directorio de recursos" de Java. Funciona como una agenda: en lugar de que cada aplicación guarde la dirección y credenciales de la base de datos en su propio código, la aplicación pregunta al directorio JNDI por nombre y JNDI le devuelve la conexión ya configurada.
 
@@ -302,7 +293,7 @@ Se declaran como elementos hijos directos de `<Server>` y Tomcat los llama autom
 </GlobalNamingResources>
 ```
 
-### Referenciar un recurso global desde un Context
+## Referenciar un recurso global desde un Context
 
 Los recursos globales no son accesibles directamente desde las aplicaciones: hay que "publicarlos" en el contexto de cada aplicación con un `ResourceLink`. Esto permite que la aplicación use un nombre local diferente al nombre global:
 
@@ -326,9 +317,7 @@ Los recursos globales no son accesibles directamente desde las aplicaciones: hay
 </Context>
 ```
 
----
-
-## 3.5 Elemento `<Service>`
+# 5. Elemento `<Service>`
 
 El `<Service>` es un contenedor organizativo que agrupa uno o más `<Connector>` con un único `<Engine>`. En la mayoría de instalaciones solo hay uno, llamado `Catalina` por tradición histórica.
 
@@ -337,7 +326,7 @@ El `<Service>` es un contenedor organizativo que agrupa uno o más `<Connector>`
          className="org.apache.catalina.core.StandardService">
 ```
 
-### Caso de uso con múltiples Services
+## Caso de uso con múltiples Services
 
 El escenario más común que justifica múltiples Services es tener **tráfico público y tráfico interno separados** en el mismo servidor Tomcat, con pools de hilos independientes para que el tráfico interno nunca se vea afectado por la carga del tráfico público:
 
@@ -368,13 +357,11 @@ El escenario más común que justifica múltiples Services es tener **tráfico p
 </Server>
 ```
 
----
-
-## 3.6 Elemento `<Connector>` — Configuración Exhaustiva
+# 6. Elemento `<Connector>` — Configuración Exhaustiva
 
 El `<Connector>` es el componente que abre un puerto de red y gestiona las conexiones entrantes. Es el punto de contacto entre el mundo exterior (los navegadores, las apps móviles, las APIs) y el interior de Tomcat.
 
-### 3.6.1 Conector HTTP/1.1 NIO — Producción estándar
+## Conector HTTP/1.1 NIO — Producción estándar
 
 Este es el conector más habitual: escucha en el puerto 8080 y acepta tráfico HTTP sin cifrar. En producción suele haber un proxy delante (Nginx, Apache httpd, un load balancer) que gestiona TLS externamente, y este conector recibe el tráfico ya descifrado desde el proxy.
 
@@ -500,7 +487,7 @@ Este es el conector más habitual: escucha en el puerto 8080 y acepta tráfico H
 />
 ```
 
-### 3.6.2 Conector HTTPS/TLS con JSSE — Tomcat 8.5+
+## Conector HTTPS/TLS con JSSE — Tomcat 8.5+
 
 Este conector maneja el cifrado TLS directamente en Tomcat, sin necesidad de un proxy externo. Es el apropiado cuando Tomcat es el servidor web final (sin Nginx ni Apache httpd delante).
 
@@ -592,7 +579,7 @@ Este conector maneja el cifrado TLS directamente en Tomcat, sin necesidad de un 
 </Connector>
 ```
 
-### 3.6.3 Conector HTTPS con mTLS (mutual TLS / certificados de cliente)
+## Conector HTTPS con mTLS (mutual TLS / certificados de cliente)
 
 El TLS estándar solo autentica al servidor. El **mTLS** (mutual TLS) añade autenticación en ambos sentidos: el servidor también verifica la identidad del cliente mediante un certificado digital. Se usa en comunicaciones máquina a máquina (microservicios, APIs internas) donde quieres garantizar criptográficamente que el cliente es quien dice ser.
 
@@ -631,7 +618,7 @@ El TLS estándar solo autentica al servidor. El **mTLS** (mutual TLS) añade aut
 </Connector>
 ```
 
-### 3.6.4 Conector con Executor compartido
+## Conector con Executor compartido
 
 Por defecto, cada `<Connector>` tiene su propio pool de hilos. Con dos conectores (HTTP y HTTPS), tienes dos pools separados, lo que puede llevar a un uso ineficiente: uno saturado y el otro casi vacío.
 
@@ -683,7 +670,7 @@ Un `<Executor>` define un **pool de hilos compartido** que ambos conectores usan
 </Connector>
 ```
 
-### 3.6.5 Conector AJP (post Ghostcat)
+## Conector AJP (post Ghostcat)
 
 **AJP** (Apache JServ Protocol) es un protocolo binario que permite que Apache httpd actúe como proxy frente a Tomcat. Se usa cuando Apache httpd recibe el tráfico externo (gestionando TLS, sirviendo archivos estáticos) y reenvía las peticiones dinámicas a Tomcat.
 
@@ -715,9 +702,7 @@ Un `<Executor>` define un **pool de hilos compartido** que ambos conectores usan
            allowedRequestAttributesPattern=".*"/>
 ```
 
----
-
-## 3.7 Elemento `<Engine>`
+# 7. Elemento `<Engine>`
 
 El `<Engine>` es el motor de enrutamiento de Tomcat. Recibe las peticiones del Connector y decide a qué `<Host>` enviárselas, basándose en el encabezado `Host:` de la petición HTTP.
 
@@ -767,15 +752,13 @@ El `<Engine>` es el motor de enrutamiento de Tomcat. Recibe las peticiones del C
 | `backgroundProcessorDelay`  | Segundos entre ejecuciones del hilo de mantenimiento en background                    |
 | `startStopThreads`          | Hilos para arrancar/parar Hosts en paralelo. `0` = número de CPUs                    |
 
----
-
-## 3.8 Elemento `<Host>` — Hosts Virtuales
+# 8. Elemento `<Host>` — Hosts Virtuales
 
 Un `<Host>` representa un **sitio web o dominio virtual**. Gracias a los hosts virtuales, un único servidor Tomcat puede alojar múltiples sitios web con dominios diferentes.
 
 El mecanismo es sencillo: cuando llega una petición, Tomcat lee la cabecera `Host:` (que el navegador envía automáticamente) y la compara con los nombres de los `<Host>` configurados para saber cuál debe atenderla.
 
-### Configuración completa de un Host virtual
+## Configuración completa de un Host virtual
 
 ```xml
 <Host
@@ -857,7 +840,7 @@ El mecanismo es sencillo: cuando llega una petición, Tomcat lee la cabecera `Ho
 </Host>
 ```
 
-### Atributos críticos del Host — Resumen
+## Atributos críticos del Host — Resumen
 
 | Atributo           | Qué hace                                                                        | Recomendación en producción  |
 |--------------------|---------------------------------------------------------------------------------|------------------------------|
@@ -867,19 +850,17 @@ El mecanismo es sencillo: cuando llega una petición, Tomcat lee la cabecera `Ho
 | `copyXML`          | Copia el context.xml del WAR al directorio conf/                                | `false`                      |
 | `unpackWARs`       | Descomprime los WARs en disco (mejor rendimiento de arranque)                   | `true`                       |
 
----
-
-## 3.9 Elemento `<Context>` en server.xml vs Archivos Externos
+# 9. Elemento `<Context>` en server.xml vs Archivos Externos
 
 Un `<Context>` representa una **aplicación web concreta**. Aunque se puede definir dentro de `server.xml`, hay razones importantes para hacerlo en un archivo separado.
 
-### ¿Por qué NO definir el Context en server.xml?
+## ¿Por qué NO definir el Context en server.xml?
 
 Cuando defines un Context en `server.xml`, cualquier cambio (añadir un parámetro de configuración, cambiar la URL de la base de datos) requiere **reiniciar todo Tomcat**, con el consiguiente corte de servicio para todas las aplicaciones.
 
 Si el Context está en un archivo separado (`conf/Catalina/localhost/myapp.xml`), Tomcat puede recargar ese contexto individual sin afectar a las demás aplicaciones.
 
-### Jerarquía de búsqueda de configuración del Context
+## Jerarquía de búsqueda de configuración del Context
 
 Tomcat busca la configuración de cada aplicación en este orden, dando prioridad a la más específica:
 
@@ -890,7 +871,7 @@ Tomcat busca la configuración de cada aplicación en este orden, dando priorida
 4. <Context> en server.xml                      ← Menor prioridad, evitar en producción
 ```
 
-### Archivo de Context descriptor externo — Producción
+## Archivo de Context descriptor externo — Producción
 
 ```xml
 <!-- conf/Catalina/localhost/myapp.xml -->
@@ -1029,7 +1010,7 @@ Tomcat busca la configuración de cada aplicación en este orden, dando priorida
 </Context>
 ```
 
-### context.xml global (aplica a TODOS los contextos)
+## context.xml global (aplica a TODOS los contextos)
 
 Este archivo define configuración que se aplica por defecto a **todas las aplicaciones** del servidor. Es el lugar correcto para configuraciones de seguridad universales:
 
@@ -1066,11 +1047,9 @@ Este archivo define configuración que se aplica por defecto a **todas las aplic
 </Context>
 ```
 
----
+# 10. Configuración del Engine con Realm Encadenado
 
-## 3.10 Configuración del Engine con Realm Encadenado
-
-### ¿Qué es un Realm encadenado y por qué usarlo?
+## ¿Qué es un Realm encadenado y por qué usarlo?
 
 Un Realm simple responde a "¿quién puede autenticarse?". Un Realm encadenado combina múltiples Realms para estrategias de autenticación más sofisticadas.
 
@@ -1160,11 +1139,9 @@ La combinación más habitual en empresas es:
 </Engine>
 ```
 
----
+# 11. Configuración de ErrorReportValve
 
-## 3.11 Configuración de ErrorReportValve
-
-### El problema que resuelve
+## El problema que resuelve
 
 Cuando ocurre un error en una aplicación (un 404, un 500, etc.), Tomcat genera una página HTML de error. Por defecto, esa página incluye en el pie:
 
@@ -1197,9 +1174,7 @@ Esto le dice al mundo exactamente qué versión de Tomcat estás usando. Si esa 
 
 > 💡 **¿Ocultar la versión hace el sistema más seguro?** Por sí solo no: si hay una vulnerabilidad, sigue existiendo aunque la ocultes. Pero forma parte de una estrategia de defensa en profundidad: cuanta menos información das al atacante, más difícil lo haces. La medida principal sigue siendo mantener Tomcat actualizado.
 
----
-
-## 3.12 server.xml Completo de Referencia para Producción
+# 12. server.xml Completo de Referencia para Producción
 
 Este es un `server.xml` completo para Tomcat 10.1.x, que combina todas las configuraciones recomendadas de las secciones anteriores:
 
@@ -1367,11 +1342,9 @@ Este es un `server.xml` completo para Tomcat 10.1.x, que combina todas las confi
 </Server>
 ```
 
----
+# 13. Variables del Sistema en server.xml
 
-## 3.13 Variables del Sistema en server.xml
-
-### ¿Por qué externalizar valores de server.xml?
+## ¿Por qué externalizar valores de server.xml?
 
 Hay valores en `server.xml` que no deberían estar escritos directamente en el archivo:
 
@@ -1411,9 +1384,7 @@ export CATALINA_OPTS="$CATALINA_OPTS \
 
 > 💡 **En entornos con Docker o Kubernetes**, estos valores suelen inyectarse como variables de entorno del contenedor o como secretos de Kubernetes, no en `setenv.sh`. El resultado es el mismo: los valores sensibles no viven en los archivos de configuración versionados, sino en un sistema de gestión de secretos separado.
 
----
-
-## 3.14 Diferencias en server.xml por Versión de Tomcat
+# 14. Diferencias en server.xml por Versión de Tomcat
 
 Esta tabla resume qué características están disponibles en cada versión, para que puedas saber si puedes usar una configuración concreta en tu instalación:
 
@@ -1431,9 +1402,7 @@ Esta tabla resume qué características están disponibles en cada versión, par
 
 > 💡 **Sobre el `RateLimitFilter` de Tomcat 11:** Antes de Tomcat 11, el rate limiting se implementaba en el proxy (Nginx, Apache httpd) o en un filtro de la aplicación. Tomcat 11 introduce un Valve nativo que puede limitar peticiones por IP directamente en el servidor, sin necesidad de un proxy externo.
 
----
-
-## Puntos Clave
+# 15. Puntos Clave
 
 - `server.xml` es el **fichero de configuración central** de Tomcat. Todo cambio en él requiere reinicio completo del servidor.
 

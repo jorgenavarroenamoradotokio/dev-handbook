@@ -4,67 +4,64 @@
 
 ---
 
-- [Módulo 01: Arquitectura Interna y Componentes de Apache Tomcat](#módulo-01-arquitectura-interna-y-componentes-de-apache-tomcat)
-  - [1.1 ¿Qué es Tomcat y para qué sirve?](#11-qué-es-tomcat-y-para-qué-sirve)
-    - [La analogía del restaurante](#la-analogía-del-restaurante)
-    - [¿Qué es un "contenedor de Servlets"?](#qué-es-un-contenedor-de-servlets)
-    - [¿En qué se diferencia de otros servidores?](#en-qué-se-diferencia-de-otros-servidores)
-    - [Evolución de versiones: ¿cuál debo usar?](#evolución-de-versiones-cuál-debo-usar)
-  - [1.2 Modelo Jerárquico de Componentes](#12-modelo-jerárquico-de-componentes)
-    - [¿Qué es una arquitectura jerárquica?](#qué-es-una-arquitectura-jerárquica)
-    - [El árbol de componentes](#el-árbol-de-componentes)
-    - [El archivo `server.xml`: el cerebro de la configuración](#el-archivo-serverxml-el-cerebro-de-la-configuración)
-  - [1.3 Descripción Detallada de Cada Componente](#13-descripción-detallada-de-cada-componente)
-    - [1.3.1 Server](#131-server)
-    - [1.3.2 Service](#132-service)
-    - [1.3.3 Connector](#133-connector)
-      - [¿Qué significa NIO, NIO2 y APR?](#qué-significa-nio-nio2-y-apr)
-      - [Atributos de rendimiento del Connector](#atributos-de-rendimiento-del-connector)
-    - [1.3.4 Engine](#134-engine)
-    - [1.3.5 Host](#135-host)
-    - [1.3.6 Context](#136-context)
-      - [¿Dónde se puede definir un Context?](#dónde-se-puede-definir-un-context)
-    - [1.3.7 Wrapper](#137-wrapper)
-  - [1.4 Pipelines, Valves y la Cadena de Procesamiento](#14-pipelines-valves-y-la-cadena-de-procesamiento)
-    - [El patrón Pipeline (cadena de responsabilidad)](#el-patrón-pipeline-cadena-de-responsabilidad)
-    - [Valves más importantes](#valves-más-importantes)
-    - [Ejemplo: Configuración de Valves avanzada](#ejemplo-configuración-de-valves-avanzada)
-    - [Archivo `rewrite.config` (para RewriteValve)](#archivo-rewriteconfig-para-rewritevalve)
-  - [1.5 El Cargador de Clases (ClassLoader) de Tomcat](#15-el-cargador-de-clases-classloader-de-tomcat)
-    - [El problema que resuelve](#el-problema-que-resuelve)
-    - [La jerarquía de ClassLoaders](#la-jerarquía-de-classloaders)
-    - [¿Qué ve cada nivel?](#qué-ve-cada-nivel)
-    - [El patrón Child-First: la clave del aislamiento](#el-patrón-child-first-la-clave-del-aislamiento)
-    - [Configuración en `conf/catalina.properties`](#configuración-en-confcatalinaproperties)
-  - [1.6 Ciclo de Vida de los Componentes (Lifecycle)](#16-ciclo-de-vida-de-los-componentes-lifecycle)
-    - [¿Por qué es importante conocer esto?](#por-qué-es-importante-conocer-esto)
-    - [Los estados del ciclo de vida](#los-estados-del-ciclo-de-vida)
-    - [LifecycleListeners: reaccionar a los cambios de estado](#lifecyclelisteners-reaccionar-a-los-cambios-de-estado)
-    - [Listeners que vienen incluidos en Tomcat por defecto](#listeners-que-vienen-incluidos-en-tomcat-por-defecto)
-  - [1.7 Componentes de Soporte: Realm, Manager y Store](#17-componentes-de-soporte-realm-manager-y-store)
-    - [1.7.1 Realm (Seguridad y Autenticación)](#171-realm-seguridad-y-autenticación)
-    - [1.7.2 Manager (Gestión de Sesiones HTTP)](#172-manager-gestión-de-sesiones-http)
-  - [1.8 Resumen Visual de la Arquitectura Completa](#18-resumen-visual-de-la-arquitectura-completa)
-  - [1.9 Diferencias Arquitectónicas entre Versiones](#19-diferencias-arquitectónicas-entre-versiones)
-  - [Puntos Clave](#puntos-clave)
+- [1. ¿Qué es Tomcat y para qué sirve?](#1-qué-es-tomcat-y-para-qué-sirve)
+  - [La analogía del restaurante](#la-analogía-del-restaurante)
+  - [¿Qué es un "contenedor de Servlets"?](#qué-es-un-contenedor-de-servlets)
+  - [¿En qué se diferencia de otros servidores?](#en-qué-se-diferencia-de-otros-servidores)
+  - [Evolución de versiones: ¿cuál debo usar?](#evolución-de-versiones-cuál-debo-usar)
+- [2. Modelo Jerárquico de Componentes](#2-modelo-jerárquico-de-componentes)
+  - [¿Qué es una arquitectura jerárquica?](#qué-es-una-arquitectura-jerárquica)
+  - [El árbol de componentes](#el-árbol-de-componentes)
+  - [El archivo `server.xml`: el cerebro de la configuración](#el-archivo-serverxml-el-cerebro-de-la-configuración)
+- [3. Descripción Detallada de Cada Componente](#3-descripción-detallada-de-cada-componente)
+  - [Server](#server)
+  - [Service](#service)
+  - [Connector](#connector)
+    - [¿Qué significa NIO, NIO2 y APR?](#qué-significa-nio-nio2-y-apr)
+    - [Atributos de rendimiento del Connector](#atributos-de-rendimiento-del-connector)
+  - [Engine](#engine)
+  - [Host](#host)
+  - [Context](#context)
+    - [¿Dónde se puede definir un Context?](#dónde-se-puede-definir-un-context)
+    - [Wrapper](#wrapper)
+- [4. Pipelines, Valves y la Cadena de Procesamiento](#4-pipelines-valves-y-la-cadena-de-procesamiento)
+  - [El patrón Pipeline (cadena de responsabilidad)](#el-patrón-pipeline-cadena-de-responsabilidad)
+  - [Valves más importantes](#valves-más-importantes)
+  - [Ejemplo: Configuración de Valves avanzada](#ejemplo-configuración-de-valves-avanzada)
+  - [Archivo `rewrite.config` (para RewriteValve)](#archivo-rewriteconfig-para-rewritevalve)
+- [5. El Cargador de Clases (ClassLoader) de Tomcat](#5-el-cargador-de-clases-classloader-de-tomcat)
+  - [El problema que resuelve](#el-problema-que-resuelve)
+  - [La jerarquía de ClassLoaders](#la-jerarquía-de-classloaders)
+  - [¿Qué ve cada nivel?](#qué-ve-cada-nivel)
+  - [El patrón Child-First: la clave del aislamiento](#el-patrón-child-first-la-clave-del-aislamiento)
+  - [Configuración en `conf/catalina.properties`](#configuración-en-confcatalinaproperties)
+- [6. Ciclo de Vida de los Componentes (Lifecycle)](#6-ciclo-de-vida-de-los-componentes-lifecycle)
+  - [¿Por qué es importante conocer esto?](#por-qué-es-importante-conocer-esto)
+  - [Los estados del ciclo de vida](#los-estados-del-ciclo-de-vida)
+  - [LifecycleListeners: reaccionar a los cambios de estado](#lifecyclelisteners-reaccionar-a-los-cambios-de-estado)
+  - [Listeners que vienen incluidos en Tomcat por defecto](#listeners-que-vienen-incluidos-en-tomcat-por-defecto)
+- [7. Componentes de Soporte: Realm, Manager y Store](#7-componentes-de-soporte-realm-manager-y-store)
+  - [Realm (Seguridad y Autenticación)](#realm-seguridad-y-autenticación)
+  - [Manager (Gestión de Sesiones HTTP)](#manager-gestión-de-sesiones-http)
+- [8. Resumen Visual de la Arquitectura Completa](#8-resumen-visual-de-la-arquitectura-completa)
+- [9. Diferencias Arquitectónicas entre Versiones](#9-diferencias-arquitectónicas-entre-versiones)
+- [10. Puntos Clave](#10-puntos-clave)
 
 ---
 
-# Módulo 01: Arquitectura Interna y Componentes de Apache Tomcat
+# 1. ¿Qué es Tomcat y para qué sirve?
 
-## 1.1 ¿Qué es Tomcat y para qué sirve?
-
-### La analogía del restaurante
+## La analogía del restaurante
 
 Imagina que tienes una aplicación web escrita en Java. Esa aplicación es como un chef que sabe cocinar platos exquisitos, pero que no puede atender a los clientes directamente: no sabe cómo recibir pedidos, gestionar las mesas ni cobrar. Necesita un restaurante que lo envuelva y le dé la infraestructura para funcionar.
 
 **Apache Tomcat es ese restaurante.** Es el software que recibe las peticiones de los usuarios desde el navegador (los clientes), las traduce a un formato que tu aplicación Java entiende, se las entrega, recibe la respuesta y la devuelve al navegador.
 
-### ¿Qué es un "contenedor de Servlets"?
+## ¿Qué es un "contenedor de Servlets"?
 
 Un **Servlet** es una clase Java que puede recibir una petición HTTP (como cuando un usuario hace clic en un botón de una web) y devolver una respuesta (como una página HTML o datos JSON). Por sí solo, un Servlet no puede ejecutarse: necesita un entorno que lo gestione. Ese entorno es el **contenedor de Servlets**, y Tomcat es el más popular de ellos.
 
-### ¿En qué se diferencia de otros servidores?
+## ¿En qué se diferencia de otros servidores?
 
 Existen servidores más completos como WildFly o WebLogic que implementan toda la especificación de Jakarta EE (bases de datos en cola, mensajería, transacciones distribuidas, etc.). Tomcat es más **ligero y enfocado**: implementa solo las partes más usadas:
 
@@ -75,7 +72,7 @@ Existen servidores más completos como WildFly o WebLogic que implementan toda l
 
 Si no necesitas mensajería ni EJB, Tomcat es suficiente y mucho más sencillo de operar.
 
-### Evolución de versiones: ¿cuál debo usar?
+## Evolución de versiones: ¿cuál debo usar?
 
 A lo largo del tiempo, las especificaciones de Servlet, JSP, etc. han ido evolucionando, y cada versión de Tomcat implementa una versión diferente. La tabla siguiente resume qué versión de Tomcat implementa qué estándares y qué versión mínima de Java necesita:
 
@@ -100,11 +97,9 @@ A lo largo del tiempo, las especificaciones de Servlet, JSP, etc. han ido evoluc
 > ```
 > Existe una herramienta llamada **Migration Tool for Jakarta EE** que puede hacer esta conversión automáticamente en tus archivos `.war` compilados.
 
----
+# 2. Modelo Jerárquico de Componentes
 
-## 1.2 Modelo Jerárquico de Componentes
-
-### ¿Qué es una arquitectura jerárquica?
+## ¿Qué es una arquitectura jerárquica?
 
 Tomcat no es un bloque monolítico de código. Está construido como un conjunto de **piezas encajadas unas dentro de otras**, como las muñecas rusas matrioska. Cada pieza tiene una responsabilidad concreta, y las piezas se organizan de mayor a menor hasta llegar a los Servlets individuales de tu aplicación.
 
@@ -113,7 +108,7 @@ Esta organización facilita:
 - **Reutilización**: varios sitios web pueden compartir el mismo servidor
 - **Mantenimiento**: cuando algo falla, sabes exactamente en qué nivel buscar
 
-### El árbol de componentes
+## El árbol de componentes
 
 ```
 Server                          ← La instancia completa de Tomcat
@@ -129,7 +124,7 @@ Server                          ← La instancia completa de Tomcat
                 └── Wrapper     ← Sus Servlets
 ```
 
-### El archivo `server.xml`: el cerebro de la configuración
+## El archivo `server.xml`: el cerebro de la configuración
 
 Todo lo anterior se define en un único archivo llamado `server.xml`, ubicado en la carpeta `conf/` de Tomcat. Es el punto de partida para entender cualquier instalación de Tomcat. Aquí un ejemplo comentado:
 
@@ -195,11 +190,9 @@ Todo lo anterior se define en un único archivo llamado `server.xml`, ubicado en
 </Server>
 ```
 
----
+# 3. Descripción Detallada de Cada Componente
 
-## 1.3 Descripción Detallada de Cada Componente
-
-### 1.3.1 Server
+## Server
 
 El `Server` es el **componente más externo**, el que representa toda la instancia de Tomcat. Solo puede haber uno por instalación.
 
@@ -220,9 +213,7 @@ Su función principal en `server.xml` es habilitar el **puerto de apagado**: cua
 <Server port="-1" shutdown="SHUTDOWN">
 ```
 
----
-
-### 1.3.2 Service
+## Service
 
 El `Service` es un **contenedor organizativo**: agrupa uno o más `Connector`s con un único `Engine`. No hace mucho por sí mismo, pero es necesario en la jerarquía.
 
@@ -234,9 +225,7 @@ La razón de su existencia es permitir que en un mismo Tomcat haya **múltiples 
 </Service>
 ```
 
----
-
-### 1.3.3 Connector
+## Connector
 
 El `Connector` es la **puerta de entrada**. Es el componente que:
 
@@ -248,7 +237,7 @@ El `Connector` es la **puerta de entrada**. Es el componente que:
 
 Piensa en el Connector como el **recepcionista** del restaurante: su trabajo es recibir a los clientes (peticiones HTTP), anotar el pedido en una ficha estándar (el objeto `HttpServletRequest`) y pasárselo a la cocina (el Engine).
 
-#### ¿Qué significa NIO, NIO2 y APR?
+### ¿Qué significa NIO, NIO2 y APR?
 
 Cuando hay muchos usuarios conectados al mismo tiempo, la forma en que Tomcat gestiona esas conexiones importa mucho:
 
@@ -269,7 +258,7 @@ Cuando hay muchos usuarios conectados al mismo tiempo, la forma en que Tomcat ge
 
 > ⚠️ **Si estás migrando desde Tomcat 8.0:** Si tu `server.xml` tiene `Http11BioProtocol`, cámbialo por `Http11NioProtocol` antes de actualizar a Tomcat 9+. De lo contrario Tomcat no arrancará.
 
-#### Atributos de rendimiento del Connector
+### Atributos de rendimiento del Connector
 
 ```xml
 <Connector port="8080"
@@ -302,9 +291,8 @@ Estos son los atributos más importantes y qué significan en términos práctic
 | `compression`         | Si `on`, comprime las respuestas con gzip automáticamente                         | Reduce el ancho de banda un 60-80% en HTML   |
 | `URIEncoding`         | Codificación de los caracteres especiales en la URL                               | Siempre `UTF-8`                               |
 
----
 
-### 1.3.4 Engine
+## Engine
 
 El `Engine` es el **motor central de enrutamiento**. Recibe las peticiones del Connector y decide a qué `Host` enviárselas, basándose en el encabezado `Host` de la petición HTTP.
 
@@ -323,9 +311,7 @@ El `Engine` es el **motor central de enrutamiento**. Recibe las peticiones del C
 
 > 💡 **¿Qué son las sticky sessions?** En un clúster con varios servidores Tomcat, un balanceador de carga distribuye peticiones entre ellos. El `jvmRoute` permite que el balanceador siempre dirija al mismo usuario al mismo nodo (donde tiene su sesión activa), evitando que pierda la sesión al cambiar de servidor.
 
----
-
-### 1.3.5 Host
+## Host
 
 El `Host` representa un **sitio web o dominio virtual**. Permite que una misma instancia de Tomcat sirva múltiples dominios diferentes, cada uno con sus propias aplicaciones.
 
@@ -362,9 +348,7 @@ Es el equivalente a los "Virtual Hosts" de Apache HTTP Server o los "Server Bloc
 
 > ⚠️ **¿Por qué `autoDeploy="false"` en producción?** Si `autoDeploy` está activado, cualquier archivo `.war` que se copie al directorio (aunque sea por error o de forma no controlada) se desplegará automáticamente. En producción quieres que los despliegues sean controlados y deliberados, no automáticos.
 
----
-
-### 1.3.6 Context
+## Context
 
 El `Context` representa **una aplicación web individual**. Es el componente que mapea una ruta URL con los archivos físicos de tu aplicación.
 
@@ -372,7 +356,7 @@ Por ejemplo: si tienes un archivo `tienda.war` y configuras un Context con `path
 
 Un `Context` con `path=""` (vacío) es la **aplicación ROOT**, que responde a `http://localhost:8080/` directamente.
 
-#### ¿Dónde se puede definir un Context?
+### ¿Dónde se puede definir un Context?
 
 Hay tres formas, de menos a más recomendable:
 
@@ -431,9 +415,7 @@ Atributos más importantes del Context:
 
 > ⚠️ **`reloadable="true"` en producción es un error común.** Aunque suena útil, lo que hace internamente es arrancar un hilo que vigila constantemente el sistema de archivos buscando cambios en clases. Esto consume CPU y memoria, y puede causar problemas de memoria (memory leaks) cuando Tomcat descarga y recarga el ClassLoader de la aplicación. Úsalo solo en desarrollo.
 
----
-
-### 1.3.7 Wrapper
+### Wrapper
 
 El `Wrapper` es el componente más pequeño de la jerarquía. Encapsula un **Servlet individual** dentro de una aplicación.
 
@@ -444,11 +426,10 @@ El `Wrapper` es el responsable del ciclo de vida del Servlet:
 - Llama a `service()` (que a su vez llama a `doGet()`, `doPost()`, etc.) en cada petición
 - Llama a `destroy()` cuando la aplicación se detiene
 
----
 
-## 1.4 Pipelines, Valves y la Cadena de Procesamiento
+# 4. Pipelines, Valves y la Cadena de Procesamiento
 
-### El patrón Pipeline (cadena de responsabilidad)
+## El patrón Pipeline (cadena de responsabilidad)
 
 Cuando llega una petición HTTP, no va directamente al Servlet. Pasa antes por una **cadena de filtros** llamados **Valves**. Esto es el patrón **Pipeline-Valve**.
 
@@ -469,7 +450,7 @@ Petición → [Pipeline del Engine]
                                                    Tu código Java
 ```
 
-### Valves más importantes
+## Valves más importantes
 
 | Valve                          | Para qué sirve                                                                  |
 |--------------------------------|---------------------------------------------------------------------------------|
@@ -483,7 +464,7 @@ Petición → [Pipeline del Engine]
 | `SingleSignOn`                 | Permite que el login en una aplicación valga para otras del mismo Host          |
 | `ErrorReportValve`             | Genera las páginas de error (el "Error 404", "Error 500", etc.)                 |
 
-### Ejemplo: Configuración de Valves avanzada
+## Ejemplo: Configuración de Valves avanzada
 
 ```xml
 <Host name="localhost" appBase="webapps">
@@ -523,7 +504,7 @@ Petición → [Pipeline del Engine]
 </Host>
 ```
 
-### Archivo `rewrite.config` (para RewriteValve)
+## Archivo `rewrite.config` (para RewriteValve)
 
 ```
 # Redirigir automáticamente HTTP a HTTPS.
@@ -536,11 +517,9 @@ RewriteRule ^/(.*)$ https://%{SERVER_NAME}/$1 [R=301,L]
 RewriteRule ^/old-path/(.*)$ /new-path/$1 [R=301,L]
 ```
 
----
+# 5. El Cargador de Clases (ClassLoader) de Tomcat
 
-## 1.5 El Cargador de Clases (ClassLoader) de Tomcat
-
-### El problema que resuelve
+## El problema que resuelve
 
 Imagina que tienes dos aplicaciones desplegadas en el mismo Tomcat:
 - **App A** necesita la librería Jackson versión 2.13
@@ -550,7 +529,7 @@ Si Tomcat cargara las clases de Jackson en un solo lugar común, solo podría ha
 
 Para resolver esto, Tomcat implementa una **jerarquía de ClassLoaders** (cargadores de clases) que aísla las dependencias de cada aplicación.
 
-### La jerarquía de ClassLoaders
+## La jerarquía de ClassLoaders
 
 Un ClassLoader es un componente de Java responsable de encontrar y cargar los archivos `.class` (el bytecode de tus clases Java) en memoria. Cuando en tu código escribes `new MiClase()`, Java delega en el ClassLoader para encontrar ese `.class`.
 
@@ -565,7 +544,7 @@ Bootstrap ClassLoader          ← Lo provee la JVM. Carga las clases base de Ja
             └── WebApp ClassLoader (App N)  ← Cada app tiene el suyo, aislado
 ```
 
-### ¿Qué ve cada nivel?
+## ¿Qué ve cada nivel?
 
 | ClassLoader         | ¿Quién lo usa?                       | ¿De dónde carga clases?              |
 |---------------------|--------------------------------------|--------------------------------------|
@@ -576,13 +555,13 @@ Bootstrap ClassLoader          ← Lo provee la JVM. Carga las clases base de Ja
 | Shared              | Todas las apps (no el servidor)      | `shared/lib/` si se configura        |
 | WebApp              | Solo la aplicación propia            | `WEB-INF/lib/` y `WEB-INF/classes/` |
 
-### El patrón Child-First: la clave del aislamiento
+## El patrón Child-First: la clave del aislamiento
 
 El modelo estándar de Java dice que un ClassLoader debe primero preguntar a su padre si conoce una clase (Parent-First). Pero el `WebAppClassLoader` de Tomcat hace lo contrario: **primero busca en su propio `WEB-INF/lib/`** y solo si no encuentra la clase, pregunta al padre (Child-First).
 
 Esto es lo que permite que la App A use Jackson 2.13 y la App B use Jackson 2.15 al mismo tiempo: cada una tiene su propia copia de Jackson en su `WEB-INF/lib/`, y sus respectivos `WebAppClassLoader` la encuentran ahí antes de que ningún ClassLoader padre interfiera.
 
-### Configuración en `conf/catalina.properties`
+## Configuración en `conf/catalina.properties`
 
 ```properties
 # Librerías visibles para Tomcat Y para todas las apps (Common ClassLoader)
@@ -597,11 +576,9 @@ server.loader=
 shared.loader=
 ```
 
----
+# 6. Ciclo de Vida de los Componentes (Lifecycle)
 
-## 1.6 Ciclo de Vida de los Componentes (Lifecycle)
-
-### ¿Por qué es importante conocer esto?
+## ¿Por qué es importante conocer esto?
 
 Todos los componentes de Tomcat (Server, Service, Connector, Engine, Host, Context…) siguen el mismo protocolo de estados. Conocer estos estados te ayuda a:
 
@@ -609,7 +586,7 @@ Todos los componentes de Tomcat (Server, Service, Connector, Engine, Host, Conte
 - Escribir código que se ejecute en momentos específicos (ej: conectar a una BD justo antes de que arranquen las apps)
 - Depurar problemas de inicialización o parada
 
-### Los estados del ciclo de vida
+## Los estados del ciclo de vida
 
 ```
 NUEVO (recién creado)
@@ -633,7 +610,7 @@ NUEVO (recién creado)
 
 Cada transición dispara uno o más **eventos** que otros componentes pueden escuchar.
 
-### LifecycleListeners: reaccionar a los cambios de estado
+## LifecycleListeners: reaccionar a los cambios de estado
 
 Un `LifecycleListener` es código que se ejecuta cuando un componente cambia de estado. Es el mecanismo con el que Tomcat permite extender su comportamiento sin modificar su código fuente.
 
@@ -680,7 +657,7 @@ Para registrar ese listener en `server.xml`:
 </Server>
 ```
 
-### Listeners que vienen incluidos en Tomcat por defecto
+## Listeners que vienen incluidos en Tomcat por defecto
 
 Estos Listeners ya están en `server.xml` de fábrica. Dejarlos activados es una buena práctica:
 
@@ -704,11 +681,9 @@ Estos Listeners ya están en `server.xml` de fábrica. Dejarlos activados es una
           SSLEngine="on"/>
 ```
 
----
+# 7. Componentes de Soporte: Realm, Manager y Store
 
-## 1.7 Componentes de Soporte: Realm, Manager y Store
-
-### 1.7.1 Realm (Seguridad y Autenticación)
+## Realm (Seguridad y Autenticación)
 
 Un `Realm` es el componente que le dice a Tomcat **dónde están guardados los usuarios, contraseñas y roles** de las aplicaciones que requieren autenticación.
 
@@ -749,7 +724,7 @@ Tipos de Realm disponibles, de menos a más robusto:
 
 ---
 
-### 1.7.2 Manager (Gestión de Sesiones HTTP)
+## Manager (Gestión de Sesiones HTTP)
 
 El `Manager` es el componente responsable de **crear, guardar, encontrar e invalidar las sesiones HTTP** de los usuarios de una aplicación.
 
@@ -787,9 +762,8 @@ Cuando un usuario inicia sesión en tu aplicación, Java crea un objeto `HttpSes
 
 > 💡 **Consejo:** En entornos de producción con alta disponibilidad o clústeres, la gestión de sesiones se suele delegar a un sistema externo como Redis o una base de datos, usando librerías específicas (como `tomcat-redis-session-manager`). Esto permite que cualquier nodo del clúster atienda a cualquier usuario sin perder su sesión.
 
----
 
-## 1.8 Resumen Visual de la Arquitectura Completa
+# 8. Resumen Visual de la Arquitectura Completa
 
 El diagrama siguiente muestra cómo encajan todos los componentes dentro de la JVM:
 
@@ -829,9 +803,7 @@ El diagrama siguiente muestra cómo encajan todos los componentes dentro de la J
 └─────────────────────────────────────────────────────────────────┘
 ```
 
----
-
-## 1.9 Diferencias Arquitectónicas entre Versiones
+# 9. Diferencias Arquitectónicas entre Versiones
 
 Esta tabla resume las características más importantes según la versión de Tomcat, para que puedas evaluar una migración o elegir la versión correcta para un proyecto nuevo:
 
@@ -849,9 +821,7 @@ Esta tabla resume las características más importantes según la versión de To
 
 > 💡 **Virtual Threads en Tomcat 11:** Project Loom es una característica de Java 21 que permite tener millones de hilos virtuales muy ligeros, gestionados por la JVM en lugar del sistema operativo. Tomcat 11 puede usar Virtual Threads para procesar peticiones, lo que elimina prácticamente el cuello de botella del modelo "un hilo por petición" sin necesidad de programar con callbacks o código asíncrono complejo.
 
----
-
-## Puntos Clave
+# 10. Puntos Clave
 
 - **Tomcat es un contenedor ligero**, no un servidor de aplicaciones completo. Implementa Servlet, JSP, EL y WebSocket, pero no EJB ni JMS.
 

@@ -4,48 +4,45 @@
 
 ---
 
-- [Módulo 08: Clustering y Sesiones Distribuidas](#módulo-08-clustering-y-sesiones-distribuidas)
-  - [8.1 Arquitectura de Clustering en Tomcat](#81-arquitectura-de-clustering-en-tomcat)
-    - [¿Qué es un cluster y por qué se necesita?](#qué-es-un-cluster-y-por-qué-se-necesita)
-    - [El problema de las sesiones en un cluster](#el-problema-de-las-sesiones-en-un-cluster)
-    - [Cómo funciona el clustering en Tomcat: Tribes](#cómo-funciona-el-clustering-en-tomcat-tribes)
-    - [8.1.1 Modos de replicación de sesiones](#811-modos-de-replicación-de-sesiones)
-  - [8.2 Configuración del Cluster con DeltaManager](#82-configuración-del-cluster-con-deltamanager)
-    - [8.2.1 Configuración completa en server.xml — Nodo 1](#821-configuración-completa-en-serverxml--nodo-1)
-    - [8.2.2 Configuración Nodo 2 — Diferencias mínimas](#822-configuración-nodo-2--diferencias-mínimas)
-  - [8.3 Configuración del Cluster con BackupManager](#83-configuración-del-cluster-con-backupmanager)
-  - [8.4 Sesiones Persistentes con PersistentManager](#84-sesiones-persistentes-con-persistentmanager)
-    - [8.4.1 Persistencia en base de datos (JDBCStore)](#841-persistencia-en-base-de-datos-jdbcstore)
-    - [8.4.2 Persistencia en sistema de archivos (FileStore)](#842-persistencia-en-sistema-de-archivos-filestore)
-  - [8.5 Configuración del Balanceador de Carga](#85-configuración-del-balanceador-de-carga)
-    - [8.5.1 Apache httpd con mod\_proxy\_balancer y Sticky Sessions](#851-apache-httpd-con-mod_proxy_balancer-y-sticky-sessions)
-    - [8.5.2 Nginx con upstream y sticky sessions](#852-nginx-con-upstream-y-sticky-sessions)
-    - [8.5.3 HAProxy para clustering de alta disponibilidad](#853-haproxy-para-clustering-de-alta-disponibilidad)
-  - [8.6 Serialización de Sesiones para Replicación](#86-serialización-de-sesiones-para-replicación)
-    - [¿Qué es la serialización y por qué importa en un cluster?](#qué-es-la-serialización-y-por-qué-importa-en-un-cluster)
-    - [8.6.1 Objetos de sesión serializables](#861-objetos-de-sesión-serializables)
-    - [8.6.2 Verificación de serialización en tests](#862-verificación-de-serialización-en-tests)
-  - [8.7 Distribución de Sesiones con Redis](#87-distribución-de-sesiones-con-redis)
-    - [¿Por qué Redis en lugar de replicación P2P?](#por-qué-redis-en-lugar-de-replicación-p2p)
-    - [8.7.1 Configuración con Redisson (cliente Redis para Java)](#871-configuración-con-redisson-cliente-redis-para-java)
-    - [8.7.2 Configuración con jedis-tomcat-redis-session-manager](#872-configuración-con-jedis-tomcat-redis-session-manager)
-  - [8.8 Diseño de Aplicaciones para Cluster](#88-diseño-de-aplicaciones-para-cluster)
-    - [8.8.1 Buenas prácticas de sesiones en cluster](#881-buenas-prácticas-de-sesiones-en-cluster)
-    - [8.8.2 Activación del soporte de distribución en web.xml](#882-activación-del-soporte-de-distribución-en-webxml)
-  - [8.9 Monitorización del Cluster](#89-monitorización-del-cluster)
-    - [8.9.1 JMX MBeans del Cluster](#891-jmx-mbeans-del-cluster)
-    - [8.9.2 Script de diagnóstico del cluster](#892-script-de-diagnóstico-del-cluster)
-  - [8.10 Diferencias de Clustering entre Versiones de Tomcat](#810-diferencias-de-clustering-entre-versiones-de-tomcat)
-  - [8.11 Clustering en Kubernetes con StaticMembership](#811-clustering-en-kubernetes-con-staticmembership)
-  - [Puntos Clave](#puntos-clave)
+- [1. Arquitectura de Clustering en Tomcat](#1-arquitectura-de-clustering-en-tomcat)
+  - [¿Qué es un cluster y por qué se necesita?](#qué-es-un-cluster-y-por-qué-se-necesita)
+  - [El problema de las sesiones en un cluster](#el-problema-de-las-sesiones-en-un-cluster)
+  - [Cómo funciona el clustering en Tomcat: Tribes](#cómo-funciona-el-clustering-en-tomcat-tribes)
+  - [Modos de replicación de sesiones](#modos-de-replicación-de-sesiones)
+- [2. Configuración del Cluster con DeltaManager](#2-configuración-del-cluster-con-deltamanager)
+  - [Configuración completa en server.xml — Nodo 1](#configuración-completa-en-serverxml--nodo-1)
+  - [Configuración Nodo 2 — Diferencias mínimas](#configuración-nodo-2--diferencias-mínimas)
+- [3. Configuración del Cluster con BackupManager](#3-configuración-del-cluster-con-backupmanager)
+- [4. Sesiones Persistentes con PersistentManager](#4-sesiones-persistentes-con-persistentmanager)
+  - [Persistencia en base de datos (JDBCStore)](#persistencia-en-base-de-datos-jdbcstore)
+  - [Persistencia en sistema de archivos (FileStore)](#persistencia-en-sistema-de-archivos-filestore)
+- [5. Configuración del Balanceador de Carga](#5-configuración-del-balanceador-de-carga)
+  - [Apache httpd con mod\_proxy\_balancer y Sticky Sessions](#apache-httpd-con-mod_proxy_balancer-y-sticky-sessions)
+  - [Nginx con upstream y sticky sessions](#nginx-con-upstream-y-sticky-sessions)
+  - [HAProxy para clustering de alta disponibilidad](#haproxy-para-clustering-de-alta-disponibilidad)
+- [6. Serialización de Sesiones para Replicación](#6-serialización-de-sesiones-para-replicación)
+  - [¿Qué es la serialización y por qué importa en un cluster?](#qué-es-la-serialización-y-por-qué-importa-en-un-cluster)
+  - [Objetos de sesión serializables](#objetos-de-sesión-serializables)
+  - [Verificación de serialización en tests](#verificación-de-serialización-en-tests)
+- [7. Distribución de Sesiones con Redis](#7-distribución-de-sesiones-con-redis)
+  - [¿Por qué Redis en lugar de replicación P2P?](#por-qué-redis-en-lugar-de-replicación-p2p)
+  - [Configuración con Redisson (cliente Redis para Java)](#configuración-con-redisson-cliente-redis-para-java)
+  - [Configuración con jedis-tomcat-redis-session-manager](#configuración-con-jedis-tomcat-redis-session-manager)
+- [8. Diseño de Aplicaciones para Cluster](#8-diseño-de-aplicaciones-para-cluster)
+  - [Buenas prácticas de sesiones en cluster](#buenas-prácticas-de-sesiones-en-cluster)
+  - [Activación del soporte de distribución en web.xml](#activación-del-soporte-de-distribución-en-webxml)
+- [9. Monitorización del Cluster](#9-monitorización-del-cluster)
+  - [JMX MBeans del Cluster](#jmx-mbeans-del-cluster)
+  - [Script de diagnóstico del cluster](#script-de-diagnóstico-del-cluster)
+- [10. Diferencias de Clustering entre Versiones de Tomcat](#10-diferencias-de-clustering-entre-versiones-de-tomcat)
+- [11. Clustering en Kubernetes con StaticMembership](#11-clustering-en-kubernetes-con-staticmembership)
+- [12. Puntos Clave](#12-puntos-clave)
 
 ---
 
-# Módulo 08: Clustering y Sesiones Distribuidas
+# 1. Arquitectura de Clustering en Tomcat
 
-## 8.1 Arquitectura de Clustering en Tomcat
-
-### ¿Qué es un cluster y por qué se necesita?
+## ¿Qué es un cluster y por qué se necesita?
 
 Una instancia única de Tomcat tiene dos limitaciones fundamentales en producción:
 
@@ -55,7 +52,7 @@ Una instancia única de Tomcat tiene dos limitaciones fundamentales en producci�
 
 Un **cluster** resuelve ambos problemas ejecutando múltiples instancias de Tomcat en paralelo, detrás de un **balanceador de carga** que distribuye el tráfico entre ellas. Si una instancia falla, el balanceador redirige el tráfico a las demás. Si la carga crece, se añaden más nodos.
 
-### El problema de las sesiones en un cluster
+## El problema de las sesiones en un cluster
 
 Sin replicación, las sesiones de usuario son locales a cada nodo. Si el usuario `A` se autentica en `node01` y en la siguiente petición el balanceador la envía a `node02`, ese nodo no tiene la sesión del usuario y le pide que se autentique de nuevo. Esto es inaceptable.
 
@@ -65,7 +62,7 @@ Hay dos soluciones principales:
 
 En la práctica, se usa una combinación: sticky sessions como optimización (para evitar replicaciones innecesarias), con replicación como fallback cuando el nodo sticky no está disponible.
 
-### Cómo funciona el clustering en Tomcat: Tribes
+## Cómo funciona el clustering en Tomcat: Tribes
 
 Tomcat implementa el clustering mediante el subsistema **Tribes**, un framework de comunicación en grupo que soporta mensajería multicast y unicast entre nodos. El clustering en Tomcat abarca dos responsabilidades principales:
 
@@ -101,7 +98,7 @@ Tomcat implementa el clustering mediante el subsistema **Tribes**, un framework 
 
 **Tribes:** Es la capa de transporte del cluster. Gestiona el descubrimiento de nodos (¿quién está en el cluster?), la transmisión de mensajes entre nodos, y la detección de fallos.
 
-### 8.1.1 Modos de replicación de sesiones
+## Modos de replicación de sesiones
 
 | Modo             | Descripción                                              | Nodos afectados  | Uso recomendado        |
 |------------------|----------------------------------------------------------|------------------|------------------------|
@@ -118,11 +115,9 @@ Tomcat implementa el clustering mediante el subsistema **Tribes**, un framework 
 
 **Redis/Memcached:** La opción moderna para cloud y microservicios. Las sesiones viven en un sistema externo en memoria (Redis). Cualquier nodo lee y escribe directamente en Redis. No hay comunicación P2P entre nodos Tomcat. Escala horizontalmente de forma transparente.
 
----
+# 2. Configuración del Cluster con DeltaManager
 
-## 8.2 Configuración del Cluster con DeltaManager
-
-### 8.2.1 Configuración completa en server.xml — Nodo 1
+## Configuración completa en server.xml — Nodo 1
 
 La configuración del cluster se añade dentro del elemento `<Engine>` en `server.xml`. Cada elemento tiene un rol específico en el sistema de replicación.
 
@@ -537,7 +532,7 @@ La configuración del cluster se añade dentro del elemento `<Engine>` en `serve
 </Server>
 ```
 
-### 8.2.2 Configuración Nodo 2 — Diferencias mínimas
+## Configuración Nodo 2 — Diferencias mínimas
 
 La configuración de todos los nodos del cluster es casi idéntica. Solo cambian dos cosas fundamentales entre nodos:
 
@@ -610,9 +605,7 @@ La configuración de todos los nodos del cluster es casi idéntica. Solo cambian
 </Engine>
 ```
 
----
-
-## 8.3 Configuración del Cluster con BackupManager
+# 3. Configuración del Cluster con BackupManager
 
 `BackupManager` es una alternativa a `DeltaManager` diseñada para clusters más grandes. En lugar de replicar a todos los nodos, cada sesión tiene un único nodo de backup.
 
@@ -709,9 +702,7 @@ La configuración de todos los nodos del cluster es casi idéntica. Solo cambian
 </Cluster>
 ```
 
----
-
-## 8.4 Sesiones Persistentes con PersistentManager
+# 4. Sesiones Persistentes con PersistentManager
 
 `PersistentManager` es un gestor de sesiones que persiste las sesiones en un almacén externo (base de datos o sistema de archivos), en lugar de replicarlas entre nodos.
 
@@ -724,7 +715,7 @@ La configuración de todos los nodos del cluster es casi idéntica. Solo cambian
 - **Supervivencia a reinicios:** Las sesiones persisten aunque Tomcat se reinicie (`saveOnRestart=true`). Útil para mantenimientos programados.
 - **Clusters sin red de replicación:** Todos los nodos leen y escriben las sesiones en la misma BD. No hay comunicación P2P entre nodos, pero la BD se convierte en un punto central (y potencial cuello de botella).
 
-### 8.4.1 Persistencia en base de datos (JDBCStore)
+## Persistencia en base de datos (JDBCStore)
 
 ```xml
 <!-- conf/Catalina/localhost/myapp.xml -->
@@ -865,7 +856,7 @@ WHERE valid_session = '0'
 -- con el timestamp actual. Si la suma es menor que ahora, la sesión expiró.
 ```
 
-### 8.4.2 Persistencia en sistema de archivos (FileStore)
+## Persistencia en sistema de archivos (FileStore)
 
 `FileStore` es la alternativa más simple: cada sesión se serializa a un archivo en disco, identificado por el JSESSIONID.
 
@@ -922,9 +913,7 @@ chmod 750 /opt/sessions/myapp
 # corrupción cuando dos nodos intentan escribir la misma sesión simultáneamente.
 ```
 
----
-
-## 8.5 Configuración del Balanceador de Carga
+# 5. Configuración del Balanceador de Carga
 
 El balanceador de carga (*load balancer*) es el componente que recibe todas las peticiones externas y las distribuye entre los nodos del cluster. Es responsable de:
 - **Distribución de carga:** Enviar peticiones al nodo menos cargado.
@@ -932,7 +921,7 @@ El balanceador de carga (*load balancer*) es el componente que recibe todas las 
 - **Health checks:** Detectar nodos caídos y dejar de enviarles tráfico.
 - **Terminación TLS:** En muchas arquitecturas, el balanceador gestiona HTTPS y las conexiones internas van sin cifrar (más eficiente).
 
-### 8.5.1 Apache httpd con mod_proxy_balancer y Sticky Sessions
+## Apache httpd con mod_proxy_balancer y Sticky Sessions
 
 Apache httpd es la opción más integrada con Tomcat cuando se usa el protocolo AJP, que es más eficiente que HTTP para la comunicación interna.
 
@@ -1072,7 +1061,7 @@ LoadModule lbmethod_bybusyness_module modules/mod_lbmethod_bybusyness.so
 </VirtualHost>
 ```
 
-### 8.5.2 Nginx con upstream y sticky sessions
+## Nginx con upstream y sticky sessions
 
 Nginx es una alternativa a Apache httpd, generalmente preferida por su menor consumo de memoria y mayor rendimiento en conexiones concurrentes. No soporta el protocolo AJP de forma nativa, por lo que la comunicación con Tomcat va por HTTP.
 
@@ -1171,7 +1160,7 @@ server {
 }
 ```
 
-### 8.5.3 HAProxy para clustering de alta disponibilidad
+## HAProxy para clustering de alta disponibilidad
 
 HAProxy es un balanceador de carga especializado, reconocido como el más robusto y de mayor rendimiento para tráfico HTTP/TCP en producción. Es la opción estándar en entornos empresariales cuando se necesita alta disponibilidad y soporte avanzado de health checks.
 
@@ -1275,9 +1264,9 @@ frontend stats
 
 ---
 
-## 8.6 Serialización de Sesiones para Replicación
+# 6. Serialización de Sesiones para Replicación
 
-### ¿Qué es la serialización y por qué importa en un cluster?
+## ¿Qué es la serialización y por qué importa en un cluster?
 
 **Serialización** es el proceso de convertir un objeto Java en memoria a una secuencia de bytes que puede transmitirse por red o guardarse en disco. La **deserialización** es el proceso inverso.
 
@@ -1285,7 +1274,7 @@ Cuando DeltaManager o BackupManager replican una sesión a otro nodo, convierten
 
 Si un objeto en la sesión **no puede serializarse** (p.ej. una conexión de base de datos, un `InputStream`, un hilo), el proceso falla. En el mejor caso, lanza una excepción visible. En el peor caso, la sesión se replica pero ese atributo se pierde silenciosamente en el nodo receptor.
 
-### 8.6.1 Objetos de sesión serializables
+## Objetos de sesión serializables
 
 Para ser serializable, una clase debe:
 1. Implementar la interfaz `java.io.Serializable`.
@@ -1385,7 +1374,7 @@ public class UserSession implements Serializable {
 }
 ```
 
-### 8.6.2 Verificación de serialización en tests
+## Verificación de serialización en tests
 
 Es fundamental verificar que los objetos de sesión pueden serializarse y deserializarse correctamente **antes de cada release**. Este test simula exactamente lo que hace Tomcat durante la replicación.
 
@@ -1476,13 +1465,11 @@ class UserSessionSerializationTest {
 }
 ```
 
----
-
-## 8.7 Distribución de Sesiones con Redis
+# 7. Distribución de Sesiones con Redis
 
 Para clusters grandes o arquitecturas cloud-native, Redis es la solución más robusta y escalable para sesiones distribuidas. Elimina completamente la necesidad de replicación P2P entre nodos Tomcat.
 
-### ¿Por qué Redis en lugar de replicación P2P?
+## ¿Por qué Redis en lugar de replicación P2P?
 
 **Con DeltaManager/BackupManager:**
 - Los nodos Tomcat se comunican directamente entre sí (P2P).
@@ -1500,7 +1487,7 @@ Para clusters grandes o arquitecturas cloud-native, Redis es la solución más r
 
 **Trade-off:** Redis introduce una dependencia externa. Si Redis falla, todos los nodos pierden acceso a las sesiones. Se mitiga con Redis en modo Sentinel (HA) o Cluster.
 
-### 8.7.1 Configuración con Redisson (cliente Redis para Java)
+## Configuración con Redisson (cliente Redis para Java)
 
 Redisson es la librería cliente Redis más completa para Java. Incluye soporte nativo para gestión de sesiones Tomcat.
 
@@ -1611,7 +1598,7 @@ singleServerConfig:
 #   subscriptionMode: SLAVE
 ```
 
-### 8.7.2 Configuración con jedis-tomcat-redis-session-manager
+## Configuración con jedis-tomcat-redis-session-manager
 
 Una alternativa más ligera a Redisson, basada en la librería Jedis (cliente Redis para Java). Menos funcionalidades pero menor overhead.
 
@@ -1652,11 +1639,11 @@ Una alternativa más ligera a Redisson, basada en la librería Jedis (cliente Re
 
 ---
 
-## 8.8 Diseño de Aplicaciones para Cluster
+# 8. Diseño de Aplicaciones para Cluster
 
 Configurar el cluster en el servidor es solo la mitad del trabajo. El código de la aplicación también debe seguir ciertas prácticas para funcionar correctamente en un entorno distribuido.
 
-### 8.8.1 Buenas prácticas de sesiones en cluster
+## Buenas prácticas de sesiones en cluster
 
 ```java
 package com.miempresa.servlet;
@@ -1759,7 +1746,7 @@ public class ClusterAwareServlet extends HttpServlet {
 }
 ```
 
-### 8.8.2 Activación del soporte de distribución en web.xml
+## Activación del soporte de distribución en web.xml
 
 Este es el paso más importante y más fácil de olvidar. Sin el elemento `<distributable/>`, **Tomcat ignora completamente el Cluster configurado en server.xml** para esa aplicación.
 
@@ -1806,11 +1793,9 @@ Este es el paso más importante y más fácil de olvidar. Sin el elemento `<dist
 </web-app>
 ```
 
----
+# 9. Monitorización del Cluster
 
-## 8.9 Monitorización del Cluster
-
-### 8.9.1 JMX MBeans del Cluster
+## JMX MBeans del Cluster
 
 Tomcat expone información del estado del cluster y de las sesiones vía JMX, igual que hace con el pool de conexiones (Módulo 07).
 
@@ -1920,7 +1905,7 @@ public class ClusterMonitor {
 }
 ```
 
-### 8.9.2 Script de diagnóstico del cluster
+## Script de diagnóstico del cluster
 
 Este script verifica de forma automatizada el estado de todos los nodos del cluster. Ideal para ejecutar periódicamente via cron o integrarlo en pipelines de CI/CD y sistemas de alertas.
 
@@ -2031,9 +2016,7 @@ else
 fi
 ```
 
----
-
-## 8.10 Diferencias de Clustering entre Versiones de Tomcat
+# 10. Diferencias de Clustering entre Versiones de Tomcat
 
 | Característica                              | 8.0   | 8.5   | 9.0   | 10.x  | 11.0  |
 |---------------------------------------------|-------|-------|-------|-------|-------|
@@ -2052,9 +2035,7 @@ fi
 
 **Virtual Threads en Tomcat 11:** Java 21 introduce los *Virtual Threads* (hilos virtuales), que son hilos extremadamente ligeros gestionados por la JVM. En Tomcat 11, el subsistema de replicación Tribes puede usar Virtual Threads para los mensajes del cluster, reduciendo el overhead de memoria asociado al mantenimiento de hilos del pool del Receiver. Especialmente beneficioso en clusters con muchos nodos y alta frecuencia de replicación.
 
----
-
-## 8.11 Clustering en Kubernetes con StaticMembership
+# 11. Clustering en Kubernetes con StaticMembership
 
 En Kubernetes, los pods tienen IPs dinámicas que cambian al reiniciarse. El descubrimiento multicast no funciona en la red de Kubernetes. La solución es `StaticMembershipService`, que lista los nodos del cluster de forma estática por hostname.
 
@@ -2247,7 +2228,6 @@ spec:
               memory: "3Gi"     # Nunca superar 3 GB (OOMKill si se supera)
               cpu: "2000m"      # Nunca superar 2 vCPU
 
----
 # Service headless: Necesario para que los pods tengan DNS estables.
 # clusterIP: None hace que el Service no tenga IP virtual; en su lugar,
 # el DNS devuelve directamente las IPs de los pods.
@@ -2267,7 +2247,6 @@ spec:
     - port: 4000
       name: cluster
 
----
 # Service para tráfico externo (con IP virtual y balanceo nativo de Kubernetes)
 # type: LoadBalancer solicita a la plataforma cloud (AWS, GCP, Azure)
 # que provisione un balanceador de carga externo apuntando a los pods.
@@ -2285,9 +2264,7 @@ spec:
   type: LoadBalancer
 ```
 
----
-
-## Puntos Clave
+# 12. Puntos Clave
 
 - El **`<distributable/>`** en `web.xml` es **obligatorio** para activar la replicación de sesiones. Sin él, el Cluster configurado en `server.xml` no replica las sesiones de esa aplicación aunque todo lo demás esté correctamente configurado.
 
