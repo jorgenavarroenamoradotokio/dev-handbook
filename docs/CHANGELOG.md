@@ -18,11 +18,24 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
 
 ### En progreso 🟡
 
-- `infrastructure/os/linux/` → Módulos 01–05 (Linux: fundamentos, CLI, administración, almacenamiento y automatización)
+- Sin plantillas en progreso
 
 ### Planificadas 🔜
 
-- `certifications/` → CompTIA Security+
+- Sin planificaciones pendientes
+
+---
+
+## [0.4.0] — 2026-06
+
+### Added
+
+- `certifications/compTIA/` — Guía modular de CompTIA Security+ (16 módulos):
+  - `Modulo-01-Fundamentos-Arquitectura.md` — Arquitectura del kernel, syscalls y sistema de ficheros
+  - `Modulo-02-CLI-Procesamiento-Texto.md` — Shell, pipes, redirecciones y herramientas de texto
+  - `Modulo-03-Administracion-Sistema.md` — Procesos, servicios systemd y gestión de usuarios
+  - `Modulo-04-Almacenamiento-Red.md` — Discos, LVM, sistemas de ficheros y networking
+  - `Modulo-05-Automatizacion-Operaciones.md` — Scripting bash, cron y automatización de operaciones
 
 ---
 
@@ -75,5 +88,3 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
   - `README.md` con índice de guías y estado del repositorio
   - `docs/CONTRIBUTING.md` con convenciones y proceso de contribución
   - `docs/CHANGELOG.md` (este fichero)
-  - `docs/GLOSSARY.md` (pendiente de contenido)
-  - `docs/templates/template-guide.md` con plantilla estándar
