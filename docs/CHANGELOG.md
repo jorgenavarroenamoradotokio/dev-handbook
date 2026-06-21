@@ -30,6 +30,15 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
 
 ### Added
 
+- `testing/unitario/mockito.md` — Guía definitiva de Mockito
+
+---
+
+
+## [0.6.0] — 2026-06
+
+### Added
+
 - `testing/unitario/jUnit.md` — Guía definitiva de jUnit
 
 ---

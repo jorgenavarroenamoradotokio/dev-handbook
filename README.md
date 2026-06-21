@@ -117,6 +117,7 @@ Apache Tomcat: instalación, configuración, seguridad, rendimiento y operacione
 | Tipo | Herramienta | Guía | Estado |
 |:-----|:------------|:-----|:------:|
 | Unitario | JUnit 5 | [jUnit.md](./testing/unitario/jUnit.md) | ✅ |
+| Unitario (Mocking) | Mockito | [Mockito.md](./testing/unitario/Mockito.md) | ✅ |
 | Integración | — | Próximamente | 🔜 |
 | E2E | — | Próximamente | 🔜 |
 | Contract | — | Próximamente | 🔜 |
@@ -173,6 +174,8 @@ dev-handbook/
 │
 ├── 📁 testing/
 │   ├── unit/
+│       ├── jUnit.md
+│       └── mockito.md
 │   ├── integration/
 │   ├── e2e/
 │   ├── contract/
