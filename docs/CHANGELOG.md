@@ -26,6 +26,30 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
 
 ---
 
+## [0.4.3] — 2026-06
+
+### Fixed
+- Normalización de índices (TOC) en todas las guías existentes:
+  - `version-control/` — 1 guia
+
+---
+
+## [0.4.2] — 2026-06
+
+### Fixed
+- Normalización de índices (TOC) en todas las guías existentes:
+  - `infrastructure/server/tomcat/` — 10 módulos
+
+---
+
+## [0.4.1] — 2026-06
+
+### Fixed
+- Normalización de índices (TOC) en todas las guías existentes:
+  - `infrastructure/os/linux/` — 5 módulos
+
+---
+
 ## [0.4.0] — 2026-06
 
 ### Added
