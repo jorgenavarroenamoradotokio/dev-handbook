@@ -1,70 +1,48 @@
 > **Estado:** 🟢 Completo
 > **Última actualización:** 2026-05
 
-- [Git](#git)
-  - [Metadata](#metadata)
-  - [1. Introducción y Filosofía de Diseño](#1-introducción-y-filosofía-de-diseño)
-    - [Características Clave](#características-clave)
-  - [2. Arquitectura Interna: El Modelo de Objetos](#2-arquitectura-interna-el-modelo-de-objetos)
-    - [2.1 Los 4 Tipos de Objetos](#21-los-4-tipos-de-objetos)
-    - [2.2 Diagrama: Flujo de Datos Interno de Git](#22-diagrama-flujo-de-datos-interno-de-git)
-    - [2.3 La Carpeta `.git` Explicada a Fondo](#23-la-carpeta-git-explicada-a-fondo)
-  - [3. Ciclo de Vida de los Archivos](#3-ciclo-de-vida-de-los-archivos)
-  - [4. Configuración de Git](#4-configuración-de-git)
-    - [4.1 Niveles de Configuración](#41-niveles-de-configuración)
-    - [4.2 Tabla de Directivas Clave](#42-tabla-de-directivas-clave)
-    - [4.3 Seguridad: Firma de Commits con GPG/SSH](#43-seguridad-firma-de-commits-con-gpgssh)
-  - [5. Convenciones de Commits (Conventional Commits)](#5-convenciones-de-commits-conventional-commits)
-    - [Tipos y su impacto en SemVer](#tipos-y-su-impacto-en-semver)
-  - [6. Estrategias de Branching](#6-estrategias-de-branching)
-    - [6.1 GitFlow](#61-gitflow)
-    - [6.2 GitHub Flow](#62-github-flow)
-    - [6.3 Trunk-Based Development (TBD)](#63-trunk-based-development-tbd)
-    - [6.4 Tabla Comparativa de Estrategias](#64-tabla-comparativa-de-estrategias)
-  - [7. Git Hooks: Automatización en Producción](#7-git-hooks-automatización-en-producción)
-    - [Hooks más útiles en producción](#hooks-más-útiles-en-producción)
-  - [8. Comandos Esenciales](#8-comandos-esenciales)
-    - [8.1 Configuración e Inicialización](#81-configuración-e-inicialización)
-    - [8.2 Staging y Commits](#82-staging-y-commits)
-    - [8.3 Historial y Comparación](#83-historial-y-comparación)
-    - [8.4 Repositorios Remotos](#84-repositorios-remotos)
-    - [8.5 Ramas, Merge y Rebase](#85-ramas-merge-y-rebase)
-    - [8.6 Deshacer Cambios: Reset, Revert y Restore](#86-deshacer-cambios-reset-revert-y-restore)
-    - [8.7 Herramientas de Productividad](#87-herramientas-de-productividad)
-  - [9. Resolución Avanzada de Conflictos](#9-resolución-avanzada-de-conflictos)
-    - [El marcador de conflicto con `zdiff3`](#el-marcador-de-conflicto-con-zdiff3)
-    - [Estrategias de merge para resolución automática](#estrategias-de-merge-para-resolución-automática)
-    - [Git Mergetool — resolución visual](#git-mergetool--resolución-visual)
-    - [Flujo recomendado para conflictos complejos](#flujo-recomendado-para-conflictos-complejos)
-  - [10. El Fichero `.gitignore`](#10-el-fichero-gitignore)
-    - [Sintaxis y patrones](#sintaxis-y-patrones)
-    - [`.gitignore` para proyectos Node.js/TypeScript en producción](#gitignore-para-proyectos-nodejstypescript-en-producción)
-  - [11. Antipatrones y Errores Comunes](#11-antipatrones-y-errores-comunes)
-  - [12. Recetas de Producción (Cheatsheet)](#12-recetas-de-producción-cheatsheet)
+- [1. Introducción y Filosofía de Diseño](#1-introducción-y-filosofía-de-diseño)
+  - [Características Clave](#características-clave)
+- [2. Arquitectura Interna: El Modelo de Objetos](#2-arquitectura-interna-el-modelo-de-objetos)
+  - [Los 4 Tipos de Objetos](#los-4-tipos-de-objetos)
+  - [Diagrama: Flujo de Datos Interno de Git](#diagrama-flujo-de-datos-interno-de-git)
+  - [La Carpeta `.git` Explicada a Fondo](#la-carpeta-git-explicada-a-fondo)
+- [3. Ciclo de Vida de los Archivos](#3-ciclo-de-vida-de-los-archivos)
+- [4. Configuración de Git](#4-configuración-de-git)
+  - [Niveles de Configuración](#niveles-de-configuración)
+  - [Tabla de Directivas Clave](#tabla-de-directivas-clave)
+  - [Seguridad: Firma de Commits con GPG/SSH](#seguridad-firma-de-commits-con-gpgssh)
+- [5. Convenciones de Commits (Conventional Commits)](#5-convenciones-de-commits-conventional-commits)
+  - [Tipos y su impacto en SemVer](#tipos-y-su-impacto-en-semver)
+- [6. Estrategias de Branching](#6-estrategias-de-branching)
+  - [GitFlow](#gitflow)
+  - [GitHub Flow](#github-flow)
+  - [Trunk-Based Development (TBD)](#trunk-based-development-tbd)
+  - [Tabla Comparativa de Estrategias](#tabla-comparativa-de-estrategias)
+- [7. Git Hooks: Automatización en Producción](#7-git-hooks-automatización-en-producción)
+  - [Hooks más útiles en producción](#hooks-más-útiles-en-producción)
+- [8. Comandos Esenciales](#8-comandos-esenciales)
+  - [Configuración e Inicialización](#configuración-e-inicialización)
+  - [Staging y Commits](#staging-y-commits)
+  - [Historial y Comparación](#historial-y-comparación)
+  - [Repositorios Remotos](#repositorios-remotos)
+  - [Ramas, Merge y Rebase](#ramas-merge-y-rebase)
+  - [Deshacer Cambios: Reset, Revert y Restore](#deshacer-cambios-reset-revert-y-restore)
+  - [Herramientas de Productividad](#herramientas-de-productividad)
+- [9. Resolución Avanzada de Conflictos](#9-resolución-avanzada-de-conflictos)
+  - [El marcador de conflicto con `zdiff3`](#el-marcador-de-conflicto-con-zdiff3)
+  - [Estrategias de merge para resolución automática](#estrategias-de-merge-para-resolución-automática)
+  - [Git Mergetool — resolución visual](#git-mergetool--resolución-visual)
+  - [Flujo recomendado para conflictos complejos](#flujo-recomendado-para-conflictos-complejos)
+- [10. El Fichero `.gitignore`](#10-el-fichero-gitignore)
+  - [Sintaxis y patrones](#sintaxis-y-patrones)
+  - [`.gitignore` para proyectos Node.js/TypeScript en producción](#gitignore-para-proyectos-nodejstypescript-en-producción)
+- [11. Antipatrones y Errores Comunes](#11-antipatrones-y-errores-comunes)
+- [12. Recetas de Producción (Cheatsheet)](#12-recetas-de-producción-cheatsheet)
 
 ---
 
-# Git
-
-> **dev-handbook** · Versión 1.0  
-> Última revisión: 2026 · Nivel: Ingeniero Senior
-
----
-
-## Metadata
-
-| Campo | Valor |
-|---|---|
-| **Versión de la guía** | 2.0 |
-| **Tecnología** | Git (DVCS) |
-| **Versión mínima recomendada** | Git 2.40+ |
-| **Tipo de componente** | Herramienta de control de versiones distribuido |
-| **Casos de uso ideales** | Cualquier proyecto de software con ≥1 colaboradores; proyectos open source; CI/CD pipelines; auditoría y trazabilidad de cambios en producción |
-| **Casos a evitar** | Repositorios con binarios grandes (>50 MB por archivo) sin Git LFS; datasets de ML o archivos multimedia masivos sin estrategia de almacenamiento externo |
-
----
-
-## 1. Introducción y Filosofía de Diseño
+# 1. Introducción y Filosofía de Diseño
 
 Git es un **sistema de control de versiones distribuido** (DVCS) creado por Linus Torvalds en 2005 para gestionar el kernel de Linux. Su filosofía se apoya en tres pilares:
 
@@ -72,7 +50,7 @@ Git es un **sistema de control de versiones distribuido** (DVCS) creado por Linu
 - **Basado en snapshots, no en diffs**: A diferencia de SVN o CVS que almacenan deltas, Git guarda una instantánea completa del árbol de ficheros en cada commit (optimizando con punteros a blobs no modificados).
 - **Integridad criptográfica**: Cada objeto se identifica con su hash SHA-1 (en tránsito a SHA-256). Es imposible modificar el historial sin que Git lo detecte.
 
-### Características Clave
+## Características Clave
 
 | Característica | Descripción |
 |---|---|
@@ -82,13 +60,11 @@ Git es un **sistema de control de versiones distribuido** (DVCS) creado por Linu
 | **Integridad SHA** | El hash de cada objeto depende de su contenido; cualquier corrupción es detectable |
 | **Staging Area** | Área de preparación explícita que da control granular sobre qué va en cada commit |
 
----
-
-## 2. Arquitectura Interna: El Modelo de Objetos
+# 2. Arquitectura Interna: El Modelo de Objetos
 
 Git es, en esencia, una **base de datos de objetos inmutable con direccionamiento por contenido** (*content-addressable storage*). Todo lo que Git almacena se reduce a cuatro tipos de objetos, cada uno identificado por el hash SHA-1 de su contenido.
 
-### 2.1 Los 4 Tipos de Objetos
+## Los 4 Tipos de Objetos
 
 | Tipo | Descripción | Almacena |
 |---|---|---|
@@ -141,7 +117,7 @@ git cat-file -p d8e8fca2
 # dist/
 ```
 
-### 2.2 Diagrama: Flujo de Datos Interno de Git
+## Diagrama: Flujo de Datos Interno de Git
 
 El siguiente diagrama muestra cómo se relacionan los objetos internos, las áreas de trabajo y el flujo de comandos:
 
@@ -211,7 +187,7 @@ sequenceDiagram
     S-->>C: Confirma éxito o rechaza (reglas de protección de rama)
 ```
 
-### 2.3 La Carpeta `.git` Explicada a Fondo
+## La Carpeta `.git` Explicada a Fondo
 
 ```bash
 .git/
@@ -236,9 +212,7 @@ sequenceDiagram
     └── exclude       # Como .gitignore pero local y no versionado
 ```
 
----
-
-## 3. Ciclo de Vida de los Archivos
+# 3. Ciclo de Vida de los Archivos
 
 Git gestiona los archivos a través de tres áreas y cuatro estados:
 
@@ -272,11 +246,9 @@ stateDiagram-v2
 | **Staged** | Staging Area (Index) | Cambios marcados para el próximo commit |
 | **Committed** | Repository (.git) | Objeto commit creado; forma parte del historial permanente |
 
----
+# 4. Configuración de Git
 
-## 4. Configuración de Git
-
-### 4.1 Niveles de Configuración
+## Niveles de Configuración
 
 Los niveles tienen precedencia: **local** sobreescribe **global**, que sobreescribe **system**.
 
@@ -295,7 +267,7 @@ git config --local core.hooksPath .githooks
 git config --show-origin user.email
 ```
 
-### 4.2 Tabla de Directivas Clave
+## Tabla de Directivas Clave
 
 | Directiva | Valores | Descripción | Recomendación |
 |---|---|---|---|
@@ -344,7 +316,7 @@ git config --global alias.undo "reset HEAD~1 --mixed"
 git config --global alias.fixup "commit --fixup"
 ```
 
-### 4.3 Seguridad: Firma de Commits con GPG/SSH
+## Seguridad: Firma de Commits con GPG/SSH
 
 En entornos de producción, un atacante podría suplantar tu identidad en un commit (el campo `user.name` es solo texto). La firma criptográfica garantiza la autenticidad.
 
@@ -392,9 +364,7 @@ git log --show-signature -1
 
 > **💡 Tip de Producción:** En GitHub, activa "Vigilant mode" en Settings → SSH and GPG keys. Esto marca los commits NO firmados de tu cuenta como "Unverified", dificultando suplantaciones.
 
----
-
-## 5. Convenciones de Commits (Conventional Commits)
+# 5. Convenciones de Commits (Conventional Commits)
 
 El estándar [Conventional Commits](https://www.conventionalcommits.org) permite automatizar changelogs, versionado semántico (SemVer) y la generación de release notes.
 
@@ -408,7 +378,7 @@ El estándar [Conventional Commits](https://www.conventionalcommits.org) permite
 [pie opcional — referencias a issues, breaking changes]
 ```
 
-### Tipos y su impacto en SemVer
+## Tipos y su impacto en SemVer
 
 | Tipo | Descripción | Impacto SemVer |
 |---|---|---|
@@ -460,11 +430,9 @@ npx standard-version
 npm install --save-dev @commitlint/cli @commitlint/config-conventional
 ```
 
----
+# 6. Estrategias de Branching
 
-## 6. Estrategias de Branching
-
-### 6.1 GitFlow
+## GitFlow
 
 Diseñado por Vincent Driessen (2010). Ideal para proyectos con releases planificadas y versionado explícito.
 
@@ -524,7 +492,7 @@ git flow hotfix start fix-sql-injection       # Crea hotfix desde main
 git flow hotfix finish fix-sql-injection      # Merge a main Y develop, crea tag
 ```
 
-### 6.2 GitHub Flow
+## GitHub Flow
 
 Flujo simplificado para despliegue continuo. Solo existe `main` y ramas de feature/fix con vida corta.
 
@@ -564,7 +532,7 @@ git pull
 git branch -d feat/stripe-payment-integration
 ```
 
-### 6.3 Trunk-Based Development (TBD)
+## Trunk-Based Development (TBD)
 
 Estándar en Google, Meta y empresas con alto volumen de deploys. Todos los desarrolladores integran a `main` (trunk) varias veces al día. Se apoya en **feature flags** para ocultar funcionalidades incompletas.
 
@@ -593,7 +561,7 @@ git pull --rebase
 git push  # CI/CD despliega automáticamente si pasa
 ```
 
-### 6.4 Tabla Comparativa de Estrategias
+## Tabla Comparativa de Estrategias
 
 | Criterio | GitFlow | GitHub Flow | Trunk-Based Dev |
 |---|---|---|---|
@@ -605,9 +573,7 @@ git push  # CI/CD despliega automáticamente si pasa
 | **Riesgo de merge conflicts** | Alto (ramas de larga vida) | Bajo | Muy bajo |
 | **Curva de aprendizaje** | Alta | Baja | Media-Alta |
 
----
-
-## 7. Git Hooks: Automatización en Producción
+# 7. Git Hooks: Automatización en Producción
 
 Los hooks son scripts que Git ejecuta automáticamente antes o después de eventos. Son la base de la **automatización de calidad** en equipos profesionales.
 
@@ -626,7 +592,7 @@ flowchart LR
     J -->|"✅ exit 0"| L["Push EJECUTADO"]
 ```
 
-### Hooks más útiles en producción
+## Hooks más útiles en producción
 
 | Hook | Cuándo se ejecuta | Casos de uso |
 |---|---|---|
@@ -732,11 +698,9 @@ git config core.hooksPath .githooks
 # "scripts": { "prepare": "git config core.hooksPath .githooks" }
 ```
 
----
+# 8. Comandos Esenciales
 
-## 8. Comandos Esenciales
-
-### 8.1 Configuración e Inicialización
+## Configuración e Inicialización
 
 ```bash
 # Inicializar un repositorio nuevo
@@ -757,7 +721,7 @@ git help <comando>
 git <comando> --help  # Equivalente
 ```
 
-### 8.2 Staging y Commits
+## Staging y Commits
 
 ```bash
 # Añadir al staging
@@ -780,7 +744,7 @@ git commit --amend --no-edit       # Añadir al último commit sin cambiar el me
 git commit --fixup <hash>          # Marcar como fixup de otro commit (para rebase -i autosquash)
 ```
 
-### 8.3 Historial y Comparación
+## Historial y Comparación
 
 ```bash
 # Log con formato útil
@@ -814,7 +778,7 @@ git blame --ignore-rev <hash>     # Ignorar un commit de reformateo masivo
 git describe --tags --long
 ```
 
-### 8.4 Repositorios Remotos
+## Repositorios Remotos
 
 ```bash
 # Gestión de remotos
@@ -845,7 +809,7 @@ git push origin :rama-a-eliminar   # Eliminar rama remota
 git push origin --delete rama      # Alternativa para eliminar rama remota
 ```
 
-### 8.5 Ramas, Merge y Rebase
+## Ramas, Merge y Rebase
 
 ```bash
 # Branch
@@ -902,7 +866,7 @@ git push origin --delete v1.0.0   # Borrar tag remoto
 | `drop` | `d` | Eliminar el commit del historial |
 | `exec` | `x` | Ejecutar un comando de shell tras el commit |
 
-### 8.6 Deshacer Cambios: Reset, Revert y Restore
+## Deshacer Cambios: Reset, Revert y Restore
 
 > ⚠️ **Regla de oro:** `git revert` es siempre seguro en ramas compartidas. `git reset --hard` en commits ya publicados romperá el historial de tus compañeros.
 
@@ -945,7 +909,7 @@ git reset --mixed B:  A --- B  (HEAD)   Cambios de C,D → Working Dir
 git reset --hard  B:  A --- B  (HEAD)   Cambios de C,D → 🗑️ ELIMINADOS
 ```
 
-### 8.7 Herramientas de Productividad
+## Herramientas de Productividad
 
 **Git Stash — trabajo temporal en pausa**
 
@@ -1017,11 +981,9 @@ git config --global alias.pushsafe "push --force-with-lease"
 git config --global alias.undo "reset HEAD~1 --mixed"
 ```
 
----
+# 9. Resolución Avanzada de Conflictos
 
-## 9. Resolución Avanzada de Conflictos
-
-### El marcador de conflicto con `zdiff3`
+## El marcador de conflicto con `zdiff3`
 
 Con `merge.conflictstyle = zdiff3` (recomendado), el conflicto muestra tres secciones:
 
@@ -1037,7 +999,7 @@ Con `merge.conflictstyle = zdiff3` (recomendado), el conflicto muestra tres secc
 
 Esto es crucial: **ves el estado original** (3000ms), así puedes tomar una decisión informada en lugar de elegir a ciegas entre los dos lados.
 
-### Estrategias de merge para resolución automática
+## Estrategias de merge para resolución automática
 
 ```bash
 # Usar "nuestra" versión para todos los conflictos (útil para ramas de larga vida)
@@ -1052,7 +1014,7 @@ git checkout --theirs ruta/archivo.ts  # Quedarse con la versión entrante
 git add ruta/archivo.ts
 ```
 
-### Git Mergetool — resolución visual
+## Git Mergetool — resolución visual
 
 ```bash
 # Ver herramientas disponibles
@@ -1069,7 +1031,7 @@ git config --global merge.tool vimdiff
 git mergetool
 ```
 
-### Flujo recomendado para conflictos complejos
+## Flujo recomendado para conflictos complejos
 
 ```bash
 # 1. Siempre abortar si el conflicto es inesperadamente complejo
@@ -1092,11 +1054,9 @@ git diff HEAD~1                  # Revisar los cambios del merge commit
 git log --oneline -5
 ```
 
----
+# 10. El Fichero `.gitignore`
 
-## 10. El Fichero `.gitignore`
-
-### Sintaxis y patrones
+## Sintaxis y patrones
 
 | Patrón | Efecto |
 |---|---|
@@ -1108,7 +1068,7 @@ git log --oneline -5
 | `*.tmp` | Ignora todos los `.tmp` |
 | `[Dd]ebug` | Ignora `Debug` y `debug` |
 
-### `.gitignore` para proyectos Node.js/TypeScript en producción
+## `.gitignore` para proyectos Node.js/TypeScript en producción
 
 ```gitignore
 # ─── Dependencias ────────────────────────────────────────────
@@ -1190,9 +1150,7 @@ git rm --cached -r directorio/
 git commit -m "chore: dejar de rastrear secrets.json"
 ```
 
----
-
-## 11. Antipatrones y Errores Comunes
+# 11. Antipatrones y Errores Comunes
 
 | Antipatrón | Por qué es problemático | Solución |
 |---|---|---|
@@ -1207,9 +1165,7 @@ git commit -m "chore: dejar de rastrear secrets.json"
 | Historial lineal sin información de ramas | Con `--squash` o `--ff` siempre se pierde contexto del trabajo realizado | `git merge --no-ff` para preservar la historia de la feature |
 | Ignorar `git reflog` | "Perdí mis commits" — cuando la solución está a un comando de distancia | Consultar `git reflog` siempre antes de darse por vencido |
 
----
-
-## 12. Recetas de Producción (Cheatsheet)
+# 12. Recetas de Producción (Cheatsheet)
 
 ```bash
 # ─── RECUPERACIÓN DE EMERGENCIA ──────────────────────────────
