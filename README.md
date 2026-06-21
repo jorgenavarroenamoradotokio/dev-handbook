@@ -3,9 +3,9 @@
 > Referencia técnica personal de ingeniería de software. Guías de producción sobre lenguajes, frameworks, bases de datos, infraestructura, testing y certificaciones — con arquitectura interna, ejemplos reales y antipatrones.
 
 <!-- BADGES:START -->
-[![Guías completadas](https://img.shields.io/badge/Guías-32-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
-[![Categorías activas](https://img.shields.io/badge/Categorías_activas-3-blue?style=flat-square)](#-índice-de-guías)
-[![Última actualización](https://img.shields.io/badge/Última_actualización-2026--06-blue?style=flat-square)](./docs/CHANGELOG.md)
+[![GuÃ­as completadas](https://img.shields.io/badge/GuÃ­as-33-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
+[![CategorÃ­as activas](https://img.shields.io/badge/CategorÃ­as_activas-3-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
+[![Ãšltima actualizaciÃ³n](https://img.shields.io/badge/Ãšltima_actualizaciÃ³n-2026-06-blue?style=flat-square)](./docs/CHANGELOG.md)
 <!-- BADGES:END -->
 [![Licencia](https://img.shields.io/badge/Licencia-Privado-red?style=flat-square)](#-licencia)
 
@@ -122,7 +122,7 @@ Apache Tomcat: instalación, configuración, seguridad, rendimiento y operacione
 
 | Tecnología | Guía | Estado |
 |:-----------|:-----|:------:|
-| — | Próximamente | 🔜 |
+| **Docker** | [Guía Definitiva](./infrastructure/containers/docker.md) | ✅ |
 
 ### 🗄️ Data — Databases (`/data/databases`)
 
@@ -270,23 +270,6 @@ Qué hace (ambas versiones, misma lógica):
 1. Cuenta archivos `.md` reales bajo cada categoría de nivel superior (excluye `docs/`, `scripts/`, `README.md`).
 2. Cuenta cuántas de esas categorías tienen al menos un archivo (= "categoría activa").
 3. Reescribe los badges entre `<!-- BADGES:START -->` y `<!-- BADGES:END -->` en este README.
-
-> Los scripts viven como archivos independientes en `scripts/update-stats.sh` y `scripts/update-stats.ps1` — no embebidos en este README. Dale permisos de ejecución a la versión bash una vez: `chmod +x scripts/update-stats.sh`. Ejecuta el que corresponda después de cada guía añadida, antes del commit.
-
----
-
-## 📊 Estado del Repositorio
-
-| Métrica | Valor |
-|:--------|:-----:|
-| Total de guías (`.md` reales) | 32 |
-| Categorías con contenido | 3 de 7 |
-| Tecnologías planificadas (sin empezar) | 35+ |
-
-> Generado por `scripts/update-stats.sh`. No editar a mano. Historial de cambios en [CHANGELOG.md](./docs/CHANGELOG.md).
-
----
-
-## 🔒 Licencia
-
-Todos los derechos reservados. No se permite copiar, modificar ni distribuir sin permiso expreso del autor.
+[![GuÃ­as completadas](https://img.shields.io/badge/GuÃ­as-33-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
+[![CategorÃ­as activas](https://img.shields.io/badge/CategorÃ­as_activas-3-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
+[![Ãšltima actualizaciÃ³n](https://img.shields.io/badge/Ãšltima_actualizaciÃ³n-2026-06-blue?style=flat-square)](./docs/CHANGELOG.md)
