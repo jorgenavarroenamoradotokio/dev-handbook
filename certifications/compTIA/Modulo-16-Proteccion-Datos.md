@@ -5,74 +5,69 @@
 ---
 
 - [1. Tipos de Datos](#1-tipos-de-datos)
-  - [Analogía del mundo real](#analogía-del-mundo-real)
-  - [1.1 Datos regulados](#11-datos-regulados)
-  - [1.2 Secretos comerciales](#12-secretos-comerciales)
-  - [1.3 Datos legales y financieros](#13-datos-legales-y-financieros)
-  - [1.4 Datos legibles vs. no legibles por humanos](#14-datos-legibles-vs-no-legibles-por-humanos)
+  - [Datos regulados](#datos-regulados)
+  - [Secretos comerciales](#secretos-comerciales)
+  - [Datos legales y financieros](#datos-legales-y-financieros)
+  - [Datos legibles vs. no legibles por humanos](#datos-legibles-vs-no-legibles-por-humanos)
 - [2. Clasificaciones de Datos](#2-clasificaciones-de-datos)
-  - [Analogía del mundo real](#analogía-del-mundo-real-1)
-  - [2.1 Esquema por nivel de confidencialidad (gubernamental/corporativo)](#21-esquema-por-nivel-de-confidencialidad-gubernamentalcorporativo)
-  - [2.2 Esquema por tipo de activo de información](#22-esquema-por-tipo-de-activo-de-información)
+  - [Analogía del mundo real](#analogía-del-mundo-real)
+  - [Esquema por nivel de confidencialidad (gubernamental/corporativo)](#esquema-por-nivel-de-confidencialidad-gubernamentalcorporativo)
+  - [Esquema por tipo de activo de información](#esquema-por-tipo-de-activo-de-información)
 - [3. Soberanía de Datos y Consideraciones Geográficas](#3-soberanía-de-datos-y-consideraciones-geográficas)
-  - [Analogía del mundo real](#analogía-del-mundo-real-2)
-  - [3.1 Soberanía de datos](#31-soberanía-de-datos)
-  - [3.2 Consideraciones geográficas](#32-consideraciones-geográficas)
+  - [Soberanía de datos](#soberanía-de-datos)
+  - [Consideraciones geográficas](#consideraciones-geográficas)
 - [4. Datos de Privacidad y Derechos del Titular](#4-datos-de-privacidad-y-derechos-del-titular)
-  - [4.1 Diferencia: datos de privacidad vs. datos confidenciales](#41-diferencia-datos-de-privacidad-vs-datos-confidenciales)
-  - [4.2 Roles en el procesamiento de datos (RGPD)](#42-roles-en-el-procesamiento-de-datos-rgpd)
-  - [4.3 Derechos del titular de datos (RGPD / CCPA)](#43-derechos-del-titular-de-datos-rgpd--ccpa)
-  - [4.4 Derecho al olvido (Right to be Forgotten)](#44-derecho-al-olvido-right-to-be-forgotten)
-  - [4.5 Inventarios y retención de datos](#45-inventarios-y-retención-de-datos)
+  - [Diferencia: datos de privacidad vs. datos confidenciales](#diferencia-datos-de-privacidad-vs-datos-confidenciales)
+  - [Roles en el procesamiento de datos (RGPD)](#roles-en-el-procesamiento-de-datos-rgpd)
+  - [Derechos del titular de datos (RGPD / CCPA)](#derechos-del-titular-de-datos-rgpd--ccpa)
+  - [Derecho al olvido (Right to be Forgotten)](#derecho-al-olvido-right-to-be-forgotten)
+  - [Inventarios y retención de datos](#inventarios-y-retención-de-datos)
 - [5. Vulneraciones de Privacidad y de Datos](#5-vulneraciones-de-privacidad-y-de-datos)
-  - [5.1 Definiciones clave](#51-definiciones-clave)
-  - [5.2 Consecuencias de una vulneración](#52-consecuencias-de-una-vulneración)
-  - [5.3 Notificación de vulneraciones](#53-notificación-de-vulneraciones)
+  - [Definiciones clave](#definiciones-clave)
+  - [Consecuencias de una vulneración](#consecuencias-de-una-vulneración)
+  - [Notificación de vulneraciones](#notificación-de-vulneraciones)
 - [6. Cumplimiento Normativo](#6-cumplimiento-normativo)
-  - [6.1 ¿Qué es el cumplimiento de seguridad?](#61-qué-es-el-cumplimiento-de-seguridad)
-  - [6.2 Impactos del incumplimiento](#62-impactos-del-incumplimiento)
-  - [6.3 Licencias de software y cumplimiento](#63-licencias-de-software-y-cumplimiento)
-  - [6.4 Impactos del incumplimiento contractual](#64-impactos-del-incumplimiento-contractual)
+  - [¿Qué es el cumplimiento de seguridad?](#qué-es-el-cumplimiento-de-seguridad)
+  - [Impactos del incumplimiento](#impactos-del-incumplimiento)
+  - [Licencias de software y cumplimiento](#licencias-de-software-y-cumplimiento)
+  - [Impactos del incumplimiento contractual](#impactos-del-incumplimiento-contractual)
 - [7. Monitoreo e Informes de Cumplimiento](#7-monitoreo-e-informes-de-cumplimiento)
-  - [7.1 Informes internos vs. externos](#71-informes-internos-vs-externos)
-  - [7.2 Control del cumplimiento](#72-control-del-cumplimiento)
+  - [Informes internos vs. externos](#informes-internos-vs-externos)
+  - [Control del cumplimiento](#control-del-cumplimiento)
 - [8. Protección de Datos: Estados y Métodos](#8-protección-de-datos-estados-y-métodos)
-  - [8.1 Los tres estados de los datos](#81-los-tres-estados-de-los-datos)
-  - [8.2 Métodos de protección de datos](#82-métodos-de-protección-de-datos)
+  - [Los tres estados de los datos](#los-tres-estados-de-los-datos)
+  - [Métodos de protección de datos](#métodos-de-protección-de-datos)
   - [Diferencia clave: Enmascaramiento vs. Tokenización vs. Ofuscación](#diferencia-clave-enmascaramiento-vs-tokenización-vs-ofuscación)
 - [9. Prevención de Pérdida de Datos (DLP)](#9-prevención-de-pérdida-de-datos-dlp)
-  - [Analogía del mundo real](#analogía-del-mundo-real-3)
-  - [9.1 Componentes de una solución DLP](#91-componentes-de-una-solución-dlp)
-  - [9.2 Tipos de contenido que escanea DLP](#92-tipos-de-contenido-que-escanea-dlp)
-  - [9.3 Mecanismos de remediación DLP](#93-mecanismos-de-remediación-dlp)
+  - [Componentes de una solución DLP](#componentes-de-una-solución-dlp)
+  - [Tipos de contenido que escanea DLP](#tipos-de-contenido-que-escanea-dlp)
+  - [Mecanismos de remediación DLP](#mecanismos-de-remediación-dlp)
 - [10. Políticas de Conducta del Personal](#10-políticas-de-conducta-del-personal)
-  - [10.1 Política de uso aceptable (AUP)](#101-política-de-uso-aceptable-aup)
-  - [10.2 Código de conducta y análisis de redes sociales](#102-código-de-conducta-y-análisis-de-redes-sociales)
-  - [10.3 BYOD y Shadow IT](#103-byod-y-shadow-it)
-  - [10.4 Política de escritorio limpio (Clean Desk Policy)](#104-política-de-escritorio-limpio-clean-desk-policy)
+  - [Política de uso aceptable (AUP)](#política-de-uso-aceptable-aup)
+  - [Código de conducta y análisis de redes sociales](#código-de-conducta-y-análisis-de-redes-sociales)
+  - [BYOD y Shadow IT](#byod-y-shadow-it)
+  - [Política de escritorio limpio (Clean Desk Policy)](#política-de-escritorio-limpio-clean-desk-policy)
 - [11. Capacitación y Concienciación en Seguridad](#11-capacitación-y-concienciación-en-seguridad)
-  - [11.1 Por qué es crítica la capacitación](#111-por-qué-es-crítica-la-capacitación)
-  - [11.2 Temas fundamentales de capacitación en seguridad](#112-temas-fundamentales-de-capacitación-en-seguridad)
-  - [11.3 Técnicas de capacitación](#113-técnicas-de-capacitación)
-  - [11.4 Campañas de phishing como herramienta de capacitación](#114-campañas-de-phishing-como-herramienta-de-capacitación)
-  - [11.5 Reconocimiento de comportamientos de riesgo](#115-reconocimiento-de-comportamientos-de-riesgo)
+  - [Por qué es crítica la capacitación](#por-qué-es-crítica-la-capacitación)
+  - [Temas fundamentales de capacitación en seguridad](#temas-fundamentales-de-capacitación-en-seguridad)
+  - [Técnicas de capacitación](#técnicas-de-capacitación)
+  - [Campañas de phishing como herramienta de capacitación](#campañas-de-phishing-como-herramienta-de-capacitación)
+  - [Reconocimiento de comportamientos de riesgo](#reconocimiento-de-comportamientos-de-riesgo)
 - [12. Ciclo de Vida de la Capacitación en Seguridad](#12-ciclo-de-vida-de-la-capacitación-en-seguridad)
-  - [12.1 Fases del ciclo de vida](#121-fases-del-ciclo-de-vida)
-  - [12.2 Medición de la efectividad](#122-medición-de-la-efectividad)
-  - [12.3 Métricas clave de capacitación](#123-métricas-clave-de-capacitación)
-- [13. Glosario de Acrónimos](#13-glosario-de-acrónimos)
+  - [Fases del ciclo de vida](#fases-del-ciclo-de-vida)
+  - [Medición de la efectividad](#medición-de-la-efectividad)
+  - [Métricas clave de capacitación](#métricas-clave-de-capacitación)
+- [13. Glosario](#13-glosario)
 
 ---
 
-## 1. Tipos de Datos
-
-### Analogía del mundo real
+# 1. Tipos de Datos
 
 > Piensa en el archivo de un hospital: tiene datos médicos (regulados por HIPAA), fórmulas de medicamentos patentados (secretos comerciales), contratos con proveedores (datos legales), y notas de médicos escritas a mano (datos legibles por humanos). Cada tipo requiere protección diferente.
 
 Los **tipos de datos** categorizan la información según sus características, estructura y uso previsto para determinar las medidas de seguridad y controles adecuados.
 
-### 1.1 Datos regulados
+## Datos regulados
 
 Los **datos regulados** son información sujeta a requisitos legales o reglamentarios específicos sobre su manejo, almacenamiento y protección.
 
@@ -90,7 +85,7 @@ Los **datos regulados** son información sujeta a requisitos legales o reglament
 - Procedimientos de notificación de vulneraciones
 - Políticas de retención y destrucción de datos
 
-### 1.2 Secretos comerciales
+## Secretos comerciales
 
 Los **secretos comerciales** son información confidencial y valiosa que da a una empresa ventaja competitiva. Incluyen:
 - Fórmulas, procesos y métodos propietarios
@@ -99,7 +94,7 @@ Los **secretos comerciales** son información confidencial y valiosa que da a un
 
 **Protección:** los empleados y contratistas deben firmar **NDA** (Non-Disclosure Agreement — Acuerdo de Confidencialidad). Su divulgación no autorizada tiene consecuencias legales graves.
 
-### 1.3 Datos legales y financieros
+## Datos legales y financieros
 
 | Categoría | Ejemplos |
 |---|---|
@@ -108,7 +103,7 @@ Los **secretos comerciales** son información confidencial y valiosa que da a un
 
 Ambos son altamente sensibles: un mal manejo puede afectar la reputación, la posición legal y la estabilidad financiera.
 
-### 1.4 Datos legibles vs. no legibles por humanos
+## Datos legibles vs. no legibles por humanos
 
 | Tipo | Descripción | Controles de seguridad relevantes |
 |---|---|---|
@@ -120,17 +115,15 @@ Ambos son altamente sensibles: un mal manejo puede afectar la reputación, la po
 > **👉 Enfoque de Examen SY0-701:**
 > CompTIA puede preguntar: *"¿Qué tipo de datos requiere herramientas especializadas para su inspección y no puede ser fácilmente analizado con métodos convencionales?"* → **Datos no legibles por humanos**. También puede relacionar tipos de datos con su regulación: historias médicas → HIPAA; datos de tarjetas → PCI DSS; datos personales de ciudadanos UE → RGPD.
 
----
+# 2. Clasificaciones de Datos
 
-## 2. Clasificaciones de Datos
-
-### Analogía del mundo real
+## Analogía del mundo real
 
 > Las clasificaciones de datos son como los sistemas de autorización de acceso en una base militar: no todo el mundo puede ver todo. Un soldado raso ve documentos "públicos"; un coronel puede ver "secretos"; solo unos pocos pueden acceder a "top secret". En empresas funciona igual.
 
 Un **esquema de clasificación de datos** es un árbol de decisiones que asigna una o más etiquetas a cada activo de datos para gestionar su ciclo de vida.
 
-### 2.1 Esquema por nivel de confidencialidad (gubernamental/corporativo)
+## Esquema por nivel de confidencialidad (gubernamental/corporativo)
 
 ```mermaid
 graph TD
@@ -147,7 +140,7 @@ graph TD
 | **Secreto** | Acceso por necesidad de conocer | Alto (daños graves a seguridad nacional) |
 | **Ultrasecreto (Top Secret)** | Acceso extremadamente restringido | Crítico (daños extraordinariamente graves) |
 
-### 2.2 Esquema por tipo de activo de información
+## Esquema por tipo de activo de información
 
 | Clasificación | Descripción | Ejemplo |
 |---|---|---|
@@ -159,15 +152,12 @@ graph TD
 > **👉 Enfoque de Examen SY0-701:**
 > Las clasificaciones son pregunta habitual. Distingue el esquema gubernamental (público/confidencial/secreto/top secret) del esquema corporativo por tipo (propietario/privado/sensible/restringido). El RGPD define categorías específicas de datos "sensibles" — pueden preguntar cuáles son: religión, política, sindicatos, género, orientación sexual, raza, genética, salud. Una trampa: "público" no significa "sin riesgo" — los datos públicos tienen riesgo de integridad y disponibilidad aunque no de confidencialidad.
 
----
 
-## 3. Soberanía de Datos y Consideraciones Geográficas
-
-### Analogía del mundo real
+# 3. Soberanía de Datos y Consideraciones Geográficas
 
 > Imagina que tienes un servidor en Alemania con datos de ciudadanos franceses. El gobierno alemán puede exigir que esos datos se mantengan en su territorio; el gobierno francés puede exigir que la ley francesa se aplique. La soberanía de datos es el choque entre estas jurisdicciones.
 
-### 3.1 Soberanía de datos
+## Soberanía de datos
 
 La **data sovereignty (soberanía de datos)** ocurre cuando una jurisdicción impide o restringe que el procesamiento y almacenamiento de datos tengan lugar en sistemas que no residen físicamente dentro de dicha jurisdicción.
 
@@ -180,7 +170,7 @@ La **data sovereignty (soberanía de datos)** ocurre cuando una jurisdicción im
 - **Localización de datos:** almacenar y procesar en centros de datos dentro de los límites legales
 - **Acuerdos contractuales:** los contratos con proveedores definen restricciones y salvaguardas obligatorias
 
-### 3.2 Consideraciones geográficas
+## Consideraciones geográficas
 
 | Escenario | Implicación |
 |---|---|
@@ -194,11 +184,9 @@ La **data sovereignty (soberanía de datos)** ocurre cuando una jurisdicción im
 > **👉 Enfoque de Examen SY0-701:**
 > Preguntas típicas: *"¿Qué concepto describe la exigencia de mantener datos dentro de los límites físicos de una jurisdicción?"* → **Soberanía de datos / Data sovereignty**. Relacionado: el RGPD se aplica a datos de ciudadanos UE **independientemente de dónde esté la organización** (efecto extraterritorial). El EEE (Espacio Económico Europeo — European Economic Area) incluye la UE más Noruega, Islandia y Liechtenstein.
 
----
+# 4. Datos de Privacidad y Derechos del Titular
 
-## 4. Datos de Privacidad y Derechos del Titular
-
-### 4.1 Diferencia: datos de privacidad vs. datos confidenciales
+## Diferencia: datos de privacidad vs. datos confidenciales
 
 | Aspecto | Datos de privacidad | Datos confidenciales |
 |---|---|---|
@@ -208,7 +196,7 @@ La **data sovereignty (soberanía de datos)** ocurre cuando una jurisdicción im
 | **Consentimiento** | Generalmente requerido para recopilación y procesamiento | No siempre necesario (información interna) |
 | **Regulación** | RGPD, CCPA, HIPAA | NDA, secretos comerciales, derecho corporativo |
 
-### 4.2 Roles en el procesamiento de datos (RGPD)
+## Roles en el procesamiento de datos (RGPD)
 
 ```mermaid
 graph LR
@@ -224,7 +212,7 @@ graph LR
 | **Procesador de datos** (Data Processor) | Procesa datos solo según instrucciones del controlador; sin poder de decisión independiente; mantiene registros de actividades | AWS, Google Cloud, empresa de nóminas |
 | **Titular de datos** (Data Subject) | Persona a quien pertenecen los datos; tiene derechos de ejercer sobre el controlador | El cliente, empleado, usuario |
 
-### 4.3 Derechos del titular de datos (RGPD / CCPA)
+## Derechos del titular de datos (RGPD / CCPA)
 
 | Derecho | Descripción |
 |---|---|
@@ -236,13 +224,13 @@ graph LR
 | **Oposición** | Oponerse al procesamiento para fines no legítimos o marketing directo |
 | **Retirar consentimiento** | Si el procesamiento se basa en consentimiento, puede revocarse en cualquier momento |
 
-### 4.4 Derecho al olvido (Right to be Forgotten)
+## Derecho al olvido (Right to be Forgotten)
 
 El **derecho al olvido** permite solicitar la supresión de datos personales de plataformas online y bases de datos. El controlador debe eliminar los datos **sin demora** salvo que existan motivos legítimos para rechazar la solicitud (ej: libertad de expresión, obligación legal, defensa en litigios).
 
 Este derecho se extiende a **terceros** con quienes se hayan compartido los datos.
 
-### 4.5 Inventarios y retención de datos
+## Inventarios y retención de datos
 
 Las leyes de privacidad (RGPD, CCPA) exigen:
 
@@ -254,11 +242,9 @@ Las leyes de privacidad (RGPD, CCPA) exigen:
 > **👉 Enfoque de Examen SY0-701:**
 > Los roles son pregunta frecuente: *"¿Qué entidad determina el propósito y los medios del procesamiento de datos personales?"* → **Controlador de datos**. *"¿Qué entidad procesa datos en nombre de otra organización?"* → **Procesador de datos**. El "derecho al olvido" es RGPD — permite solicitar la eliminación de datos. Trampa: el procesador de datos NO puede tomar decisiones independientes sobre cómo usar los datos; solo sigue instrucciones del controlador.
 
----
+# 5. Vulneraciones de Privacidad y de Datos
 
-## 5. Vulneraciones de Privacidad y de Datos
-
-### 5.1 Definiciones clave
+## Definiciones clave
 
 | Término | Definición |
 |---|---|
@@ -267,7 +253,7 @@ Las leyes de privacidad (RGPD, CCPA) exigen:
 
 > **Nota importante:** si un administrador ejecuta una consulta que muestra números de tarjetas sin censurar, eso **es una vulneración de datos** aunque la consulta no salga del servidor.
 
-### 5.2 Consecuencias de una vulneración
+## Consecuencias de una vulneración
 
 | Consecuencia | Descripción |
 |---|---|
@@ -276,7 +262,7 @@ Las leyes de privacidad (RGPD, CCPA) exigen:
 | **Multas regulatorias** | Cantidad fija o porcentaje de la facturación anual |
 | **Robo de PI** (Propiedad Intelectual) | Pérdida de ingresos, patentes, secretos comerciales; difícil de remediar en mercados extranjeros |
 
-### 5.3 Notificación de vulneraciones
+## Notificación de vulneraciones
 
 ```mermaid
 flowchart TD
@@ -304,15 +290,13 @@ flowchart TD
 > **👉 Enfoque de Examen SY0-701:**
 > El plazo de **72 horas del RGPD** es dato de examen. HIPAA exige notificar a medios cuando afecta a más de **500 personas**. Pregunta típica: *"¿Cuándo existe vulneración de datos incluso si no hay acceso externo?"* → Cuando existe la **posibilidad** de acceso no autorizado (ej: permisos mal configurados). Diferencia data breach (cualquier dato) de privacy breach (datos personales).
 
----
+# 6. Cumplimiento Normativo
 
-## 6. Cumplimiento Normativo
-
-### 6.1 ¿Qué es el cumplimiento de seguridad?
+## ¿Qué es el cumplimiento de seguridad?
 
 El **cumplimiento de seguridad** es la adhesión a normas, reglamentos y mejores prácticas para proteger información confidencial, mitigar riesgos y garantizar la CIA (Confidencialidad, Integridad, Disponibilidad).
 
-### 6.2 Impactos del incumplimiento
+## Impactos del incumplimiento
 
 ```mermaid
 graph TD
@@ -330,7 +314,7 @@ graph TD
 | **Daño reputacional** | Pérdida de clientes, contratos y oportunidades de negocio |
 | **Escrutinio regulatorio adicional** | Auditorías frecuentes, investigaciones, medidas de remediación obligatorias |
 
-### 6.3 Licencias de software y cumplimiento
+## Licencias de software y cumplimiento
 
 El incumplimiento de licencias de software incluye:
 - Exceder las instalaciones permitidas
@@ -341,7 +325,7 @@ El incumplimiento de licencias de software incluye:
 
 **Remediación:** rehabilitación de licencias, gestión adecuada y auditorías de software.
 
-### 6.4 Impactos del incumplimiento contractual
+## Impactos del incumplimiento contractual
 
 | Impacto | Descripción |
 |---|---|
@@ -353,18 +337,16 @@ El incumplimiento de licencias de software incluye:
 > **👉 Enfoque de Examen SY0-701:**
 > CompTIA puede presentar un escenario donde una organización usa más licencias de software de las contratadas → consecuencia: **incumplimiento contractual con el proveedor**. Las multas del RGPD pueden llegar al **4% de la facturación global anual** o 20 millones de euros (lo que sea mayor). La "diligencia debida" en protección de datos describe la evaluación exhaustiva de las prácticas de protección de datos de una organización.
 
----
+# 7. Monitoreo e Informes de Cumplimiento
 
-## 7. Monitoreo e Informes de Cumplimiento
-
-### 7.1 Informes internos vs. externos
+## Informes internos vs. externos
 
 | Tipo | Destinatarios | Enfoque | Propósito |
 |---|---|---|---|
 | **Informe interno de cumplimiento** | Gestores de riesgo, ejecutivos, analistas de seguridad, responsables de privacidad | Detalles operativos; información granular sobre controles | Soporte a toma de decisiones interna |
 | **Informe externo de cumplimiento** | Accionistas, clientes, reguladores, socios comerciales | Resúmenes de alto nivel; alineado a requisitos normativos | Transparencia y rendición de cuentas externas |
 
-### 7.2 Control del cumplimiento
+## Control del cumplimiento
 
 El **control del cumplimiento** incluye:
 - **Auditorías e investigaciones** de terceros (proveedores, socios) para verificar cumplimiento de normativas
@@ -374,11 +356,9 @@ El **control del cumplimiento** incluye:
 
 > La automatización mejora la precisión y la capacidad de detectar incumplimientos o anomalías con prontitud.
 
----
+# 8. Protección de Datos: Estados y Métodos
 
-## 8. Protección de Datos: Estados y Métodos
-
-### 8.1 Los tres estados de los datos
+## Los tres estados de los datos
 
 ```mermaid
 graph LR
@@ -395,7 +375,7 @@ graph LR
 
 **Desafío clave:** los datos en reposo requieren mantener las claves de cifrado seguras durante más tiempo que los datos en tránsito (que usan claves temporales de sesión).
 
-### 8.2 Métodos de protección de datos
+## Métodos de protección de datos
 
 | Método | Descripción | Caso de uso típico |
 |---|---|---|
@@ -408,7 +388,7 @@ graph LR
 | **Segmentación** | Divide redes, datos y aplicaciones en componentes aislados | EHR (Electronic Health Records — Historias Clínicas Electrónicas); acceso por mínimo privilegio |
 | **Restricciones de permisos** | Controla acceso por rol, regla, atributo u obligación | ACL, RBAC, ABAC, MAC; principio de mínimo privilegio |
 
-### Diferencia clave: Enmascaramiento vs. Tokenización vs. Ofuscación
+## Diferencia clave: Enmascaramiento vs. Tokenización vs. Ofuscación
 
 | Técnica | ¿Reversible? | ¿Conserva formato? | Uso principal |
 |---|---|---|---|
@@ -420,15 +400,11 @@ graph LR
 > **👉 Enfoque de Examen SY0-701:**
 > Los tres estados de datos son pregunta casi garantizada. Memoriza: **en reposo → cifrado de disco/archivo/BD**; **en tránsito → TLS/IPSec**; **en uso → TEE/Intel SGX**. La tokenización se asocia con pagos (PCI DSS). El hashing es unidireccional (no se puede revertir). CompTIA puede preguntar: *"¿Qué método reemplaza un número de tarjeta de crédito con un valor aleatorio sin valor por sí mismo?"* → **Tokenización**. *"¿Qué técnica protege datos en memoria en uso?"* → **TEE / Trusted Execution Environment**.
 
----
-
-## 9. Prevención de Pérdida de Datos (DLP)
-
-### Analogía del mundo real
+# 9. Prevención de Pérdida de Datos (DLP)
 
 > El DLP es como el guardia de seguridad de la empresa que revisa todo lo que sale por la puerta — correos, USBs, uploads a la nube — y bloquea aquello que no debería salir según las políticas de la empresa.
 
-### 9.1 Componentes de una solución DLP
+## Componentes de una solución DLP
 
 ```mermaid
 graph TD
@@ -444,14 +420,14 @@ graph TD
 | **Agentes de punto de conexión** (Endpoint Agents) | Aplicar políticas en equipos cliente aunque no estén conectados a la red corporativa |
 | **Agentes de red** (Network Agents) | Escanear comunicaciones en el perímetro; interactuar con servidores web y de mensajería |
 
-### 9.2 Tipos de contenido que escanea DLP
+## Tipos de contenido que escanea DLP
 
 - **Formatos estructurados:** bases de datos con control de acceso formal
 - **Formatos no estructurados:** correos electrónicos, documentos de texto libre → aplica **transformación de datos** para hacerlos escaneables
 
 **Canales monitorizados:** transferencias a USB, correo electrónico, mensajería instantánea, redes sociales, servicios de almacenamiento cloud (vía proxy o API del proveedor).
 
-### 9.3 Mecanismos de remediación DLP
+## Mecanismos de remediación DLP
 
 | Mecanismo | Descripción |
 |---|---|
@@ -467,11 +443,9 @@ graph TD
 > **👉 Enfoque de Examen SY0-701:**
 > DLP es tema central del examen. Pregunta típica: *"¿Qué componente DLP aplica políticas en los equipos de los usuarios incluso cuando no están conectados a la red corporativa?"* → **Agente de punto de conexión**. Otro escenario: empleado intenta copiar PII a un USB → el mecanismo DLP que reemplaza el archivo con un aviso → **Tombstone/Marcador**. Distingue "solo alerta" (permite pero registra) de "bloqueo" (impide copiar pero permite acceso local) de "cuarentena" (deniega acceso al archivo).
 
----
+# 10. Políticas de Conducta del Personal
 
-## 10. Políticas de Conducta del Personal
-
-### 10.1 Política de uso aceptable (AUP)
+## Política de uso aceptable (AUP)
 
 La **AUP** (Acceptable Use Policy — Política de Uso Aceptable) define qué pueden y no pueden hacer los empleados con los equipos e infraestructura de la organización.
 
@@ -481,7 +455,7 @@ La **AUP** (Acceptable Use Policy — Política de Uso Aceptable) define qué pu
 - Prohibición de acceder a datos confidenciales sin autorización
 - Restricciones de uso de Internet y herramientas personales durante el trabajo
 
-### 10.2 Código de conducta y análisis de redes sociales
+## Código de conducta y análisis de redes sociales
 
 El **código de conducta** establece estándares profesionales esperados, incluyendo:
 - Uso de redes sociales (riesgo de infección de virus, pérdida de tiempo, derechos de autor, difamación)
@@ -489,7 +463,7 @@ El **código de conducta** establece estándares profesionales esperados, incluy
 - **Los empleadores pueden monitorear cuentas personales de redes sociales** para verificar infracciones de políticas
 - Personal con acceso privilegiado debe estar sujeto a cláusulas que prohíban el uso indebido de privilegios
 
-### 10.3 BYOD y Shadow IT
+## BYOD y Shadow IT
 
 **BYOD** (Bring Your Own Device — Trae tu Propio Dispositivo): los dispositivos personales (smartphones, USB, tabletas) facilitan la copia de archivos y presentan riesgos de:
 - Exfiltración de datos
@@ -501,24 +475,22 @@ El **código de conducta** establece estándares profesionales esperados, incluy
 
 **Controles:** soluciones DLP y gestión del punto de conexión / NAC (Network Access Control — Control de Acceso a la Red).
 
-### 10.4 Política de escritorio limpio (Clean Desk Policy)
+## Política de escritorio limpio (Clean Desk Policy)
 
 Cada área de trabajo debe estar **libre de documentos dejados a la vista**. Objetivo: evitar que personal o visitantes no autorizados obtengan información sensible en el lugar de trabajo.
 
 > **👉 Enfoque de Examen SY0-701:**
 > CompTIA puede preguntar: *"¿Qué política controla el uso aceptable de equipos corporativos?"* → **AUP**. *"¿Qué término describe el uso de servicios no aprobados por TI para proyectos empresariales?"* → **Shadow IT**. La política de escritorio limpio (clean desk) protege contra ataques de **shoulder surfing** y acceso físico no autorizado. Recuerda: las comunicaciones en sistemas corporativos pueden ser **monitoreadas legalmente** por el empleador.
 
----
+# 11. Capacitación y Concienciación en Seguridad
 
-## 11. Capacitación y Concienciación en Seguridad
-
-### 11.1 Por qué es crítica la capacitación
+## Por qué es crítica la capacitación
 
 > Los usuarios sin capacitación representan la **vulnerabilidad más grave** de cualquier sistema: son susceptibles a ingeniería social, malware y manejo descuidado de datos sensibles.
 
 La capacitación debe alcanzar **todos los niveles:** usuarios finales, personal técnico y ejecutivos.
 
-### 11.2 Temas fundamentales de capacitación en seguridad
+## Temas fundamentales de capacitación en seguridad
 
 | Tema | Descripción |
 |---|---|
@@ -531,7 +503,7 @@ La capacitación debe alcanzar **todos los niveles:** usuarios finales, personal
 | **Seguridad operativa** | Seguridad física, estaciones de trabajo, clasificación de datos, comunicaciones seguras |
 | **Trabajo híbrido/remoto** | Acceso remoto seguro, Wi-Fi segura, protección del espacio físico en casa |
 
-### 11.3 Técnicas de capacitación
+## Técnicas de capacitación
 
 | Técnica | Descripción |
 |---|---|
@@ -541,7 +513,7 @@ La capacitación debe alcanzar **todos los niveles:** usuarios finales, personal
 | **Tutoría individual** | Para roles específicos que requieren capacitación personalizada |
 | **Campañas de phishing simuladas** | Ataques de phishing controlados para evaluar y entrenar la respuesta de empleados |
 
-### 11.4 Campañas de phishing como herramienta de capacitación
+## Campañas de phishing como herramienta de capacitación
 
 Las **campañas de phishing simuladas** son ataques controlados que:
 - Mejoran la conciencia de las amenazas
@@ -552,7 +524,7 @@ Las **campañas de phishing simuladas** son ataques controlados que:
 
 El phishing es efectivo porque explota vulnerabilidades **humanas**: suplantación de entidades de confianza, urgencia, manipulación psicológica y amplio alcance.
 
-### 11.5 Reconocimiento de comportamientos de riesgo
+## Reconocimiento de comportamientos de riesgo
 
 | Tipo de comportamiento | Descripción | Ejemplos |
 |---|---|---|
@@ -565,11 +537,9 @@ El phishing es efectivo porque explota vulnerabilidades **humanas**: suplantaci�
 > **👉 Enfoque de Examen SY0-701:**
 > La capacitación basada en roles es objetivo 5.6. Preguntas típicas: *"¿Qué técnica de capacitación usa ataques simulados para evaluar la respuesta de los empleados?"* → **Campañas de phishing simuladas**. *"¿Qué término describe usar aplicaciones SaaS personales no aprobadas para trabajo corporativo?"* → **Shadow IT**. El CBT incluye gamificación: insignias, niveles, avatares. Los cables de carga maliciosos como vector de ataque son tema emergente que puede aparecer en el examen.
 
----
+# 12. Ciclo de Vida de la Capacitación en Seguridad
 
-## 12. Ciclo de Vida de la Capacitación en Seguridad
-
-### 12.1 Fases del ciclo de vida
+## Fases del ciclo de vida
 
 ```mermaid
 flowchart LR
@@ -582,14 +552,14 @@ flowchart LR
     MA -.->|ciclo continuo| E1
 ```
 
-### 12.2 Medición de la efectividad
+## Medición de la efectividad
 
 | Tipo de efectividad | Descripción | Métodos de medición |
 |---|---|---|
 | **Efectividad inicial** | Impacto inmediato tras la capacitación | Pre/post evaluaciones; cuestionarios sobre comprensión de conceptos |
 | **Efectividad recurrente** | Impacto a largo plazo; si se retienen y aplican conocimientos en el tiempo | Seguimiento de comportamiento continuo; auditorías periódicas |
 
-### 12.3 Métricas clave de capacitación
+## Métricas clave de capacitación
 
 | Métrica | Qué mide |
 |---|---|
@@ -603,9 +573,7 @@ flowchart LR
 > **👉 Enfoque de Examen SY0-701:**
 > El ciclo de vida de capacitación mide la efectividad en dos dimensiones: **inicial** (inmediata, post-training) y **recurrente** (sostenida en el tiempo). Una pregunta típica: *"¿Qué tipo de medición evalúa si los empleados aplican los conocimientos adquiridos en sus actividades diarias durante un período prolongado?"* → **Efectividad recurrente**. Las simulaciones de phishing generan métricas cuantitativas sobre tasas de clics y susceptibilidad.
 
----
-
-## 13. Glosario de Acrónimos
+# 13. Glosario 
 
 | Acrónimo | Nombre completo | Español |
 |---|---|---|
