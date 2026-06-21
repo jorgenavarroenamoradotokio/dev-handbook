@@ -3,9 +3,9 @@
 > Referencia técnica personal de ingeniería de software. Guías de producción sobre lenguajes, frameworks, bases de datos, infraestructura, testing y certificaciones — con arquitectura interna, ejemplos reales y antipatrones.
 
 <!-- BADGES:START -->
-[![GuÃ­as completadas](https://img.shields.io/badge/GuÃ­as-34-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
-[![CategorÃ­as activas](https://img.shields.io/badge/CategorÃ­as_activas-4-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
-[![Ãšltima actualizaciÃ³n](https://img.shields.io/badge/Ãšltima_actualizaciÃ³n-2026-06-blue?style=flat-square)](./docs/CHANGELOG.md)
+[![GuÃ­as completadas](https://img.shields.io/badge/Gui­as-34-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
+[![CategorÃ­as activas](https://img.shields.io/badge/Categorias_activas-4-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
+[![Ãšltima actualizaciÃ³n](https://img.shields.io/badge/ultima_actualizacion-2026-06-blue?style=flat-square)](./docs/CHANGELOG.md)
 <!-- BADGES:END -->
 [![Licencia](https://img.shields.io/badge/Licencia-Privado-red?style=flat-square)](#-licencia)
 
