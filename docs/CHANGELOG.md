@@ -30,6 +30,14 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
 
 ### Added
 
+- `platforms/movile/JetpackCompose.md` — Guía definitiva de JetpackCompose
+
+---
+
+## [0.7.0] — 2026-08
+
+### Added
+
 - `infreastructure/build-tools/maven.md` — Guía definitiva de Maven
 
 ---
