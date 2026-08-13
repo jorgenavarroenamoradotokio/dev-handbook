@@ -1,11 +1,11 @@
-﻿# dev-handbook
+# dev-handbook
 
 > Referencia técnica personal de ingeniería de software. Guías de producción sobre lenguajes, frameworks, bases de datos, infraestructura, testing y certificaciones — con arquitectura interna, ejemplos reales y antipatrones.
 
 <!-- BADGES:START -->
-[![GuÃ­as completadas](https://img.shields.io/badge/Gui­as-34-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
-[![CategorÃ­as activas](https://img.shields.io/badge/Categorias_activas-4-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
-[![Última actualización](https://img.shields.io/badge/Última_actualización-2026--06-blue?style=flat-square)](./docs/CHANGELOG.md)
+[![GuÃ­as completadas](https://img.shields.io/badge/GuÃ­as-37-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
+[![CategorÃ­as activas](https://img.shields.io/badge/CategorÃ­as_activas-5-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
+[![Ãšltima actualizaciÃ³n](https://img.shields.io/badge/Ãšltima_actualizaciÃ³n-2026/08-blue?style=flat-square)](./docs/CHANGELOG.md)
 <!-- BADGES:END -->
 [![Licencia](https://img.shields.io/badge/Licencia-Privado-red?style=flat-square)](#-licencia)
 
@@ -109,7 +109,7 @@ Apache Tomcat: instalación, configuración, seguridad, rendimiento y operacione
 |:--------------|:-----------|:-----|:------:|
 | Backend | — | Próximamente | 🔜 |
 | Frontend | — | Próximamente | 🔜 |
-| Mobile | — | Próximamente | 🔜 |
+| Mobile | Jetpack Compose | [JetpackCompose.md](./platforms/mobile/JetpackCompose.md) | ✅ |
 | Microservicios | — | Próximamente | 🔜 |
 
 ### 🧪 Testing (`/testing`)
@@ -284,6 +284,6 @@ Qué hace (ambas versiones, misma lógica):
 1. Cuenta archivos `.md` reales bajo cada categoría de nivel superior (excluye `docs/`, `scripts/`, `README.md`).
 2. Cuenta cuántas de esas categorías tienen al menos un archivo (= "categoría activa").
 3. Reescribe los badges entre `<!-- BADGES:START -->` y `<!-- BADGES:END -->` en este README.
-[![Guias completadas](https://img.shields.io/badge/GuÃ­as-34-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
-[![Categorias activas](https://img.shields.io/badge/CategorÃ­as_activas-4-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
-[![Ultima actualizacion](https://img.shields.io/badge/Ãšltima_actualizaciÃ³n-2026-06-blue?style=flat-square)](./docs/CHANGELOG.md)
+[![GuÃ­as completadas](https://img.shields.io/badge/GuÃ­as-37-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
+[![CategorÃ­as activas](https://img.shields.io/badge/CategorÃ­as_activas-5-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
+[![Ãšltima actualizaciÃ³n](https://img.shields.io/badge/Ãšltima_actualizaciÃ³n-2026/08-blue?style=flat-square)](./docs/CHANGELOG.md)
