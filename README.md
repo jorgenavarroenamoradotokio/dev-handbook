@@ -129,6 +129,12 @@ Apache Tomcat: instalación, configuración, seguridad, rendimiento y operacione
 |:-----------|:-----|:------:|
 | **Docker** | [Guía Definitiva](./infrastructure/containers/Docker.md) | ✅ |
 
+### Infrastructure — Containers (`/infrastructure/build-tools`)
+
+| Tecnología | Guía | Estado |
+|:-----------|:-----|:------:|
+| **Maven** | [Guía Definitiva](./infrastructure/build-tools/maven.md) | ✅ |
+
 ### 🗄️ Data — Databases (`/data/databases`)
 
 | Tipo | Tecnología | Guía | Estado |
@@ -189,6 +195,7 @@ dev-handbook/
 │   ├── containers/
 │   ├── ci-cd/
 │   └── build-tools/
+│       └── maven.md
 │
 ├── 📁 version-control/
 │   └── git.md
@@ -277,6 +284,6 @@ Qué hace (ambas versiones, misma lógica):
 1. Cuenta archivos `.md` reales bajo cada categoría de nivel superior (excluye `docs/`, `scripts/`, `README.md`).
 2. Cuenta cuántas de esas categorías tienen al menos un archivo (= "categoría activa").
 3. Reescribe los badges entre `<!-- BADGES:START -->` y `<!-- BADGES:END -->` en este README.
-[![GuÃ­as completadas](https://img.shields.io/badge/GuÃ­as-34-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
-[![CategorÃ­as activas](https://img.shields.io/badge/CategorÃ­as_activas-4-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
-[![Ãšltima actualizaciÃ³n](https://img.shields.io/badge/Ãšltima_actualizaciÃ³n-2026-06-blue?style=flat-square)](./docs/CHANGELOG.md)
+[![Guias completadas](https://img.shields.io/badge/GuÃ­as-34-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
+[![Categorias activas](https://img.shields.io/badge/CategorÃ­as_activas-4-blue?style=flat-square)](#-Ã­ndice-de-guÃ­as)
+[![Ultima actualizacion](https://img.shields.io/badge/Ãšltima_actualizaciÃ³n-2026-06-blue?style=flat-square)](./docs/CHANGELOG.md)
