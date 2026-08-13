@@ -26,6 +26,15 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
 
 ---
 
+## [0.7.0] — 2026-08
+
+### Added
+
+- `infreastructure/build-tools/maven.md` — Guía definitiva de Maven
+
+---
+
+
 ## [0.6.0] — 2026-06
 
 ### Added
