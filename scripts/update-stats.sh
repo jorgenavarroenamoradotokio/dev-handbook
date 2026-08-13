@@ -36,7 +36,7 @@ for dir in "${!CATEGORIES[@]}"; do
   fi
 done
 
-today=$(date +%Y-%m)
+today=$(date +%Y/%m)
 
 badges=$(cat <<EOF
 [![Guías completadas](https://img.shields.io/badge/Guías-${total_guides}-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
