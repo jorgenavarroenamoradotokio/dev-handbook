@@ -1,4 +1,4 @@
-# Guía de Contribución — dev-handbook
+# Guía de Contribución
 
 Este documento define las convenciones para mantener el repositorio consistente y útil a largo plazo.
 
@@ -11,20 +11,22 @@ Este documento define las convenciones para mantener el repositorio consistente 
 | Lenguajes (Go, Python, TypeScript, Rust, Java) | `languages/` |
 | Frameworks web backend (FastAPI, Gin, Spring) | `platforms/web/backend/` |
 | Frameworks web frontend (Next.js, Remix, SvelteKit) | `platforms/web/frontend/` |
-| Frameworks móvil (React Native, Flutter) | `platforms/mobile/` |
+| Frameworks móvil (React Native, Flutter, Jetpack Compose) | `platforms/mobile/` |
 | Microservicios (gRPC, Temporal, Dapr) | `platforms/microservices/` |
 | Bases de datos relacionales (PostgreSQL, MySQL) | `data/databases/relational/` |
 | Bases de datos NoSQL (MongoDB, DynamoDB) | `data/databases/nosql/` |
 | Caché (Redis, Memcached) | `data/databases/cache/` |
-| Testing (Vitest, Pytest, Playwright, k6) | `testing/` |
+| Testing (Vitest, Pytest, Playwright, k6, JUnit, Mockito) | `testing/<tipo>/` (ver nota abajo) |
+| Herramientas de build (Maven, Gradle, Bazel) | `infrastructure/build-tools/` |
 | Docker y contenedores | `infrastructure/containers/` |
 | CI/CD (GitHub Actions, GitLab CI, ArgoCD) | `infrastructure/ci-cd/` |
-| Servidores y proxies (Nginx, Caddy, HAProxy) | `infrastructure/servers/` |
-| Servidores de aplicaciones (Tomcat, JBoss, Jetty) | `infrastructure/server/<nombre>/` |
+| Servidores y proxies de red (Nginx, Caddy, HAProxy) | `infrastructure/servers/<nombre>/` |
+| Servidores de aplicaciones (Tomcat, JBoss, Jetty) | `infrastructure/servers/<nombre>/` |
 | Sistemas operativos (Linux, administración) | `infrastructure/os/<os>/` |
 | Control de versiones, Git workflows | `version-control/` |
 | Shell, CLI tools (bash, zsh, awk, jq) | `tooling/shell/` |
-| Certificaciones (AWS, CKA, Terraform) | `certifications/` |
+| Certificaciones (CompTIA, AWS, CKA, Terraform) | `certifications/<proveedor>/` |
+
 
 Si una tecnología no encaja claramente, abre un issue o crea la carpeta con un `README.md` que explique el criterio.
 
@@ -35,7 +37,7 @@ Si una tecnología no encaja claramente, abre un issue o crea la carpeta con un 
 Algunas tecnologías con mucho contenido se dividen en **módulos numerados** dentro de su carpeta:
 
 ```
-infrastructure/server/tomcat/
+infrastructure/servers/tomcat/
 ├── Modulo-01-Arquitectura.md
 ├── Modulo-02-Instalacion.md
 └── ...
@@ -65,9 +67,9 @@ git switch -c docs/guide-<tecnologia>
 # docs/guide-tomcat
 
 # 3. Copiar la plantilla estándar
-cp docs/templates/template-guide.md <categoria>/<tecnologia>.md
+cp docs/templates/template-guide.md <categoria>/<Tecnologia>.md
 # Para guías modulares:
-# cp docs/templates/template-guide.md infrastructure/server/tomcat/Modulo-01-Arquitectura.md
+# cp docs/templates/template-guide.md infrastructure/servers/tomcat/Modulo-01-Arquitectura.md
 
 # 4. Desarrollar la guía (ver estándares de calidad abajo)
 
@@ -76,7 +78,11 @@ cp docs/templates/template-guide.md <categoria>/<tecnologia>.md
 #    - Actualizar el contador en "Estado del Repositorio"
 
 # 6. Actualizar docs/CHANGELOG.md
-#    - Añadir entrada en la sección [Unreleased] o la versión correcta
+#    - Añadir entrada en la sección [Unreleased], o si se publica directamente:
+#    - Incrementar el MINOR sobre la ÚLTIMA versión ya publicada en el fichero
+#      (nunca reutilizar un número de versión, aunque el cambio parezca menor)
+#    - Antes de commitear, comprobar que el número elegido no existe ya como
+#      cabecera `## [X.Y.Z]` en el CHANGELOG
 
 # 7. Commit
 git add .
@@ -85,6 +91,7 @@ git commit -m "docs(<categoria>): add <tecnologia> guide"
 # docs(data): add postgresql guide
 # docs(infrastructure): add nginx guide
 # docs(infrastructure): add linux os guide
+# docs(version-control): add git guide
 
 # 8. Merge a main
 git switch main
@@ -104,15 +111,16 @@ Usar [Conventional Commits](https://www.conventionalcommits.org):
 ```
 docs(<scope>): <descripción en imperativo>
 
-# Scopes válidos: languages, platforms, data, testing,
-#                 infrastructure, tooling, certifications, meta
+# Scopes válidos: languages, platforms, data, testing, infrastructure,
+#                 tooling, certifications, version-control, meta
 ```
 
 ### Nombres de archivo
 
-- Siempre en **kebab-case** para guías únicas: `docker-compose.md`, `react-native.md`
+- Siempre en **PascalKebab** para guías únicas: `Docker-Compose.md`, `React-Native.md`, `Git.md`, `JUnit.md`, `Maven.md`
 - Para guías modulares: prefijo `Modulo-NN-` en **PascalKebab**: `Modulo-01-Arquitectura.md`
 - Sin espacios, sin caracteres especiales
+- Ficheros existentes que no cumplan esta convención (`git.md`, `mockito.md`, `Docker.md`, `JetpackCompose.md`, `maven.md`) deben renombrarse la próxima vez que se toquen; no crear ficheros nuevos con el patrón antiguo.
 
 ### Diagramas
 
@@ -150,6 +158,16 @@ Cada guía debe aspirar al nivel **Completo**:
 | `Básico` | Instalación, comandos principales, ejemplo mínimo |
 | `Intermedio` | Configuración real, patrones de uso, integración con otras herramientas |
 | `Completo` | Arquitectura interna, producción, seguridad, rendimiento, antipatrones, troubleshooting |
+
+---
+
+## Convención de versiones del CHANGELOG
+
+- `MAJOR`: reestructuración completa del repositorio
+- `MINOR`: nueva guía añadida
+- `PATCH`: correcciones, mejoras o actualizaciones de una guía existente
+
+**Regla de asignación:** el número de versión siempre es el último publicado + 1 en el campo correspondiente. Nunca se reutiliza ni se retrocede un número, aunque dos cambios ocurran el mismo mes. Antes de añadir una entrada, revisar la cabecera de versión más reciente en `CHANGELOG.md` y confirmar que la nueva no coincide con ninguna ya existente.
 
 ---
 

@@ -26,90 +26,53 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
 
 ---
 
-## [0.7.0] — 2026-08
+## [1.0.1] — 2026-08
+
+### Refactor
+  - Reorganizamos la estructura del proyecto para crear un directorio raiz para almacenar todas las guias y tener mejor organiazcion
+  - Actualizamos el contenido de `CONTRIBUTING.md` y `README.md`
+  - Actualizamos el documento de versiones
+
+### Fix
+  - Actualizamos los script para actualizar el documento README.md
 
 ### Added
-
+- `infreastructure/build-tools/Maven.md` — Guía definitiva de Maven
 - `platforms/movile/JetpackCompose.md` — Guía definitiva de JetpackCompose
-
----
-
-## [0.7.0] — 2026-08
-
-### Added
-
-- `infreastructure/build-tools/maven.md` — Guía definitiva de Maven
-
----
-
-
-## [0.6.0] — 2026-06
-
-### Added
-
-- `testing/unitario/mockito.md` — Guía definitiva de Mockito
-
----
-
-
-## [0.6.0] — 2026-06
-
-### Added
-
-- `testing/unitario/jUnit.md` — Guía definitiva de jUnit
-
----
-
-## [0.5.0] — 2026-06
-
-### Added
-
-- `infrastructure/containers/Docker.md` — Guía definitiva de Docker
-
----
-
-## [0.4.3] — 2026-06
-
-### Fixed
-- Normalización de índices (TOC) en todas las guías existentes:
-  - `version-control/` — 1 guia
-
----
-
-## [0.4.2] — 2026-06
-
-### Fixed
-- Normalización de índices (TOC) en todas las guías existentes:
-  - `infrastructure/server/tomcat/` — 10 módulos
-
----
-
-## [0.4.1] — 2026-06
-
-### Fixed
-- Normalización de índices (TOC) en todas las guías existentes:
-  - `infrastructure/os/linux/` — 5 módulos
 
 ---
 
 ## [0.4.0] — 2026-06
 
 ### Added
+- `infrastructure/containers/Docker.md` — Guía definitiva de Docker
+- `testing/unitario/JUnit.md` — Guía definitiva de jUnit
+- `testing/unitario/Mockito.md` — Guía definitiva de Mockito
 
-- `certifications/compTIA/` — Guía modular de CompTIA Security+ (16 módulos):
-  - `Modulo-01-Fundamentos-Arquitectura.md` — Arquitectura del kernel, syscalls y sistema de ficheros
-  - `Modulo-02-CLI-Procesamiento-Texto.md` — Shell, pipes, redirecciones y herramientas de texto
-  - `Modulo-03-Administracion-Sistema.md` — Procesos, servicios systemd y gestión de usuarios
-  - `Modulo-04-Almacenamiento-Red.md` — Discos, LVM, sistemas de ficheros y networking
-  - `Modulo-05-Automatizacion-Operaciones.md` — Scripting bash, cron y automatización de operaciones
+---
+
+## [0.3.1] — 2026-06
+
+### Fixed
+- Normalización de índices (TOC) en todas las guías existentes:
+  - `infrastructure/os/linux/` — 5 módulos
+- Normalización de índices (TOC) en todas las guías existentes:
+  - `infrastructure/server/tomcat/` — 10 módulos
+- Normalización de índices (TOC) en todas las guías existentes:
+  - `version-control/` — 1 guia
 
 ---
 
 ## [0.3.0] — 2026-06
 
 ### Added
-
 - `infrastructure/os/linux/` — Guía modular de Linux en progreso (5 módulos):
+  - `Modulo-01-Fundamentos-Arquitectura.md` — Arquitectura del kernel, syscalls y sistema de ficheros
+  - `Modulo-02-CLI-Procesamiento-Texto.md` — Shell, pipes, redirecciones y herramientas de texto
+  - `Modulo-03-Administracion-Sistema.md` — Procesos, servicios systemd y gestión de usuarios
+  - `Modulo-04-Almacenamiento-Red.md` — Discos, LVM, sistemas de ficheros y networking
+  - `Modulo-05-Automatizacion-Operaciones.md` — Scripting bash, cron y automatización de operaciones
+- `certifications/compTIA/` — Guía modular de CompTIA Security+ (16 módulos):
   - `Modulo-01-Fundamentos-Arquitectura.md` — Arquitectura del kernel, syscalls y sistema de ficheros
   - `Modulo-02-CLI-Procesamiento-Texto.md` — Shell, pipes, redirecciones y herramientas de texto
   - `Modulo-03-Administracion-Sistema.md` — Procesos, servicios systemd y gestión de usuarios
@@ -121,7 +84,6 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
 ## [0.2.0] — 2026-06
 
 ### Added
-
 - `infrastructure/server/tomcat/` — Guía completa de Apache Tomcat dividida en 10 módulos:
   - `Modulo-01-Arquitectura.md` — Arquitectura interna, componentes y modelo de procesamiento
   - `Modulo-02-Instalacion.md` — Instalación y configuración inicial de producción
@@ -139,18 +101,9 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
 ## [0.1.0] — 2026-05
 
 ### Added
-
-- `version-control/git.md` — Guía definitiva de Git y Version Control
-  - Git internals: modelo de objetos (blob, tree, commit, tag), DAG
-  - Configuración profesional de `~/.gitconfig` con SSH signing
-  - Comandos avanzados: bisect, worktrees, reflog, add -p
-  - Workflows comparados: Trunk-Based Development vs Gitflow vs GitHub Flow
-  - Conventional Commits + automatización de CHANGELOG con git-cliff
-  - Git hooks con pre-commit: detección de secrets, validación de commits
-  - Branch protection rules y CODEOWNERS para GitHub
-  - 8 antipatrones documentados con causa → consecuencia → fix
-
 - Estructura inicial del repositorio
   - `README.md` con índice de guías y estado del repositorio
   - `docs/CONTRIBUTING.md` con convenciones y proceso de contribución
   - `docs/CHANGELOG.md` (este fichero)
+  - `script/` actualizar de manera automatica el documento README.md
+- `version-control/Git.md` — Guía definitiva de Git y Version Control
