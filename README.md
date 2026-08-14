@@ -5,8 +5,8 @@
 ---
 
 <!-- BADGES:START -->
-[![Guías completadas](https://img.shields.io/badge/Gu%C3%ADas-45-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
-[![Categorías activas](https://img.shields.io/badge/Categor%C3%ADas_activas-5-blue?style=flat-square)](#-índice-de-guías)
+[![Guías completadas](https://img.shields.io/badge/Gu%C3%ADas-53-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
+[![Categorías activas](https://img.shields.io/badge/Categor%C3%ADas_activas-6-blue?style=flat-square)](#-índice-de-guías)
 [![Última actualización](https://img.shields.io/badge/%C3%9Altima_actualizaci%C3%B3n-2026%2F08-blue?style=flat-square)](./docs/CHANGELOG.md)
 <!-- BADGES:END -->
 
@@ -87,6 +87,17 @@ guide/
 │           ├── 📄 Modulo-08-Sesiones-Clustering.md
 │           ├── 📄 Modulo-09-Rendimiento-Monitorizacion.md
 │           └── 📄 Modulo-10-Migracion.md
+│
+├── 📁 languages/
+│   └── 📁 kotlin/
+│       ├── 📄 Modulo-01-Fundamentos-Sintaxis.md
+│       ├── 📄 Modulo-02-Colecciones.md
+│       ├── 📄 Modulo-03-POO.md
+│       ├── 📄 Modulo-04-POO-Avanzada.md
+│       ├── 📄 Modulo-05-Programacion-Funcional.md
+│       ├── 📄 Modulo-06-Excepciones.md
+│       ├── 📄 Modulo-07-Corrutinas.md
+│       └── 📄 Modulo-08-Anotaciones-JVM.md
 │
 ├── 📁 platforms/
 │   ├── 📁 mobile/
@@ -174,6 +185,19 @@ guide/
 | 08 | Sesiones Clustering | 🟢 Completo |
 | 09 | Rendimiento Monitorizacion | 🟢 Completo |
 | 10 | Migracion | 🟢 Completo |
+
+### Languages — Kotlin (`/languages/kotlin`)
+
+| Modulo | Guia | Estado |
+|:-------|:-----|:------:|
+| 01 | Fundamentos Sintaxis | 🟢 Completo |
+| 02 | Colecciones | 🟢 Completo |
+| 03 | POO | 🟢 Completo |
+| 04 | POO Avanzada | 🟢 Completo |
+| 05 | Programacion Funcional | 🟢 Completo |
+| 06 | Excepciones | 🟢 Completo |
+| 07 | Corrutinas | 🟢 Completo |
+| 08 | Anotaciones JVM | 🟢 Completo |
 
 ### Platforms — Mobile (`/platforms/mobile`)
 

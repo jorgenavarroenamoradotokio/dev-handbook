@@ -40,6 +40,7 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
 - `infreastructure/build-tools/Maven.md` — Guía definitiva de Maven
 - `platforms/mobile/JetpackCompose.md` — Guía definitiva de JetpackCompose
 - `platforms/web/backend/` — 8 módulos
+- `languagues/kotlin/` — 8 módulos
 
 ---
 
