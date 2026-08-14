@@ -5,7 +5,7 @@
 ---
 
 <!-- BADGES:START -->
-[![Guías completadas](https://img.shields.io/badge/Gu%C3%ADas-37-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
+[![Guías completadas](https://img.shields.io/badge/Gu%C3%ADas-45-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
 [![Categorías activas](https://img.shields.io/badge/Categor%C3%ADas_activas-5-blue?style=flat-square)](#-índice-de-guías)
 [![Última actualización](https://img.shields.io/badge/%C3%9Altima_actualizaci%C3%B3n-2026%2F08-blue?style=flat-square)](./docs/CHANGELOG.md)
 <!-- BADGES:END -->
@@ -89,8 +89,19 @@ guide/
 │           └── 📄 Modulo-10-Migracion.md
 │
 ├── 📁 platforms/
-│   └── 📁 mobile/
-│       └── 📄 JetpackCompose.md
+│   ├── 📁 mobile/
+│   │   └── 📄 JetpackCompose.md
+│   └── 📁 web/
+│       └── 📁 backend/
+│           └── 📁 graphql/
+│               ├── 📄 Modulo-01-Fundamentos-Arquitectura.md
+│               ├── 📄 Modulo-02-Diseño-Estructuración-Schema.md
+│               ├── 📄 Modulo-03-Resolvers-DataLoader-Problema N+1.md
+│               ├── 📄 Modulo-04-Autenticación-Autorización.md
+│               ├── 📄 Modulo-05-Seguridad.md
+│               ├── 📄 Modulo-06-Testing.md
+│               ├── 📄 Modulo-07-Integracion-Fronted.md
+│               └── 📄 Modulo-08-Arquitecturas-Distribuidas.md
 │
 ├── 📁 testing/
 │   └── 📁 unitario/
@@ -169,6 +180,19 @@ guide/
 | Modulo | Guia | Estado |
 |:-------|:-----|:------:|
 | - | Jetpack Compose | 🟢 Completo |
+
+### Platforms — Graphql (`/platforms/web/backend/graphql`)
+
+| Modulo | Guia | Estado |
+|:-------|:-----|:------:|
+| 01 | Fundamentos Arquitectura | 🟢 Completo |
+| 02 | Diseño Estructuración Schema | 🟢 Completo |
+| 03 | Resolvers Data Loader Problema N+1 | 🟢 Completo |
+| 04 | Autenticación Autorización | 🟢 Completo |
+| 05 | Seguridad | 🟢 Completo |
+| 06 | Testing | 🟢 Completo |
+| 07 | Integracion Fronted | 🟢 Completo |
+| 08 | Arquitecturas Distribuidas | 🟢 Completo |
 
 ### Testing — Unitario (`/testing/unitario`)
 
