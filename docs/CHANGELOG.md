@@ -41,6 +41,7 @@ Las versiones siguen [Semantic Versioning](https://semver.org/lang/es/): `MAJOR.
 - `platforms/mobile/JetpackCompose.md` — Guía definitiva de JetpackCompose
 - `platforms/web/backend/` — 8 módulos
 - `languagues/kotlin/` — 8 módulos
+- `data/database/cache/redis/` - 10 módulos
 
 ---
 
