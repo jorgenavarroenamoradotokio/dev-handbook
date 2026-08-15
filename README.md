@@ -5,8 +5,8 @@
 ---
 
 <!-- BADGES:START -->
-[![Guías completadas](https://img.shields.io/badge/Gu%C3%ADas-53-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
-[![Categorías activas](https://img.shields.io/badge/Categor%C3%ADas_activas-6-blue?style=flat-square)](#-índice-de-guías)
+[![Guías completadas](https://img.shields.io/badge/Gu%C3%ADas-63-4CAF50?style=flat-square)](./docs/CHANGELOG.md)
+[![Categorías activas](https://img.shields.io/badge/Categor%C3%ADas_activas-7-blue?style=flat-square)](#-índice-de-guías)
 [![Última actualización](https://img.shields.io/badge/%C3%9Altima_actualizaci%C3%B3n-2026%2F08-blue?style=flat-square)](./docs/CHANGELOG.md)
 <!-- BADGES:END -->
 
@@ -62,6 +62,21 @@ guide/
 │       ├── 📄 Modulo-14-Gobernanza.md
 │       ├── 📄 Modulo-15-Gestion-Riesgos.md
 │       └── 📄 Modulo-16-Proteccion-Datos.md
+│
+├── 📁 data/
+│   └── 📁 database/
+│       └── 📁 cache/
+│           └── 📁 redis/
+│               ├── 📄 Modulo-01-Instalaccion.md
+│               ├── 📄 Modulo-02-Arquitectura.md
+│               ├── 📄 Modulo-03-Datos-Tipo.md
+│               ├── 📄 Modulo-04-Persistencia.md
+│               ├── 📄 Modulo-05-Seguridad-ACL-TLS.md
+│               ├── 📄 Modulo-06-Patrones-Arquitectura.md
+│               ├── 📄 Modulo-07-Alta-Disponibilidad-Escalabilidad.md
+│               ├── 📄 Modulo-08-Optimizacion-Rendimiento.md
+│               ├── 📄 Modulo-09-Observabilidad-Troubleshooting.md
+│               └── 📄 Modulo-10-Testing-Validacion.md
 │
 ├── 📁 infrastructure/
 │   ├── 📁 build-tools/
@@ -148,6 +163,21 @@ guide/
 | 14 | Gobernanza | 🟢 Completo |
 | 15 | Gestion Riesgos | 🟢 Completo |
 | 16 | Proteccion Datos | 🟢 Completo |
+
+### Data — Redis (`/data/database/cache/redis`)
+
+| Modulo | Guia | Estado |
+|:-------|:-----|:------:|
+| 01 | Instalaccion | 🟢 Completo |
+| 02 | Arquitectura | 🟢 Completo |
+| 03 | Datos Tipo | 🟢 Completo |
+| 04 | Persistencia | 🟢 Completo |
+| 05 | Seguridad ACL TLS | 🟢 Completo |
+| 06 | Patrones Arquitectura | 🟢 Completo |
+| 07 | Alta Disponibilidad Escalabilidad | 🟢 Completo |
+| 08 | Optimizacion Rendimiento | 🟢 Completo |
+| 09 | Observabilidad Troubleshooting | 🟢 Completo |
+| 10 | Testing Validacion | 🟢 Completo |
 
 ### Infrastructure — Build Tools (`/infrastructure/build-tools`)
 
